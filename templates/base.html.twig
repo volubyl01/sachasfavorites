@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Pokedex Favorites
+			{% endblock %}
+		</title>
+		<link rel="icon" href="{{ asset('img/pokemonworldLogo.png') }}">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/journal/bootstrap.min.css" integrity="sha512-i0XjXal2VCWv2R9nyqgvp/pPZGTG563h0djHqDDgu/8S9EIsLNpv+9WoqQFu3ngwDyD5I5WvwauQM1gyNXxsRw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700&display=swap" rel="stylesheet">
+		<link href="{{ asset('css/stylePok.css') }}" rel="stylesheet"/>
+
+	</head>
+
+	{% include "partials/_nav.html.twig" %}
+	<body class="container-fluid vw-100 ">
+	 {% block body %}{% endblock %}
+	 {% include "partials/_footer.html.twig" %}
+	</body>
+		
+
+</html>

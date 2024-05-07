@@ -1,0 +1,91 @@
+<table class="table table-hover">
+        <thead>
+          {% for pokemon in pokemons %}
+            <tr>
+                {# <th>Id</th> #}
+                <th>{{ pokemon.name }}</th>   
+                <th>{{pokemon.element.type}}</th>
+                <th>class="cursor">{{ pokemon.level }}</th>
+                <th><img src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:150px'></th>
+                <th>{{ pokemon.description }}</th>
+                <th><a href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">Voir</a>
+                    <a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">Modifier</a></th>
+                {% else %}
+                  <tr>
+                <td colspan="6">rien trouvé !</td>
+            </tr>
+               {% endfor %}
+            </thead>
+        
+           
+     
+         <tbody>
+             <tr>
+                {# <th>Id</th> #}
+                <th>Name</th>   
+                <th>Element</th>
+                <th>Level</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+      </tbody>
+      </table>
+</div>
+
+ <a class="btn btn-warning" href="{{ path('app_pokemon_new') }}">Ajouter un personnage dans la team</a>
+
+   
+{% endblock %}
+    
+        *********************************************************
+        
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Pokemon index{% endblock %}
+
+
+{% block body %}
+
+<div class="container-sm w-50 mt-5 ">
+<h1 class="text-center">Pokemon Favorites World</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Name</th>   
+                <th>Element</th>
+                <th>Level</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokemon in pokemons %}
+            <tr>
+                {# <td>{{ pokemon.id }}</td> #}
+                <td>{{ pokemon.name }}</td>
+                <td>{{pokemon.element.type}}</td>
+                 <td class="cursor">{{ pokemon.level }}</td>
+                 <td><img src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:150px'></td>
+                <td>{{ pokemon.description }}</td>
+                <td>
+                    <a href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">Voir</a>
+                    <a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">rien trouvé !</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+ <a class="btn btn-warning" href="{{ path('app_pokemon_new') }}">Ajouter un personnage dans la team</a>
+
+   
+{% endblock %}

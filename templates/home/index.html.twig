@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sacha's Favorites
+{% endblock %}
+
+{% block body %}
+	<div classe="container-sm " style="min-height:590px">>
+		
+			<div class="card text-dark">
+				<div class="card-img-overlay mt-5">
+					<div class="text-light text-end">
+						<div>
+							<h1>Sacha's Favorites</h1>
+							<h2 class="card-title mt-5 mb-3">Mes Pokemons favoris dans le monde</h2>
+
+							<li class="list-unstyled ">
+								<a href="{{path('app_pokemon_index')}}" class="btn btn-warning"><h5>Découvrir !</h5>
+								</a>
+							</li>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+	</div>
+
+{% endblock %}

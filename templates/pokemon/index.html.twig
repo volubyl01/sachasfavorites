@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Pokemon Favorites
+{% endblock %}
+
+
+{% block body %}
+	<div class="d-flex container-sm">
+
+		<aside class="flex-item	m-5 p-5">
+			{{form_start(form)}}
+			<h1 class="text-center text-light text-uppercase p-5">Sacha's Favorites</h1>
+
+			<div class="row bg-dark  border rounded align-center mx-auto">
+				<button class=" btn btn-warning text-center text-success mx-auto" type="submit">
+					<h3>Rechercher</h3>
+				</button>
+				<div class="row text-center">{{ form_widget(form) }}</div>
+				<div class="row bg-dark  border rounded align-center mx-auto	">
+					<a class="btn btn-warning text-primary " href="{{ path('app_pokemon_new') }}">
+						<h3>Ajouter un personnage dans la team</h3>
+					</a>
+				</div>
+			</div>
+		</aside>
+
+		{{form_end(form)}}
+		<div class="container p-5">
+
+			<table class="table table-hover border border-warning rounded">
+				<tbody>
+					{% for pokemon in pokemons %}
+
+						<div class="liste p-3">
+
+							<tr
+								id="fond">
+								{# <td>{{ pokemon.id }}</td> #}
+								<div class"card-body " id="card-body">
+									<td class=' bg-transparent align-middle'><img src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:150px'></td>
+
+									<td class="col-5 align-middle text-dark text-sm-center">
+										<div class="rounded border border-danger bg-light">
+											<h2>{{ pokemon.name }}</h2>
+											<h2>{{pokemon.element.type}}</h2>
+											<h2>{{ pokemon.level }}</h2>
+										</div>
+									</td>
+
+									<td class=' col-5  align-middle text-dark text-center'>
+										<div class="rounded border border-danger bg-light  h-75">
+											<h5>{{ pokemon.description }}</h5>
+										</div>
+									</td>
+
+								</div>
+
+								<td class='col-5 bg-transparent align-middle text-dark'>
+									<div class="d-flex">
+										<a class="btn btn-success mx-auto" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
+											<h3>Voir</h3>
+										</a>
+										<a class="btn btn-light mx-auto" href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">
+											<h3>Modifier</h3>
+										</a>
+									</div>
+								</td>
+
+							</tr>
+						</div>
+					{% else %}
+						<tr>
+							<td colspan="6">rien trouvé !</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</div>
+		</tbody>
+
+
+	</table>
+
+{% endblock %}

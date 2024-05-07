@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ pokemon.name }}
+{% endblock %}
+
+{% block body %}
+
+	<div class="container-sm w-50 mt-5 d-flex">
+		<h1 class="text-center text-light text-uppercase">{{ pokemon.name }}</h1>
+		<div class="container-sm p-5">
+			<div
+				>
+				{# <div class="card mx-auto bg-transparent"> #}
+				<div class="p-5 align-middle">
+					<h3 class="text-center text-light text-uppercase">
+						{{ pokemon.name }}</h3>
+					<img src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:300px'>
+				</div>
+
+				<div class="text-center mx-auto align-middle">
+
+					<div class"card-body " id="card-body">
+					
+
+						<td class="col-5 align-middle text-dark text-sm-center">
+							<div class="rounded border border-danger bg-light">
+								<h2>{{ pokemon.name }}</h2>
+								<h2>{{pokemon.element.type}}</h2>
+								<h2>{{ pokemon.level }}</h2>
+							</div>
+						</td>
+
+						<div>
+
+
+							{# <th>Description</th> #}
+							<td class="bg-transparent align-middle text-dark text-center">
+								<h5 class="bg-light">{{ pokemon.description }}</p>
+							</td>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</table>
+		<div class="text-center">
+			<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning">back to list</a>
+
+			<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning">edit</a>
+
+			<button>{{ include('pokemon/_delete_form.html.twig') }}</button>
+		</div>
+	
+{% endblock %}
