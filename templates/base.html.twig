@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>
-			{% block title %}Pokedex Favorites
+			{% block title %}Sacha's favorites
 			{% endblock %}
 		</title>
 		<link rel="icon" href="{{ asset('img/pokemonworldLogo.png') }}">
@@ -16,11 +16,13 @@
 
 	</head>
 
-	{% include "partials/_nav.html.twig" %}
-	<body class="container-fluid vw-100 ">
-	 {% block body %}{% endblock %}
-	 {% include "partials/_footer.html.twig" %}
 	</body>
-		
+	{# <body class="d-flex flex-column min-vh-100"> #}
+
+	{% include "partials/_nav.html.twig" %}
+	 {% block body %}{% endblock %}
+	
+	</body>
+	 {% include "partials/_footer.html.twig" %}	
 
 </html>

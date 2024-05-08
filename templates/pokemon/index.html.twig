@@ -7,7 +7,7 @@
 
 {% block body %}
 	<div class="d-flex container-sm">
-
+{# colonne de recherche et création de Pokemon #}
 		<aside class="flex-item	m-5 p-5">
 			{{form_start(form)}}
 			<h1 class="text-center text-light text-uppercase p-5">Sacha's Favorites</h1>
@@ -24,7 +24,7 @@
 				</div>
 			</div>
 		</aside>
-
+{# table de tous les pokemons #}
 		{{form_end(form)}}
 		<div class="container p-5">
 
@@ -79,6 +79,6 @@
 		</tbody>
 
 
-	</table>
+	</div>
 
 {% endblock %}

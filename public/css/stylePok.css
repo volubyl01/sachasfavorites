@@ -1,16 +1,20 @@
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    background-image: url('../img/pokemonworld.jpg');
-    /* opacity: 0.5;     */
-    background-repeat: no-repeat;   
+    background : url('../img/BackgroundPokemon.png') no-repeat center fixed  ;
+    -webkit-background-size: cover; 
     background-size:cover;
+    background-repeat: no-repeat;   
     margin:0;
     padding:0;
-    /* opacity:0.33;
-    z-index:2; */
-    box-sizing:border-box;  
+  } 
+     
     /* background : transparent; 
 background-color : white; */
-} 
+
 .table {
 border-radius: 15px;
 }

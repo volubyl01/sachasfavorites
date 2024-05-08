@@ -22,7 +22,7 @@ class ElementController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_element_new', methods: ['GET', 'POST'])]
+    #[Route('new', name: 'app_element_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $element = new Element();
