@@ -1,28 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<meta charset="UTF-8">
 		<title>
 			{% block title %}Sacha's favorites
 			{% endblock %}
 		</title>
-		<link rel="icon" href="{{ asset('img/pokemonworldLogo.png') }}">
 
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/journal/bootstrap.min.css" integrity="sha512-i0XjXal2VCWv2R9nyqgvp/pPZGTG563h0djHqDDgu/8S9EIsLNpv+9WoqQFu3ngwDyD5I5WvwauQM1gyNXxsRw==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+{# 		
+		<link rel="icon" href="{{ asset('') }}""> #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700&display=swap" rel="stylesheet">
-		<link href="{{ asset('css/stylePok.css') }}" rel="stylesheet"/>
+		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/lumen/bootstrap.min.css" integrity="sha512-N6Wwrw2+w72hDf55YI/j+y3JUXpO7qTuo+kilvcpFJqEabBFA3nurVZineUcg4+op0dJLrzQXcNNif9Gf/ECPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="{{ asset('css/backgroundFonts.css') }}">
+
+		{# {% block stylesheets %}
+
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="{{asset('css/backgroundFonts.css')}}">
+{% endblock %} #}
 
 	</head>
-
+	<body>
+		{% include "partials/_nav.html.twig" %}
+		{% block body %}{% endblock %}
+		{% include "partials/_footer.html.twig" %}
 	</body>
-	{# <body class="d-flex flex-column min-vh-100"> #}
-
-	{% include "partials/_nav.html.twig" %}
-	 {% block body %}{% endblock %}
-	
-	</body>
-	 {% include "partials/_footer.html.twig" %}	
-
 </html>

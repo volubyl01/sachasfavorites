@@ -38,8 +38,9 @@ class PokemonType extends AbstractType
                 'class' => Element::class,
                 'choice_label' => 'Type',
             ])
-            ->add('level', RangeType::class)
-            ->add ('level', NumberType::class, )
+            // ->add('level', RangeType::class)
+          ->add ('level', NumberType::class)
+            
         ;
     }
 

@@ -13,14 +13,16 @@ class SearchingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('text', SearchType::class, [
+            ->add("Name", SearchType::class, [
                 'required' => false
             ]);
+           
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
+
             'csrf_protection' => false,
         ]);
     }

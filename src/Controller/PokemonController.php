@@ -20,7 +20,7 @@ class PokemonController extends AbstractController
     #[Route('/', name: 'app_pokemon_index', methods: ['GET'])]
     public function index(PokemonRepository $pokemonRepository, ElementRepository $elementRepository, Request $request): Response
     {
-
+// on introduit les possibilités de recherche
        $form = $this->createForm(SearchingType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
 
@@ -28,9 +28,9 @@ class PokemonController extends AbstractController
         $elements = $elementRepository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $searchText = $form->get('text')->getData();
+            $searchText = $form->get("Name")->getData();
             $pokemons = $pokemonRepository->search($searchText);
-
+// **********
             //     return $this->redirectToRoute(
             //         'app_pokemon_search',
             //         ['text' =>$form->get('text')->getData()]

@@ -1,0 +1,53 @@
+/* public/img/BackgroundFonts.css*  */
+* {
+	border:0;
+	margin:0;
+	padding:0;
+}
+.navbar {
+    border-bottom: none !important;
+}
+
+body {
+	background-image: url("../img/Background_pokemon_good.png");
+	background-repeat:no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+.bg-accueil {
+	background-color:#ED1B24 ;
+	opacity:0.8;
+}
+.bg-intro {
+	background-color: #FBE163;
+}
+.bg-buttonM {
+	background-color: #2774BC;
+}
+.farro-light {
+	font-family: "Farro", sans-serif;
+	font-weight: 300;
+	font-style: normal;
+}
+
+.farro-regular {
+	font-family: "Farro", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.farro-medium {
+	font-family: "Farro", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.farro-bold {
+	font-family: "Farro", sans-serif;
+	font-weight: 700;
+	font-style: normal;
+}
+.ajouter {
+	background-image: var(--bs-gradient);
+}

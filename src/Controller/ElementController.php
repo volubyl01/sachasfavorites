@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Element;
 use App\Form\ElementType;
+
+use App\Form\SearchingType;
+
 use App\Repository\ElementRepository;
+use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +22,14 @@ class ElementController extends AbstractController
     #[Route('/', name: 'app_element_index', methods: ['GET'])]
     public function index(ElementRepository $elementRepository): Response
     {
+
+
+
+
+
+        
+
+        
         return $this->render('element/index.html.twig', [
             'elements' => $elementRepository->findAll(),
         ]);
