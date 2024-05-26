@@ -9,14 +9,11 @@
 		class="text-primary container">
 		{# ligne 1 #}
 		<h1 class="text-primary text-uppercase display-2 text-center">Ajouter un Pokemon</h1>
-		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-6 col-md-3 col-sm-3 justify-content-center pt-4 p-2  mx-auto">
-					<div class="ajouter">
+					<div class="fs-5 text-center justify-content-between">
 						{{ include('pokemon/_form.html.twig') }}
-					</div>
-
-					
+					</div>	
 						<button class="btn btn-primary  btn-sm w-25">
 							<a class="text-light" href="{{ path('app_pokemon_index') }}">Retour à la liste
 							</a>
@@ -32,6 +29,6 @@
 
 
 			</div>
-		</div>
+		
 	</div>
 {% endblock %}

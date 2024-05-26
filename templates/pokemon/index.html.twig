@@ -20,8 +20,7 @@
 				</div>
 
 				<div class="col-lg-4 col-md-6 col-sm-4 justify-content-center pt-4 bg-success p-2 border rounded">
-					<p class="fs-5 text-center">Rechercher</p>
-					<div class="fs-5 text-left justify-content-between">
+					<div class="fs-5 text-center justify-content-between">
 						{{form_start(form)}}
 
 						{{ form_widget(form) }}
@@ -39,7 +38,7 @@
 		</div>
 
 
-		<table class="table table-responsive table-hover border border-3 border-radius border-warning my-5">
+		<table class="table table-responsive table-hover border border-5 border-radius border-success my-5">
 			<tbody>
 				{% for pokemon in pokemons %}
 					<tr
@@ -47,13 +46,17 @@
 						{# illustration #}
 
 
-						<td class="w-lg-25 w-md-25 text-center ">
+						<td class="w-lg-25 w-md-25 text-center align-middle">
 							<img class="" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:200px'>
 						</td>
 						<td class="w-lg-25 w-sm-25 align-center">
 							<div class="border border-warning align-center text-center p-5 rounded">
 								<div class="display-5  mx-auto">{{ pokemon.name }}</div>
-								<div class=" display-5 mx-auto">{{pokemon.element.type}}</div>
+								<div class=" display-5 mx-auto">{{pokemon.element.specificite}}</div>
+								<div class="img-fluid">
+								<img src="{{asset('uploads/image/') ~ pokemon.element.illustration}}" alt="" style='width:60px'>
+								</div>
+								
 								<div class="display-5 mx-auto">{{pokemon.level}}</div>
 							</div>
 						</td>

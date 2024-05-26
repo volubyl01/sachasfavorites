@@ -6,6 +6,7 @@ use App\Repository\ElementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Pokemon;
 
 #[ORM\Entity(repositoryClass: ElementRepository::class)]
 class Element
@@ -16,14 +17,20 @@ class Element
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $type = null;
+    private ?string $specificite = null;
 
-    #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'element')]
-    private Collection $level;
+    #[ORM\Column(nullable: true)]
+    private ?int $level = null;
+
+    #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'specificite')]
+    private Collection $pokemons;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $illustration = null;
 
     public function __construct()
     {
-        $this->level = new ArrayCollection();
+        $this->pokemons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -31,44 +38,64 @@ class Element
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getSpecificite(): ?string
     {
-        return $this->type;
+        return $this->specificite;
     }
 
-    public function setType(?string $type): static
+    public function setSpecificite(?string $specificite): self
     {
-        $this->type = $type;
+        $this->specificite = $specificite;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Pokemon>
-     */
-    public function getLevel(): Collection
+    
+    public function getLevel(): int
     {
         return $this->level;
     }
 
-    public function addLevel(Pokemon $level): static
+    public function setLevel(?int $level): self
     {
-        if (!$this->level->contains($level)) {
-            $this->level->add($level);
-            $level->setElement($this);
+        $this->level = $level;
+
+        return $this;
+    }
+/**
+     * @return Collection<int, Pokemon>
+     */
+
+    public function addPokemon(Pokemon $pokemon): static
+    {
+        if (!$this->pokemons->contains($pokemon)) {
+            $this->pokemons->add($pokemon);
+            $pokemon->setElement($this);
         }
 
         return $this;
     }
 
-    public function removeLevel(Pokemon $level): static
+    public function removePokemon(Pokemon $pokemon): static
     {
-        if ($this->level->removeElement($level)) {
+        if ($this->pokemons->removeElement($pokemon)) {
             // set the owning side to null (unless already changed)
-            if ($level->getElement() === $this) {
-                $level->setElement(null);
+            if ($pokemon->getElement() === $this) {
+                $pokemon->setElement(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(?string $illustration): static
+    {
+        $this->illustration = $illustration;
 
         return $this;
     }

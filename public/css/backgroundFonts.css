@@ -1,29 +1,49 @@
 /* public/img/BackgroundFonts.css*  */
 * {
-	border:0;
-	margin:0;
-	padding:0;
+	border: 0;
+	margin: 0;
+	padding: 0;
 }
 .navbar {
-    border-bottom: none !important;
+	border-bottom: none !important;
 }
 
-body {
+body.home {
 	background-image: url("../img/Background_pokemon_good.png");
-	background-repeat:no-repeat;
+	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
 }
+
+body.liste-pokemons {
+	background-image: url("../img/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+
+body.new-pokemon {
+	background: linear-gradient(
+		208deg,
+		rgba(34, 193, 195, 1) 0%,
+		rgba(253, 187, 45, 1) 100%
+	);
+}
 .bg-accueil {
-	background-color:#ED1B24 ;
-	opacity:0.8;
+	background-color: #ed1b24;
+	opacity: 0.8;
 }
 .bg-intro {
-	background-color: #FBE163;
+	background-color: #fbe163;
+}
+.txt-edit {
+	color: #fbe163;
 }
 .bg-buttonM {
-	background-color: #2774BC;
+	background-color: #2774bc;
 }
 .farro-light {
 	font-family: "Farro", sans-serif;

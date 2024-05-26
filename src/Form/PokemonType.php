@@ -36,7 +36,7 @@ class PokemonType extends AbstractType
             ]) 
             ->add('element', EntityType::class, [
                 'class' => Element::class,
-                'choice_label' => 'Type',
+                'choice_label' => 'Specificite',
             ])
             // ->add('level', RangeType::class)
           ->add ('level', NumberType::class)

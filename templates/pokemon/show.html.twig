@@ -1,45 +1,48 @@
 {% extends 'base.html.twig' %}
 {% block title %}
+	Découvrir
 	{{ pokemon.name }}
 {% endblock %}
 
 {% block body %}
-	<div class="container-fluid ">
-		<div class="row d-flex">
-			<div class="col-3">
-				<div class="d-inline-block">
-					<img src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:300px'>
+	<body class="body-show" data-background="{{ illustration }}">
+		<div class="container ">
+			<h1 class="text-primary text-uppercase display-2 text-center">Découvrir
+				{{ pokemon.name }}</h1>
+
+			<div class="row d-flex justify-content-between">
+				<div class="col-3">
+					<div class="text-dark text-center">
+						<h3>{{ pokemon.name }}</h3>
+						<h5 class="bg-light">{{ pokemon.description }}</p>
+					</div>
 				</div>
-			</div>
-			<div
-				class="col-3">
-				{# <th>Description</th> #}
-				<div class="text-dark text-center">
-					<h3>{{ pokemon.name }}</h3>
-					<h5 class="bg-light">{{ pokemon.description }}</p>
+				<div class="col-3 ">
+					<div class="">
+						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:300px'>
+					</div>
+					<div class="text-center">
+						<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning">Retour à la liste</a>
+
+						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning">Modifier</a>
+
+						<button>{{ include('pokemon/_delete_form.html.twig') }}</button>
+					</div>
+
+				</div>
+
+				<div class="col-3">
+					<div class="text-light">
+
+						<h2>{{ pokemon.level }}</h2>
+					</div>
+					{# <div>
+						<img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'>
+					</div> #}
 				</div>
 			</div>
 		</div>
-
-
-		<div class="col-3">
-			<div class="text-light">
-
-
-				<h2>{{ pokemon.name }}</h2>
-				<h2>{{pokemon.element.type}}</h2>
-				<h2>{{ pokemon.level }}</h2>
-			</div>
-		</div>
-
-	</div>
-
-
-	<div class="text-center">
-		<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning">back to list</a>
-
-		<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning">edit</a>
-
-		<button>{{ include('pokemon/_delete_form.html.twig') }}</button>
-	</div>
-</div></div>{% endblock %}
+	</body>
+</div>{% endblock %}{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('js/script-show.js') }}"></script>{% endblock %}

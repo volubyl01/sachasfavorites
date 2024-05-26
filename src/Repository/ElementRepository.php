@@ -46,13 +46,13 @@ class ElementRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    public function search($value): ?array
-{
-   $query =  $this->createQueryBuilder('p')
-        ->Where('p.element LIKE :val')
-        ->setParameter('val', '%'.$value.'%')
-        ->getQuery()
-        ->getResult();
-        return $query;
-}
+//     public function search($value): ?array
+// {
+//    $query =  $this->createQueryBuilder('p')
+//         ->Where('p.specificite LIKE :val')
+//         ->setParameter('val', '%'.$value.'%')
+//         ->getQuery()
+//         ->getResult();
+//         return $query;
+// }
 }
