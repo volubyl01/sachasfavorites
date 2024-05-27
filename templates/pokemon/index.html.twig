@@ -8,7 +8,7 @@
 	<div class="text-dark container">
 
 	<div class="col-5 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
-					<h1 class="display-5 text-center">Sacha's Favorites</h1>
+					<h1 class="display-5 text-center fw-bold">Sacha's Favorites</h1>
 				</div>
 
 		{# colonne de recherche et création de Pokemon #}
@@ -26,9 +26,9 @@
 						{{ form_widget(form) }}
 					</div>
 					<div class="my-3 text-center">
-						<button type="submit" class="btn btn-warning my-3">Lancer la recherche</button>
-						<button>
-							<a class="btn btn-warning text-yellow nodecoration" href="{{ path('app_pokemon_new') }}">
+						<button type="submit button" class="btn btn-outline-warning my-3">Lancer la recherche</button>
+						<button type="button" class="btn btn-outline-warning text-yellow">
+							<a  class="nodecoration text-dark" href="{{ path('app_pokemon_new') }}">
 								Ajouter un personnage
 							</a>
 						</button>

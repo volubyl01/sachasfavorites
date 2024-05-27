@@ -1,5 +1,6 @@
 /* public/img/BackgroundFonts.css*  */
 * {
+	font-family: "Farro";
 	border: 0;
 	margin: 0;
 	padding: 0;
@@ -26,11 +27,9 @@ body.liste-pokemons {
 }
 
 body.new-pokemon {
-	background: linear-gradient(
-		208deg,
-		rgba(34, 193, 195, 1) 0%,
-		rgba(253, 187, 45, 1) 100%
-	);
+	background-image: url("../img/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 .bg-accueil {
 	background-color: #ed1b24;

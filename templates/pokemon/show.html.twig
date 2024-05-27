@@ -5,23 +5,32 @@
 {% endblock %}
 
 {% block body %}
-	<body class="body-show" data-background="{{ illustration }}">
+	<body style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center;">
 		<div class="container ">
 			<h1 class="text-primary text-uppercase display-2 text-center">Découvrir
 				{{ pokemon.name }}</h1>
 
-			<div class="row d-flex justify-content-between">
-				<div class="col-3">
-					<div class="text-dark text-center">
-						<h3>{{ pokemon.name }}</h3>
-						<h5 class="bg-light">{{ pokemon.description }}</p>
+			<div class="row">
+
+				<div class="col-6 text-primary text-center mx-auto my-auto">
+					<h3>Son histoire</h3>
+					<h5 class="bg-light">{{ pokemon.description }}</p>
+					<div class="text-primary">
+					<h3>Son élément</h3>
+						<h2>{{ pokemon.element.specificite}}</h2>
+						<h3>Sa force</h3>
+						<h2>{{ pokemon.level }}</h2>
 					</div>
+					{# <div>
+						<img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'>
+					</div> #}
 				</div>
-				<div class="col-3 ">
-					<div class="">
+
+				<div class="col-6  ">
+					<div class="text-center">
 						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:300px'>
 					</div>
-					<div class="text-center">
+					<div class="text-center align-center">
 						<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning">Retour à la liste</a>
 
 						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning">Modifier</a>
@@ -30,19 +39,7 @@
 					</div>
 
 				</div>
-
-				<div class="col-3">
-					<div class="text-light">
-
-						<h2>{{ pokemon.level }}</h2>
-					</div>
-					{# <div>
-						<img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'>
-					</div> #}
-				</div>
 			</div>
 		</div>
 	</body>
-</div>{% endblock %}{% block javascripts %}
-{{ parent() }}
-<script src="{{ asset('js/script-show.js') }}"></script>{% endblock %}
+</div>{% endblock %}

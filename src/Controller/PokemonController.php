@@ -94,8 +94,17 @@ class PokemonController extends AbstractController
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
+
+        // ne fonctionne pas
+        // $element = $pokemon->getElement();
+        // $illustration = $element->getIllustration();
+
         $element = $pokemon->getElement();
-        $illustration = $element->getIllustration();
+        if ($element !== null) {
+            $illustration = $element->getIllustration();
+        } else {
+            $illustration = null;
+        }
         
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
