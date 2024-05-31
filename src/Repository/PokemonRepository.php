@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Element;
 use App\Entity\Pokemon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @extends ServiceEntityRepository<Pokemon>
@@ -16,43 +18,56 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PokemonRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Pokemon::class);
     }
 
-//    /**
-//     * @return Pokemon[] Returns an array of Pokemon objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Pokemon[] Returns an array of Pokemon objects
+    //     */
 
-//    public function findOneBySomeField($value): ?Pokemon
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 
-public function search($value): ?array
+    //    public function findOneBySomeField($value): ?Pokemon
+    //    {
+    //        return $this->createQueryBuilder('p')
+    //            ->andWhere('p.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
+public function searchByName($value)
 {
-   $query =  $this->createQueryBuilder('p')
-        ->Where('p.name LIKE :val')
-        ->setParameter('val', '%'.$value.'%')
+    return $this->createQueryBuilder('p')
+        ->where('p.name LIKE :val')
+        ->setParameter('val', '%' . $value . '%')
         ->getQuery()
         ->getResult();
-        return $query;
 }
+
+public function searchBySpecificite($value)
+{
+    return $this->createQueryBuilder('p')
+        ->join('p.element', 'e')
+        ->where('e.specificite LIKE :val')
+        ->setParameter('val', '%' . $value . '%')
+        ->getQuery()
+        ->getResult();
+}
+// filtres********************************************
+
+// class 
+// public function findByNameElement($name,$element)
+// {
+//     return $this->createQueryBuilder('p')
+//         ->andWhere('p.name = :val')
+//         ->andWhere('P.element = :val')
+      
+//         ->orderBy('p.element', 'ASC')
+//         ->setMaxResults(10)
+//         ->getQuery()
+//         ->getResult()
+//     ;
 }

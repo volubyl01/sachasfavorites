@@ -21,15 +21,7 @@ class ElementController extends AbstractController
 {
     #[Route('/', name: 'app_element_index', methods: ['GET'])]
     public function index(ElementRepository $elementRepository): Response
-    {
-
-
-
-
-
-        
-
-        
+    { 
         return $this->render('element/index.html.twig', [
             'elements' => $elementRepository->findAll(),
         ]);
@@ -62,7 +54,7 @@ class ElementController extends AbstractController
             'element' => $element,
         ]);
     }
-
+// FONCTION EDITION
     #[Route('/{id}/edit', name: 'app_element_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Element $element, EntityManagerInterface $entityManager): Response
     {
@@ -70,11 +62,32 @@ class ElementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_element_index', [], Response::HTTP_SEE_OTHER);
+           
+            // $entityManager->flush(); par défaut
+             //on introduit une image dan sl'édition : 
+            $illustration = $form->get('illustration')->getData();
+            // je vérfie qu'une nouvelle image a été envoyée au formulaire
+            if ($illustration !== null) {
+                // je vérifie l'existence d'une ancienne image de l'élément
+                // si c'est le cas je supprime l'ancienne image
+                if ($element->getIllustration() !== null && file_exists('element_illustration_directory' . $element->getIllustration())) {
+                    unlink('element_illustration_directory' . $element->getIllustration());
+                }
+
+                // puis je télécharge la nouvelle image et change le nom de l'image en BDD
+
+                $illustrationName = uniqid() . '.' . $illustration->guessExtension();
+                $element->setIllustration($illustrationName);
+                $illustration->move($this->getParameter('element_illustration_directory'), $illustrationName);
         }
 
+// on conserve les données pour enregistrement
+        $entityManager->persist($element);
+        $entityManager->flush();
+
+  return $this->redirectToRoute('app_element_index', [], Response::HTTP_SEE_OTHER); 
+    }
         return $this->render('element/edit.html.twig', [
             'element' => $element,
             'form' => $form,

@@ -24,7 +24,9 @@
 {% endblock %} #}
 
 	</head>
-	<body>
+	{# on code pour une manipulation en js#}
+	<body class="{{ bodyClass|default('') }}">	
+		
 		{% include "partials/_nav.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "partials/_footer.html.twig" %}

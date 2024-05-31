@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
 
+
+
+
+
 use App\Form\SearchingType;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
@@ -20,48 +24,45 @@ class PokemonController extends AbstractController
     #[Route('/', name: 'app_pokemon_index', methods: ['GET'])]
     public function index(PokemonRepository $pokemonRepository, ElementRepository $elementRepository, Request $request): Response
     {
-// on introduit les possibilités de recherche
-       $form = $this->createForm(SearchingType::class, null, ['method' => 'GET']);
+
+        // on introduit les possibilités de recherche
+        $form = $this->createForm(SearchingType::class, null, ['method' => 'GET']);
         $form->handleRequest($request);
+
 
         $pokemons = $pokemonRepository->findAll();
         $elements = $elementRepository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $searchText = $form->get("Name")->getData();
-            $pokemons = $pokemonRepository->search($searchText);
-// **********
-            //     return $this->redirectToRoute(
-            //         'app_pokemon_search',
-            //         ['text' =>$form->get('text')->getData()]
-            //     );
-        }
+            $searchName = $form->get('name')->getData();
+            $searchSpecificite = $form->get('specificite')->getData();
 
-        if ($request->query->get('id') !== null) {
-            $elementId = $request->query->get('id');
-            $pokemons = $pokemonRepository->findBy(['element' => $elementId], ['id'=>'DESC']);
+            if (!empty($searchName)) {
+                $pokemons = $pokemonRepository->searchByName($searchName);
+            } elseif (!empty($searchSpecificite)) {
+                $pokemons = $pokemonRepository->searchBySpecificite($searchSpecificite);
+            }
         }
-
 
         return $this->render('pokemon/index.html.twig', [
             'form' => $form,
             'pokemons' => $pokemons,
-            'elements' => $elements
+            'element' => $elements,
+            'bodyClass' => 'liste-pokemons',
         ]);
+        // *****fin méthode recherche
     }
 
 
 
     #[Route('/new', name: 'app_pokemon_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager , ElementRepository $elementrepository) : Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ElementRepository $elementrepository): Response
     {
         $pokemon = new Pokemon();
-       
-
         $form = $this->createForm(PokemonType::class, $pokemon);
         $form->handleRequest($request);
 
-         if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $image = $form->get('image')->getData();
             if ($image !== null) {
                 $imageName = uniqid() . '.' . $image->guessExtension();
@@ -75,7 +76,7 @@ class PokemonController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $entityManager->persist($pokemon);
             $entityManager->flush();
 
@@ -83,6 +84,8 @@ class PokemonController extends AbstractController
         }
 
         return $this->render('pokemon/new.html.twig', [
+            // je crée une classe pour la page new-pokemon pour pouvoir ensuite choisir un fond de page personnalisé : je récupère la classe dans le template de bae (base.html.twig")
+            'bodyClass' => 'new-pokemon',
             'pokemon' => $pokemon,
             'form' => $form,
         ]);
@@ -91,8 +94,22 @@ class PokemonController extends AbstractController
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
+
+        // ne fonctionne pas
+        // $element = $pokemon->getElement();
+        // $illustration = $element->getIllustration();
+
+        $element = $pokemon->getElement();
+        if ($element !== null) {
+            $illustration = $element->getIllustration();
+        } else {
+            $illustration = null;
+        }
+        
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
+            'illustration' => $illustration,
+            
         ]);
     }
 
@@ -120,16 +137,18 @@ class PokemonController extends AbstractController
                 $image->move($this->getParameter('pokemon_image_directory'), $imageName);
             }
 
-
-
             $entityManager->persist($pokemon);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
         }
+        $element = $pokemon->getElement();
+        $illustration = $element->getIllustration($pokemon);
 
         return $this->render('pokemon/edit.html.twig', [
             'pokemon' => $pokemon,
+            'illustration' => $illustration,
+            'element' => $element,
             'form' => $form,
         ]);
     }
@@ -137,7 +156,7 @@ class PokemonController extends AbstractController
     #[Route('/{id}', name: 'app_pokemon_delete', methods: ['POST'])]
     public function delete(Request $request, Pokemon $pokemon, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pokemon->getId(), $request->getPayload()->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $pokemon->getId(), $request->getPayload()->get('_token'))) {
             $entityManager->remove($pokemon);
             $entityManager->flush();
         }
