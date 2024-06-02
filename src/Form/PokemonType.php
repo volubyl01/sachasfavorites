@@ -33,7 +33,7 @@ class PokemonType extends AbstractType
                         'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
                     ]),
                 ],
-            ]) 
+            ])
             ->add('element', EntityType::class, [
                 'class' => Element::class,
                 'choice_label' => 'Specificite',

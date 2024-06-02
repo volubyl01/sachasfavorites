@@ -25,8 +25,6 @@ class Pokemon
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-
-
     #[ORM\ManyToOne(targetEntity: Element::class, inversedBy: 'pokemons')]
     #[ORM\JoinColumn(name: 'element_id', referencedColumnName: 'id')]
     private ?Element $element = null;

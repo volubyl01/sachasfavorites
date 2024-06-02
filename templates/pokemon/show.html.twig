@@ -6,39 +6,45 @@
 
 {% block body %}
 	<body style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center;">
-		<div class="container ">
-			<h1 class="text-primary text-uppercase display-2 text-center">Découvrir
-				{{ pokemon.name }}</h1>
-
+		<div class="container mx-auto">
 			<div class="row">
+				<div class="col-5 bg-accueil fw-bold text-light fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
+					<h1 class="display-5 text-center">Découvrir
+						{{ pokemon.name }}</h1>
+				</div>
+			</div>
+			<div class="row justify-content-between">
 
-				<div class="col-6 text-primary text-center mx-auto my-auto">
+				<div class="col-5 bg-light text-primary text-center  my-5 border rounded-4">
 					<h3>Son histoire</h3>
-					<h5 class="bg-light">{{ pokemon.description }}</p>
+					<h5 class="">{{ pokemon.description }}</p>
 					<div class="text-primary">
-					<h3>Son élément</h3>
+						<h3>Son élément</h3>
 						<h2>{{ pokemon.element.specificite}}</h2>
 						<h3>Sa force</h3>
 						<h2>{{ pokemon.level }}</h2>
 					</div>
-					{# <div>
-						<img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'>
-					</div> #}
+					{# <div><img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'></div> #}
+					<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a>
 				</div>
 
-				<div class="col-6  ">
-					<div class="text-center">
-						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:300px'>
-					</div>
-					<div class="text-center align-center">
-						<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning">Retour à la liste</a>
-
-						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning">Modifier</a>
-
-						<button>{{ include('pokemon/_delete_form.html.twig') }}</button>
+				<div class="col-5 text-primary text-center  my-5 border rounded-4 border-light">
+					<div class="text-center mb-5">
+						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:460px'>
 					</div>
 
+					<div
+						class="mx-auto">
+						{# <a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a> A suPPR#}
+
+						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+					</div>
+					
+					<div class="py-2">
+					{{ include('pokemon/_delete_form.html.twig') }}
+					</div>
 				</div>
+
 			</div>
 		</div>
 	</body>

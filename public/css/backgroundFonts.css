@@ -9,6 +9,7 @@
 	border-bottom: none !important;
 }
 
+
 body.home {
 	background-image: url("../img/Background_pokemon_good.png");
 	background-repeat: no-repeat;
@@ -69,4 +70,16 @@ body.new-pokemon {
 }
 .ajouter {
 	background-image: var(--bs-gradient);
+}
+.charactersElectric {
+    background-image:url("../uploads/Image/electric.webp");
+	background-size: cover ;
+	background-repeat: no-repeat;
+	opacity:1.5;
+}
+.charactersFire {
+    background-image:url("../uploads/Image/feu.webp");
+	background-size: cover ;
+	background-repeat: no-repeat;
+	opacity:1.5;
 }
