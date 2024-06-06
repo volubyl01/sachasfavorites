@@ -1,4 +1,4 @@
-import './bootstrap.js';
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -13,10 +13,10 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 ///import de bootstrap js
 // app.js
 
-const $ = require('jquery');
+// const $ = require('jquery'); Par défaut
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
-require('bootstrap');
+// require('bootstrap'); par défaut
 
 // or you can include specific pieces
 // require('bootstrap/js/dist/tooltip');

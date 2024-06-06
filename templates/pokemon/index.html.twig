@@ -8,7 +8,7 @@
 	<div class="text-dark container">
 
 		<div class="col-5 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
-			<h1 class="display-5 text-center fw-bold">Sacha's Favorites</h1>
+			<h1 class="display-5 text-center fw-bolder">Sacha's Favorites</h1>
 		</div>
 
 		{# colonne de recherche et création de Pokemon #}
@@ -45,7 +45,7 @@
 						{# illustration #}
 						<td class="w-lg-25 w-md-25 text-center align-middle">
 
-							<img class="my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:300px'>
+							<img class="my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:200px'>
 							<div class="my-2 display-5  mx-auto text-primary">{{ pokemon.name }}</div>
 						</td>
 						<td class="w-lg-25 w-sm-25 align-center bg-image align-middle">
@@ -54,7 +54,7 @@
 								<div class=" display-5 mx-auto text-primary my-3">{{pokemon.element.specificite}}</div>
 
 								<div class="img-fluid">
-									<img class="rounded-circle" src="{{asset('uploads/image/') ~ pokemon.element.illustration}}" alt="" style='width:18rem;height:18rem'>
+									<img class="rounded-circle" src="{{asset('uploads/image/') ~ pokemon.element.illustration}}" alt="" style='width:13rem;height:13rem'>
 								</div>
 								<div class="display-5 mx-auto my-3 text-primary">{{pokemon.level}}</div>
 							</div>

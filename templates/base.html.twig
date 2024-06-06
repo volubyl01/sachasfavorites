@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="{{ asset('css/backgroundFonts.css') }}">
 
 		{# {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
 
     {{ encore_entry_link_tags('app') }}
     <link rel="stylesheet" href="{{asset('css/backgroundFonts.css')}}">
@@ -30,5 +31,9 @@
 		{% include "partials/_nav.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "partials/_footer.html.twig" %}
+		{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+    <script src="{{ asset('controllers/hello_controllers.js') }}"></script>
+{% endblock %}
 	</body>
 </html>
