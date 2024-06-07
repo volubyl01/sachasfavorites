@@ -27,3 +27,4 @@
 ###> symfony/nodes_modules ###
 /nodes_modules
 ###> symfony/nodes_modules ###
+node_modules
