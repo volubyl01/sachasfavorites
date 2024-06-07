@@ -29,8 +29,8 @@ class PokemonType extends AbstractType
                 'required' => false,
                 'constraints'=> [
                     new File ([
-                        'maxSize' => '500k',
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
+                        'maxSize' => '1000k',
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
                     ]),
                 ],
             ])
