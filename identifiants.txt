@@ -1,0 +1,2 @@
+ROLE admin : Cécile
+Password : ouibiensur
