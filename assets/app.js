@@ -9,12 +9,6 @@ import './bootstrap.js';
 // import './styles/app.css';
 import './js/test.js';
 
-
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
-
-///import de bootstrap js
-// app.js
-
 // const $ = require('jquery'); Par défaut
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything
@@ -26,6 +20,28 @@ console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
+});
+// assets/app.js  
+// import './styles/app.css'; // A voir plus tard
+const entreeSortie = document.getElementById('entreeSortie');
+
+loginBtn.addEventListener('click', () => {
+    if (entreeSortie.textContent === 'Connexion') {
+        // Rediriger vers la page de connexion
+        window.location.href = '/login';
+    } else {
+        // Déconnecter l'utilisateur
+        fetch('/logout', {
+            method: 'POST'
+        })
+        .then(() => {
+            // Actualiser la page après la déconnexion
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
 });
 
 
