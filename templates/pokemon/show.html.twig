@@ -33,7 +33,7 @@
 						En savoir plus
 					</a>
 				</div>
-{# Menu Canvas #}
+				{# Menu Canvas #}
 				<div class="offcanvas offcanvas-start  bg-primary opacity-1 border border-warning border-3 rounded-3 text-light" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 					<div class="offcanvas-header">
 						<h5 class="offcanvas-title" id="offcanvasExampleLabel">Sites de référence</h5>
@@ -43,20 +43,17 @@
 					{# Body du canvas #}
 					<div class="offcanvas-body ">
 
-<div style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center;">
-test	</div>
-
-
-
-
-
-					{# Corps de canvas #}
-						<div>
-							Retrouvez ici le monde de
-							{{ pokemon.name }}
+						<div style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center background-size:100px">
+							test
+							<div>
+								Retrouvez ici le monde de
+								{{ pokemon.name }}
+							</div>
 						</div>
+						{# Corps de canvas #}
+
 						<div class="dropdown mt-3">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+							<button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
 								{{ pokemon.name }}
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
@@ -66,33 +63,23 @@ test	</div>
 								<li>
 									<a class="dropdown-item" href="#">Something else here</a>
 								</li>
+								<li class="mx-auto">
+									{# <a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a> A suPPR#}
+									<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
+								</li>
+
+								<li class="py-2">
+									{{ include('pokemon/_delete_form.html.twig') }}
+								</li>
 							</ul>
 						</div>
 					</div>
 					{# fin corps de texte #}
-
-
-
-
-
-
-
 				</div>
 				{# Colonne droite #}
 				<div class="col-5 text-primary text-center  my-3 border rounded-4 border-light">
 					<div class="text-center mb-5">
 						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:460px'>
-					</div>
-
-					<div
-						class="mx-auto">
-						{# <a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a> A suPPR#}
-
-						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
-					</div>
-
-					<div class="py-2">
-						{{ include('pokemon/_delete_form.html.twig') }}
 					</div>
 				</div>
 

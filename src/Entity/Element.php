@@ -28,9 +28,16 @@ class Element
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $illustration = null;
 
+    /**
+     * @var Collection<int, Image>
+     */
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'image')]
+    private Collection $np;
+
     public function __construct()
     {
         $this->pokemons = new ArrayCollection();
+        $this->np = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +103,36 @@ class Element
     public function setIllustration(?string $illustration): static
     {
         $this->illustration = $illustration;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getNp(): Collection
+    {
+        return $this->np;
+    }
+
+    public function addNp(Image $np): static
+    {
+        if (!$this->np->contains($np)) {
+            $this->np->add($np);
+            $np->setImage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNp(Image $np): static
+    {
+        if ($this->np->removeElement($np)) {
+            // set the owning side to null (unless already changed)
+            if ($np->getImage() === $this) {
+                $np->setImage(null);
+            }
+        }
 
         return $this;
     }
