@@ -75,7 +75,7 @@ body.new-pokemon {
 	background-image: var(--bs-gradient);
 }
 .charactersElectric {
-    background-image:url("../uploads/Image/electric.webp");
+	background-image:url("../uploads/Image/electricity.jpg") ;
 	background-size: cover ;
 	background-repeat: no-repeat;
 	opacity:1.5;

@@ -8,31 +8,33 @@
 		</title>
 
 		{# 		
-				<link rel="icon" href="{{ asset('') }}""> #}
-				{# link font #}
+		<link rel="icon" href="{{ asset('') }}""> #}
+		{# link font #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700" rel="stylesheet">
+		{# link to Bootstrap #}
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/lumen/bootstrap.min.css" integrity="sha512-N6Wwrw2+w72hDf55YI/j+y3JUXpO7qTuo+kilvcpFJqEabBFA3nurVZineUcg4+op0dJLrzQXcNNif9Gf/ECPA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
 		<link
-		{# lien style css avec asset #}
-		rel="stylesheet" href="{{ asset('css/backgroundFonts.css') }}">
+		{# lien style css avec asset #} rel="stylesheet" href="{{ asset('css/backgroundFonts.css') }}">
 	{# on réserve pour une utilisation d'encore
-		{% block stylesheets %}
-	    {{ encore_entry_link_tags('app') }}
-	    {{ encore_entry_link_tags('app') }}
-		{% endblock %} #}
+			{% block stylesheets %}
+		    {{ encore_entry_link_tags('app') }}
+		    {{ encore_entry_link_tags('app') }}
+			{% endblock %} #}
 	</head>
 	{# on code pour une manipulation en js#}
-	<body class="{{ bodyClass|default('') }}">
-{# Nav - Body - Footer #}
+	<body
+		class="{{ bodyClass|default('') }}">
+		{# Nav - Body - Footer #}
 		{% include "partials/_nav.html.twig" %}
 		{% block body %}{% endblock %}
 		{% include "partials/_footer.html.twig" %}
-		{# on inclue le script js avec Twig #}
+		{# on inclue les scripts js avec Twig #}
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}
 			{# // <script src="{{ asset('controllers/styles/test.js') }}"></script> autre solution #}
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 		{% endblock %}
 	</body>
 </html>

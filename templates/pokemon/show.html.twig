@@ -13,9 +13,10 @@
 						{{ pokemon.name }}</h1>
 				</div>
 			</div>
-			<div class="row justify-content-between">
-
-				<div class="col-5 bg-light text-primary text-center  my-5 border rounded-4">
+			<div
+				class="row justify-content-between">
+				{# colonne gauche #}
+				<div class="col-5 bg-light text-primary text-center  my-3 border rounded-4">
 					<h3>Son histoire</h3>
 					<h5 class="">{{ pokemon.description }}</p>
 					<div class="text-primary">
@@ -24,11 +25,61 @@
 						<h3>Sa force</h3>
 						<h2>{{ pokemon.level }}</h2>
 					</div>
-					{# <div><img src="{{asset('uploads/Image/' ~ pokemon.element.illustration)}}" alt="" style='width:60px'></div> #}
+					{# bouton vers page Team #}
 					<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a>
+					{# Volet mobile CANVAS #}
+					{# Bouton href plutot que bs-target #}
+					<a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+						En savoir plus
+					</a>
 				</div>
+{# Menu Canvas #}
+				<div class="offcanvas offcanvas-start  bg-primary opacity-1 border border-warning border-3 rounded-3 text-light" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+					<div class="offcanvas-header">
+						<h5 class="offcanvas-title" id="offcanvasExampleLabel">Sites de référence</h5>
+						{# Bouton de ferneture du canvas #}
+						<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+					</div>
+					{# Body du canvas #}
+					<div class="offcanvas-body ">
 
-				<div class="col-5 text-primary text-center  my-5 border rounded-4 border-light">
+<div style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center;">
+test	</div>
+
+
+
+
+
+					{# Corps de canvas #}
+						<div>
+							Retrouvez ici le monde de
+							{{ pokemon.name }}
+						</div>
+						<div class="dropdown mt-3">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+								{{ pokemon.name }}
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
+								<li>
+									<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:80px'>
+								</li>
+								<li>
+									<a class="dropdown-item" href="#">Something else here</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					{# fin corps de texte #}
+
+
+
+
+
+
+
+				</div>
+				{# Colonne droite #}
+				<div class="col-5 text-primary text-center  my-3 border rounded-4 border-light">
 					<div class="text-center mb-5">
 						<img src="{{asset('uploads/Image/' ~ pokemon.image)}}" alt="" style='width:460px'>
 					</div>
@@ -39,9 +90,9 @@
 
 						<a href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}" class="btn btn-warning btn-sm">Modifier</a>
 					</div>
-					
+
 					<div class="py-2">
-					{{ include('pokemon/_delete_form.html.twig') }}
+						{{ include('pokemon/_delete_form.html.twig') }}
 					</div>
 				</div>
 

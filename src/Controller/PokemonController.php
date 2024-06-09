@@ -7,8 +7,8 @@ use App\Form\PokemonType;
 
 
 
-
-
+use App\Form\ElementType;
+use App\Entity\Element;
 use App\Form\SearchingType;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
@@ -94,11 +94,6 @@ class PokemonController extends AbstractController
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
-
-        // ne fonctionne pas
-        // $element = $pokemon->getElement();
-        // $illustration = $element->getIllustration();
-
         $element = $pokemon->getElement();
         if ($element !== null) {
             $illustration = $element->getIllustration();

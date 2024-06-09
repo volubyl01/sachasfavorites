@@ -32,6 +32,11 @@ body.new-pokemon {
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+body.new-element {
+	background-image: url("../img/AdobeStock_585885970.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
 .bg-accueil {
 	background-color: #ed1b24;
 	opacity: 0.8;
@@ -72,8 +77,7 @@ body.new-pokemon {
 	background-image: var(--bs-gradient);
 }
 .charactersElectric {
-    background-image:url("../uploads/Image/electric.webp");
-	background-size: cover ;
+    background-image:url("../uploads/Image/electricity.jpg") ;
 	background-repeat: no-repeat;
 	opacity:1.5;
 }
