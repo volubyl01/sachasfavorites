@@ -1,6 +1,6 @@
-services:
-    Symfony\Component\HttpClient\HttpClient: ~
+# services:
+#     Symfony\Component\HttpClient\HttpClient: ~
 
-    App\Controller\API\ApiService:
-        arguments:
-            $httpClient: '@Symfony\Contracts\HttpClient\HttpClientInterface'
+#     App\Controller\API\ApiService:
+#         arguments:
+#             $httpClient: '@Symfony\Contracts\HttpClient\HttpClientInterface'

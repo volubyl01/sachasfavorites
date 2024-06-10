@@ -15,27 +15,27 @@ class ApiController extends AbstractController
 {
 
 //ON consomme l'api et on la pérpare à stocker ses données dans la bdd interne
-private $apiService;
-private $entityManager;
+// private $apiService;
+// private $entityManager;
 
-public function __construct(ApiService $apiService, EntityManagerInterface $entityManager)
-{
-    $this->apiService = $apiService;
-    $this->entityManager = $entityManager;
-}
+// public function __construct(ApiService $apiService, EntityManagerInterface $entityManager)
+// {
+//     $this->apiService = $apiService;
+//     $this->entityManager = $entityManager;
+// }
 
-public function fetchAndStoreData()
-{
-    $data = $this->apiService->fetchApiData();
+// public function fetchAndStoreData()
+// {
+//     $data = $this->apiService->fetchApiData();
 
-    // Traitement des données pour les stocker dans la base de données interne
-    // ...
+//     // Traitement des données pour les stocker dans la base de données interne
+//     // ...
 
-    $this->entityManager->persist($data);
-    $this->entityManager->flush();
+//     $this->entityManager->persist($data);
+//     $this->entityManager->flush();
 
-    return new Response('Données stockées avec succès');
-}
+//     return new Response('Données stockées avec succès');
+// }
 
 
 
@@ -64,9 +64,7 @@ public function fetchAndStoreData()
                 'sprite' => $pokemonData['sprites']['front_default'],
             ];
         }
-        
-
-        return $this->render('api/index.html.twig', [
+         return $this->render('api/index.html.twig', [
             'pokemons' => $pokemons
         ]);
     }

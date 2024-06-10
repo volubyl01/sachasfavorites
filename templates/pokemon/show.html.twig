@@ -36,7 +36,7 @@
 				{# Menu Canvas #}
 				<div class="offcanvas offcanvas-start  bg-primary opacity-1 border border-warning border-3 rounded-3 text-light" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
 					<div class="offcanvas-header">
-						<h5 class="offcanvas-title" id="offcanvasExampleLabel">Sites de référence</h5>
+						<h5 class="offcanvas-title text-warning display-6" id="offcanvasExampleLabel">La team du {{ pokemon.element.specificite }}</h5>
 						{# Bouton de ferneture du canvas #}
 						<button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 					</div>
@@ -45,15 +45,16 @@
 
 						<div style="background-image: url('{{ asset('uploads/Image/' ~ illustration) }}'); background-size: cover; background-position: center background-size:100px">
 							test
-							<div>
+							{# <div>
 								Retrouvez ici le monde de
 								{{ pokemon.name }}
-							</div>
+							</div> #}
 						</div>
 						{# Corps de canvas #}
 
 						<div class="dropdown mt-3">
 							<button class="btn btn-secondary dropdown-toggle btn-sm" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+								Retrouvez ici le monde de
 								{{ pokemon.name }}
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="">
