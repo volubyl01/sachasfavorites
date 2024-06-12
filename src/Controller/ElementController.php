@@ -44,6 +44,7 @@ class ElementController extends AbstractController
         return $this->render('element/new.html.twig', [
             'element' => $element,
             'form' => $form,
+            'bodyClass'=> 'new-element'
         ]);
     }
 

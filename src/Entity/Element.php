@@ -22,11 +22,13 @@ class Element
     #[ORM\Column(nullable: true)]
     private ?int $level = null;
 
-    #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'specificite')]
+    #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'Elements')]
     private Collection $pokemons;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $illustration = null;
+
+ 
 
     public function __construct()
     {
@@ -99,4 +101,9 @@ class Element
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Image>
+     */
+
 }

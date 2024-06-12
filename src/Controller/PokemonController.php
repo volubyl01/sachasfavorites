@@ -7,8 +7,8 @@ use App\Form\PokemonType;
 
 
 
-
-
+use App\Form\ElementType;
+use App\Entity\Element;
 use App\Form\SearchingType;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/pokemon')]
+#[Route('/monpokemon')]
 class PokemonController extends AbstractController
 {
     #[Route('/', name: 'app_pokemon_index', methods: ['GET'])]
@@ -94,11 +94,6 @@ class PokemonController extends AbstractController
     #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
     public function show(Pokemon $pokemon): Response
     {
-
-        // ne fonctionne pas
-        // $element = $pokemon->getElement();
-        // $illustration = $element->getIllustration();
-
         $element = $pokemon->getElement();
         if ($element !== null) {
             $illustration = $element->getIllustration();
@@ -163,4 +158,23 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
+// soumission du formulaire
+// public function soumission(Request $request)
+// {
+//     $form = $this->createForm(SearchingType::class, null);
+
+//     // Traitement de la soumission du formulaire
+//     $form->handleRequest($request);
+
+//     if ($form->isSubmitted() && $form->isValid()) {
+//         $data = $form->getData();
+//         // Traiter les données du formulaire ici
+//         // ...
+//     }
+
+//     return $this->render('pokemon/index.html.twig', [
+//         'form' => $form->createView(),
+//         // Autres variables à passer au template
+//     ]);
+// }
 }
