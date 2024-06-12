@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
-#[Route('/api')]
+#[Route('/pokemonliste')]
 
 class ApiController extends AbstractController
 {
@@ -39,7 +39,7 @@ class ApiController extends AbstractController
 
 
 
-    #[Route('/', name: 'app_api_index')]
+    #[Route('/', name: 'app_liste_index')]
     public function index()
     {
         $client = new Client();

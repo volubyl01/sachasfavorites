@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-#[Route('/pokemon')]
+#[Route('/monpokemon')]
 class PokemonController extends AbstractController
 {
     #[Route('/', name: 'app_pokemon_index', methods: ['GET'])]
@@ -158,4 +158,23 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
+// soumission du formulaire
+// public function soumission(Request $request)
+// {
+//     $form = $this->createForm(SearchingType::class, null);
+
+//     // Traitement de la soumission du formulaire
+//     $form->handleRequest($request);
+
+//     if ($form->isSubmitted() && $form->isValid()) {
+//         $data = $form->getData();
+//         // Traiter les données du formulaire ici
+//         // ...
+//     }
+
+//     return $this->render('pokemon/index.html.twig', [
+//         'form' => $form->createView(),
+//         // Autres variables à passer au template
+//     ]);
+// }
 }
