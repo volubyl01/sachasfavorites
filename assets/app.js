@@ -9,6 +9,16 @@ import './bootstrap.js';
 // import './styles/app.css';
 import './js/test.js';
 
+
+// import { createApp } from 'vue';
+// import app from './components/Hello-World.vue';
+
+// const app = createApp({});
+// app.component('hello-world', HelloWorld);
+
+// app.mount('#app');
+
+
 // const $ = require('jquery'); Par défaut
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything

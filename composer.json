@@ -12,6 +12,7 @@
 		"doctrine/doctrine-migrations-bundle": "^3.3",
 		"doctrine/orm": "^3.1",
 		"friendsofsymfony/rest-bundle": "^3.7",
+		"google/apiclient": "^2.16",
 		"guzzlehttp/guzzle": "^7.8",
 		"nelmio/cors-bundle": "^2.4",
 		"phpdocumentor/reflection-docblock": "^5.3",
@@ -90,7 +91,8 @@
 		],
 		"post-update-cmd": [
 			"@auto-scripts"
-		]
+		],
+		"pre-autoload-dump": "Google\\Task\\Composer::cleanup"
 	},
 	"conflict": {
 		"symfony/symfony": "*"
@@ -99,7 +101,11 @@
 		"symfony": {
 			"allow-contrib": false,
 			"require": "7.0.*"
-		}
+		},
+		"google/apiclient-services": [
+			"Drive",
+			"YouTube"
+		]
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^9.5",

@@ -1,0 +1,64 @@
+<?php 
+
+namespace App\Controller;
+
+use App\Entity\Team;
+use App\Repository\TeamRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use GuzzleHttp\Client;
+
+class CartController extends AbstractController
+{
+    private $httpClient;
+    private $entityManager;
+    private $teamRepository;
+
+    public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager, TeamRepository $teamRepository)
+    {
+        $this->httpClient = $httpClient;
+        $this->entityManager = $entityManager;
+        $this->teamRepository = $teamRepository;
+    }
+
+ 
+
+    #[Route('/pokemon/add', name: 'app_pokemon_add', methods: ['POST'])]
+    public function addToTeam(Request $request): Response
+    {
+        $pokemonId = $request->request->get('pokemon_id');
+        $pokemonIdUtf8 = mb_convert_encoding($pokemonId, 'UTF-8', mb_detect_encoding($pokemonId, 'UTF-8, ISO-8859-1', true));
+
+        $client = new Client();
+        $response = $client->request('GET', 'https://pokeapi.co/api/v2/pokemon/' . $pokemonIdUtf8);
+
+        if ($response->getStatusCode() === 200) {
+            $pokemonData = json_decode($response->getBody(), true);
+
+            $team = new Team();
+            $team->setName($pokemonData['name']);
+            $team->setSprite($pokemonData['sprites']['front_default']);
+
+            $this->entityManager->persist($team);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('app_team_show');
+        } else {
+            throw new \Exception('Erreur lors de la récupération des données du Pokémon');
+        }
+    }
+
+    #[Route('/pokemon/show', name: 'app_team_show')]
+    public function showCart(): Response
+    {
+        $team = $this->teamRepository->findAll();
+
+        return $this->render('team/index.html.twig', [
+            'team' => $team,
+        ]);
+    }
+}

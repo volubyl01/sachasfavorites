@@ -14,11 +14,11 @@ class SearchingType extends AbstractType
     {
         $builder
         ->add('name', TextType::class, [
-            'label' => 'Rechercher par nom',
+            'label' => 'Search By pokemon',
             'required' => false,
         ])
         ->add('specificite', TextType::class, [
-            'label' => 'Ou rechercher par élément',
+            'label' => 'Or search by element',
             'required' => false,
         ]);
     }

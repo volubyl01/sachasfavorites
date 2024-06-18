@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Controller;
+
+use App\Form\YoutubeType;
+use App\Service\YoutubeService;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+
+#[Route('/youtube-search')]
+class YoutubeController extends AbstractController
+{
+    #[Route('/{query}', name: 'app_youtube_search')]
+    public function search(YoutubeService $youtubeService, Request $request): Response
+    {
+
+        $form = $this->createForm(YoutubeType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchQuery = $form->get('query')->getData();
+            $searchResponse = $youtubeService->searchVideos($searchQuery);
+
+
+        // $searchResponse = $youtubeService->searchVideos($query);
+
+        if (is_object($searchResponse)) {
+            $videos = [];
+
+            if (isset($searchResponse->items) && is_array($searchResponse->items)) {
+                foreach ($searchResponse->items as $searchResult) {
+                    if ($searchResult->id->kind === 'youtube#video') {
+                        $videos[] = [
+                            'id' => $searchResult->id->videoId,
+                            'title' => $searchResult->snippet->title,
+                            'description' => $searchResult->snippet->description,
+                            'thumbnailUrl' => $searchResult->snippet->thumbnails->default->url,
+                        ];
+                    }
+                }
+            }
+        } else {
+            // Gérer le cas où la réponse de l'API n'est pas un objet
+            $videos = [];
+        }
+    }
+        return $this->render('youtube/search.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+}
+

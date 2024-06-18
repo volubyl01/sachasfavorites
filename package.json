@@ -24,6 +24,8 @@
         "css-loader": "^7.1.2",
         "node-sass": "^9.0.0",
         "sass-loader": "^14.2.1",
-        "style-loader": "^4.0.0"
+        "style-loader": "^4.0.0",
+        "vue": "^3.4.29",
+        "vue-loader": "^17.3.1"
     }
 }
