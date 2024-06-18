@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<h1>Recherche sur YouTube</h1>
+
+	{{ form_start(form) }}
+{{form_widget(form)}}
+	<button type="submit" class="btn btn-primary"> Rechercher</button>
+	{{ form_end(form) }}
+
+	{% if videos is defined and videos|length > 0 %}
+		<h2>Résultats de la recherche pour "{{ form.query.vars.value }}"</h2>
+
+		<ul>
+			{% for video in videos %}
+				<li>
+					<a href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank">
+						<img src="{{ video.thumbnailUrl }}" alt="{{ video.title }}">
+						<h3>{{ video.title }}</h3>
+						<p>{{ video.description }}</p>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% elseif form.query.vars.value is defined %}
+		<p>Aucun résultat trouvé pour "{{ form.query.vars.value }}"</p>
+	{% endif %}
+{% endblock %}

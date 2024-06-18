@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\PokemonRepository;
+use App\Entity\Element;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Metadata\ApiResource;
+use App\Repository\PokemonRepository;
 
 #[ORM\Entity(repositoryClass: PokemonRepository::class)]
 

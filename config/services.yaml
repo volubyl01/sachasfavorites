@@ -6,6 +6,7 @@
 parameters:
     pokemon_image_directory : "%kernel.project_dir%/public/uploads/image"
     element_illustration_directory : "%kernel.project_dir%/public/uploads/image"
+    app.youtube_api_key: 'YAIzaSyAjqHKgV53T_72xNBJiXt_c20eBl60JUyI'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -43,10 +44,17 @@ services:
 #             $decorated: '@api_platform.data_persister' # Injecter le service data persister chaîné
 #         tags:
 #             - { name: 'api_platform.data_persister', priority: 10 } # Enregistrer comme un data persister
-    App\Service\PokemonService:
-        arguments:
-            $httpClient: '@http_client' 
+# Déclaration de l'API REST - en cours
+    App\Service\TeamService:
+        arguments: [ '$httpClient' ]
+       
     # Définition du service HttpClientInterface
     http_client:
         class: Symfony\Contracts\HttpClient\HttpClientInterface
-        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']        
+        factory: ['Symfony\Component\HttpClient\HttpClient', 'create']
+
+    App\Service\YoutubeService:
+        arguments:
+            $httpClient: '@http_client'
+            $apiKey: '%env(YOUTUBE_API_KEY)%'
+            
