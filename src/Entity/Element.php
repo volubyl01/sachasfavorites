@@ -53,7 +53,7 @@ class Element
     }
 
     
-    public function getLevel(): int
+    public function getLevel(): ?int
     {
         return $this->level;
     }
@@ -68,7 +68,7 @@ class Element
      * @return Collection<int, Pokemon>
      */
 
-    public function addPokemon(Pokemon $pokemon): static
+    public function addPokemon(Pokemon $pokemon): self
     {
         if (!$this->pokemons->contains($pokemon)) {
             $this->pokemons->add($pokemon);
@@ -78,7 +78,7 @@ class Element
         return $this;
     }
 
-    public function removePokemon(Pokemon $pokemon): static
+    public function removePokemon(Pokemon $pokemon): self
     {
         if ($this->pokemons->removeElement($pokemon)) {
             // set the owning side to null (unless already changed)
