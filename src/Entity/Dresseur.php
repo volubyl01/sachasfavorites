@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\DresseurRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\DresseurRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: DresseurRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
@@ -27,11 +28,17 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $panier = null;
+
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
+
+ 
 
     public function getId(): ?int
     {
@@ -84,6 +91,18 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function setPanier(array $panier):static
+    {
+        $this->panier = $panier;
+        return $this;
+    }
+
+    public function getPanier(array $panier):static
+    {
+        $this->panier = $panier;
+        return array_column($panier);
+    }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */
@@ -107,4 +126,6 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+ 
 }

@@ -55,6 +55,10 @@ public function __construct(private RequestStack $requestStack)
                 'sprite' => $pokemonData['sprites']['front_default'],
             ];
         }
+        usort($pokemons, function($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+
         return $this->render('team/index.html.twig', [
             'pokemons' => $pokemons
         ]);
@@ -65,8 +69,6 @@ public function __construct(private RequestStack $requestStack)
     public function showCart(int $id, TeamRepository $teamRepository): Response
     {
 
-        $team = $teamRepository->find($id);
-
         if (!$team) {
             throw $this->createNotFoundException('Team not found');
         }
@@ -76,41 +78,44 @@ public function __construct(private RequestStack $requestStack)
         ]);
     }
 
-    // #[Route('/team/add', name: 'app_team_add')]
-    // public function addPokemonToTeam(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
-    // {
-    //     $team = new Team();
+    #[Route('/team/add', name: 'app_team_add')]
+    public function addTeam(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    {
+        $team = new Team();
     
-    //     $form = $this->createForm(TeamType::class, $team);
-    //     $form->handleRequest($request);
+        $form = $this->createForm(TeamType::class, $team);
+        $form->handleRequest($request);
     
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($team);
-    //         $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($team);
+            $entityManager->flush();
     
-    //         // Stocker l'identifiant de l'équipe dans la session
-    //         $session->set('team_id', $team->getId());
+            // Stocker l'identifiant de l'équipe dans la session
+            $session->set('id', $team->getId());
     
-    //         return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
-    //     }
+            return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
+        }
     
-    //     return $this->render('team/index.html.twig', [
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
+        return $this->render('team/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
     
     #[Route('/team/add-pokemon', name: 'app_team_add_pokemon', methods: ['POST'])]
-    public function addPokemonToTeam(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository, SessionInterface $session): Response
+    public function addPokemonToTeam(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository, SessionInterface $session, ?int $id): Response
     {
         $pokemonSprite = $request->request->get('pokemon');
+     
     
         // Récupérer l'identifiant de l'équipe depuis la session
         $id = $session->get('team_id');
-        $team = $teamRepository->find($id);
-    
-        if (!$team) {
-            throw $this->createNotFoundException('Team not found');
-        }
+        // Récupérer l'équipe à partir de l'identifiant
+        // Récupérer l'équipe à partir de l'identifiant
+    $team = $teamRepository->find($id);
+
+    if (!$team) {
+        throw $this->createNotFoundException('Team not found');
+    }
     
         // Logique pour ajouter le pokémon à l'équipe
         $team->addPokemon($pokemonSprite);

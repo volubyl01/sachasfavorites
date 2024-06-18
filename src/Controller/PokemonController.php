@@ -44,11 +44,15 @@ class PokemonController extends AbstractController
             }
         }
 
+        usort($pokemons, function($a, $b) {
+            return strcasecmp($a->getName(), $b->getName());
+        });
+
         return $this->render('pokemon/index.html.twig', [
             'form' => $form,
             'pokemons' => $pokemons,
             'element' => $elements,
-            'bodyClass' => 'liste-pokemons',
+            // 'bodyClass' => 'liste-pokemons',
         ]);
         // *****fin méthode recherche
     }

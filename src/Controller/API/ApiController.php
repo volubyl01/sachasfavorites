@@ -64,6 +64,12 @@ class ApiController extends AbstractController
                 'sprite' => $pokemonData['sprites']['front_default'],
             ];
         }
+
+        // on souhaite que la liste soit ordonnée alphabétiquement
+        usort($pokemons, function($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+
          return $this->render('api/index.html.twig', [
             'pokemons' => $pokemons
         ]);
