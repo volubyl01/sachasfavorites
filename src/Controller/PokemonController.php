@@ -52,7 +52,8 @@ class PokemonController extends AbstractController
             'form' => $form,
             'pokemons' => $pokemons,
             'element' => $elements,
-            // 'bodyClass' => 'liste-pokemons',
+            // on attribue un nom de class pour le body pour pouvoir individualiser les backgrounds
+            'bodyClass' => 'liste-pokemons',
         ]);
         // *****fin méthode recherche
     }

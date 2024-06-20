@@ -3,14 +3,28 @@
     "app": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-3b2887.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_object_to-string_js-node_modules_core-js_modules_es_p-2a1352.js",
         "/build/app.js"
+      ]
+    },
+    "bootstrap": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js.js",
+        "/build/bootstrap.js"
       ]
     },
     "test": {
       "js": [
         "/build/runtime.js",
         "/build/test.js"
+      ]
+    },
+    "test-audio": {
+      "js": [
+        "/build/runtime.js",
+        "/build/test-audio.js"
       ]
     }
   }

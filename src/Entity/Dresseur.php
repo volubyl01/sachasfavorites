@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DresseurRepository;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,17 +29,11 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-
-    #[ORM\Column(type: Types::JSON, nullable: true)]
-    private ?array $panier = null;
-
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
     private ?string $password = null;
-
- 
 
     public function getId(): ?int
     {
@@ -91,17 +86,6 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setPanier(array $panier):static
-    {
-        $this->panier = $panier;
-        return $this;
-    }
-
-    public function getPanier(array $panier):static
-    {
-        $this->panier = $panier;
-        return array_column($panier);
-    }
 
     /**
      * @see PasswordAuthenticatedUserInterface

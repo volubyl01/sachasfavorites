@@ -109,7 +109,9 @@ public function __construct(private RequestStack $requestStack)
     
         // Récupérer l'identifiant de l'équipe depuis la session
         $id = $session->get('team_id');
-        // Récupérer l'équipe à partir de l'identifiant
+        if (!$team_id) {
+            addTeam($id);
+        }
         // Récupérer l'équipe à partir de l'identifiant
     $team = $teamRepository->find($id);
 
