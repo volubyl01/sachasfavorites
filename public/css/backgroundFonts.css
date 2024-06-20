@@ -26,6 +26,13 @@ body.liste-pokemons {
 	background-attachment: fixed;
 
 }
+body.liste-energies {
+	background-image: url("../img/ciel_etoile.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
 
 body.new-pokemon {
 	background-image: url("../img/pokeball-pokemon-pngrepo-com.png") ;

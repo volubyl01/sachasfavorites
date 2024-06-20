@@ -54,18 +54,20 @@ class DresseurController extends AbstractController
     public function edit(Request $request, Dresseur $dresseur, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(Dresseur1Type::class, $dresseur);
-        $form->handleRequest($request);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_dresseur_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $this->addFlash('success', 'Le dresseur a été modifié avec succès.');
 
-        return $this->render('dresseur/edit.html.twig', [
-            'dresseur' => $dresseur,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_dresseur_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    return $this->render('dresseur/edit.html.twig', [
+        'dresseur' => $dresseur,
+        'form' => $form,
+    ]);
     }
 
     #[Route('/{id}', name: 'app_dresseur_delete', methods: ['POST'])]

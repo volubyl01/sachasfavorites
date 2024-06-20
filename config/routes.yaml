@@ -19,3 +19,7 @@ app_team_show:
 app_youtube_search:
     path: /youtube-search
     controller: App\Controller\YoutubeController::search
+
+app_dresseur_new:
+    path: /new-dresseur
+    controller: App\Controller\DresseurController::new

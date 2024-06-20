@@ -1,4 +1,11 @@
-import './bootstrap.js';
+// import { startStimulusApp } from '@symfony/stimulus-bridge';
+
+// export const app = startStimulusApp(require.context(
+//     '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+//     true,
+//     /\.(j|t)sx?$/
+// ));
+
 
 /*
  * Welcome to your app's main JavaScript file!
@@ -6,8 +13,9 @@ import './bootstrap.js';
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
+import '@symfony/stimulus-bridge';
 // import './styles/app.css';
-import './js/test.js';
+
 
 
 // import { createApp } from 'vue';

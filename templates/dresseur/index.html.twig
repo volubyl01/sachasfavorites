@@ -11,7 +11,6 @@
                 <th>Id</th>
                 <th>Username</th>
                 <th>Roles</th>
-                <th>Panier</th>
                 <th>Password</th>
                 <th>actions</th>
             </tr>
@@ -22,7 +21,6 @@
                 <td>{{ dresseur.id }}</td>
                 <td>{{ dresseur.username }}</td>
                 <td>{{ dresseur.roles ? dresseur.roles|json_encode : '' }}</td>
-                <td>{{ dresseur.panier ? dresseur.panier|json_encode : '' }}</td>
                 <td>{{ dresseur.password }}</td>
                 <td>
                     <a href="{{ path('app_dresseur_show', {'id': dresseur.id}) }}">show</a>
