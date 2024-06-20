@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class YoutubeType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options):void
     {
         $builder
             ->add('query', SearchType::class, [
@@ -41,7 +41,7 @@ class YoutubeType extends AbstractType
             ->add('region_code', HiddenType::class);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver):void
     {
         $resolver->setDefaults([
             'api_key' => 'AIzaSyDyJEReIqr2FCSfW4XGIbo_MPufZH7lx2w', // Clé API YouTube

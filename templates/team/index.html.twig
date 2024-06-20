@@ -7,9 +7,10 @@
     <ul>
         {% for pokemon in pokemons %}
             <li>
+            <form action="{{ path('app_team_add_pokemon') }}" method="post">
                 <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
                 {{ pokemon.name }}
-                <form action="{{ path('app_team_add_pokemon') }}" method="post">
+                
     <input type="hidden" name="pokemon" value="{{ pokemon.sprite }}">
     <button type="submit">Ajouter à l'équipe</button>
 </form>

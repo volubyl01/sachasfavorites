@@ -23,7 +23,8 @@
     },
     "test-audio": {
       "js": [
-        "/build/runtime.js"
+        "/build/runtime.js",
+        "/build/test-audio.js"
       ]
     }
   }

@@ -60,12 +60,12 @@ class Pokemon
         return $this;
     }
 
-    public function getLevel(): ?string
+    public function getLevel(): ?int
     {
         return $this->level;
     }
 
-    public function setLevel(string $level): static
+    public function setLevel(int $level): static
     {
         $this->level = $level;
 

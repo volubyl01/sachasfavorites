@@ -1,4 +1,20 @@
+"use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["app"],{
+
+/***/ "./node_modules/@symfony/stimulus-bridge/dist/webpack/loader.js!./assets/controllers/controllers.json":
+/*!************************************************************************************************************!*\
+  !*** ./node_modules/@symfony/stimulus-bridge/dist/webpack/loader.js!./assets/controllers/controllers.json ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+});
+
+/***/ }),
 
 /***/ "./assets/app.js":
 /*!***********************!*\
@@ -6,18 +22,21 @@
   \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
 /* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _bootstrap_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./bootstrap.js */ "./assets/bootstrap.js");
-/* harmony import */ var _js_test_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/test.js */ "./assets/js/test.js");
-/* harmony import */ var _js_test_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_js_test_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _symfony_stimulus_bridge__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @symfony/stimulus-bridge */ "./node_modules/@symfony/stimulus-bridge/dist/index.js");
 
 
+// import { startStimulusApp } from '@symfony/stimulus-bridge';
 
+// export const app = startStimulusApp(require.context(
+//     '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+//     true,
+//     /\.(j|t)sx?$/
+// ));
 
 /*
  * Welcome to your app's main JavaScript file!
@@ -25,8 +44,8 @@ __webpack_require__.r(__webpack_exports__);
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-// import './styles/app.css';
 
+// import './styles/app.css';
 
 // import { createApp } from 'vue';
 // import app from './components/Hello-World.vue';

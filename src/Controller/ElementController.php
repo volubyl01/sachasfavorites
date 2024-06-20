@@ -24,6 +24,7 @@ class ElementController extends AbstractController
     { 
         return $this->render('element/index.html.twig', [
             'elements' => $elementRepository->findAll(),
+            'bodyClass' => 'liste-energies'
         ]);
     }
 
