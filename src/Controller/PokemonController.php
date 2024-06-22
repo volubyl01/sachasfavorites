@@ -2,21 +2,25 @@
 
 namespace App\Controller;
 
-use App\Entity\Pokemon;
-use App\Form\PokemonType;
-
-
-
-use App\Form\ElementType;
+use App\Entity\Team;
 use App\Entity\Element;
+
+
+
+use App\Entity\Pokemon;
+use App\Form\ElementType;
+use App\Form\PokemonType;
 use App\Form\SearchingType;
+use App\Repository\TeamRepository;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('/monpokemon')]
 class PokemonController extends AbstractController
@@ -163,23 +167,32 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
-// soumission du formulaire
-// public function soumission(Request $request)
-// {
-//     $form = $this->createForm(SearchingType::class, null);
-
-//     // Traitement de la soumission du formulaire
-//     $form->handleRequest($request);
-
-//     if ($form->isSubmitted() && $form->isValid()) {
-//         $data = $form->getData();
-//         // Traiter les données du formulaire ici
-//         // ...
-//     }
-
-//     return $this->render('pokemon/index.html.twig', [
-//         'form' => $form->createView(),
-//         // Autres variables à passer au template
-//     ]);
-// }
+    #[Route('/add-to-team/{id}', name: 'add_to_team', methods: ['POST'])]
+    public function addToTeam(Request $request, Security $security, EntityManagerInterface $em, TeamRepository $teamRepository, Pokemon $pokemon): Response
+    {
+        $user = $security->getUser();
+        
+        if (!$user) {
+            throw new AccessDeniedException('Vous devez être connecté pour ajouter un Pokémon à votre équipe.');
+        }
+    
+        // Récupérer l'équipe de l'utilisateur ou en créer une nouvelle si elle n'existe pas
+        $team = $teamRepository->findOneBy(['dresseur' => $user]) ?? new Team();
+        
+        // Si c'est une nouvelle équipe, définir le dresseur
+        if (!$team->getId()) {
+            $team->setDresseur($user);
+        }
+    
+        // Ajouter le Pokémon à l'équipe
+        $team->addPokemon($pokemon);
+    
+        $em->persist($team);
+        $em->flush();
+    
+        $this->addFlash('success', $pokemon->getName() . ' a été ajouté à votre équipe !');
+    
+        // Redirigez vers la liste des Pokémon ou une autre page appropriée
+        return $this->redirectToRoute('show_pokemon');
+    }
 }

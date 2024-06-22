@@ -2,11 +2,17 @@
 
 namespace App\Controller\API;
 
+use App\Service\TeamService;
+use App\Entity\Team;
 use GuzzleHttp\Client;
+use App\Entity\Pokemon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 
 #[Route('/pokemonliste')]
@@ -14,32 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiController extends AbstractController
 {
 
-//ON consomme l'api et on la pérpare à stocker ses données dans la bdd interne
-// private $apiService;
-// private $entityManager;
-
-// public function __construct(ApiService $apiService, EntityManagerInterface $entityManager)
-// {
-//     $this->apiService = $apiService;
-//     $this->entityManager = $entityManager;
-// }
-
-// public function fetchAndStoreData()
-// {
-//     $data = $this->apiService->fetchApiData();
-
-//     // Traitement des données pour les stocker dans la base de données interne
-//     // ...
-
-//     $this->entityManager->persist($data);
-//     $this->entityManager->flush();
-
-//     return new Response('Données stockées avec succès');
-// }
-
-
-
-    #[Route('/', name: 'app_liste_index')]
+ #[Route('/', name: 'app_liste_index')]
     public function index()
     {
         $client = new Client();
@@ -74,4 +55,75 @@ class ApiController extends AbstractController
             'pokemons' => $pokemons
         ]);
     }
+// APi paginée
+#[Route('/api/results', name: 'api_results')]
+    public function getResults(Request $request, TeamService $apiService): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 20);
+
+        $url = 'https://pokeapi.co/api/v2/pokemon/'; // Remplacez par l'URL de votre API
+        $data = $apiService->getPagedResults($url, $page, $limit);
+
+        return $this->render('api/results.html.twig', [
+            'data' => $data,
+        ]);
+    }
+// méthode pour l'import des données de l'api
+
+
+#[Route('/import-pokemon', name: 'import_pokemon')]
+public function importPokemon(TeamService $teamService, EntityManagerInterface $em): JsonResponse
+{
+    $offset = 0;
+    $limit = 100; // Nombre de Pokémon à importer par lot
+    $totalImported = 0;
+    $totalSkipped = 0;
+
+    do {
+        $data = $teamService->fetchPokemons($offset, $limit);
+
+        foreach ($data['results'] as $pokemonData) {
+            try {
+                $pokemonDetails = $teamService->fetchPokemonDetails($pokemonData['url']);
+                
+                // Vérifier si le Pokémon existe déjà
+                $existingPokemon = $em->getRepository(Pokemon::class)->findOneBy(['name' => $pokemonDetails['name']]);
+                
+                if (!$existingPokemon) {
+                    $pokemon = new Pokemon();
+                    $pokemon->setName($pokemonDetails['name']);
+                    $pokemon->setSprite($pokemonDetails['sprites']['front_default']);
+                    
+                    // Ajoutez d'autres propriétés si nécessaire
+                    // $pokemon->setType($pokemonDetails['types'][0]['type']['name']);
+                    // $pokemon->setHeight($pokemonDetails['height']);
+                    // $pokemon->setWeight($pokemonDetails['weight']);
+                    
+                    $em->persist($pokemon);
+                    $totalImported++;
+                } else {
+                    $totalSkipped++;
+                }
+            } catch (\Exception $e) {
+                // Log l'erreur ou gérez-la comme vous le souhaitez
+                $this->addFlash('error', 'Erreur lors de l\'importation de ' . $pokemonData['name'] . ': ' . $e->getMessage());
+            }
+        }
+
+        $em->flush();
+        $em->clear(); // Libère la mémoire
+
+        $offset += $limit;
+    } while ($data['next'] !== null);
+
+    $message = sprintf(
+        'Importation terminée. %d Pokémon importés, %d Pokémon ignorés (déjà existants).',
+        $totalImported,
+        $totalSkipped
+    );
+
+    return new JsonResponse(['message' => $message]);
+}
+
 }

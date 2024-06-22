@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Team;
 use App\Form\TeamType;
-use GuzzleHttp\Client;
+use App\Entity\Pokemon;
+use App\Service\TeamService;
 use App\Repository\TeamRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,63 +17,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
-//     private $httpClient;
-
-//  public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager, TeamRepository $teamRepository)
-//     {
-//         $this->httpClient = $httpClient;
-//         // $this->entityManager = $entityManager;
-//         // $this->teamRepository = $teamRepository;
-//     }
-public function __construct(private RequestStack $requestStack)
-{
-}
+    public function __construct(private RequestStack $requestStack)
+    {
+    }
 
     #[Route('/pokemon', name: 'app_pokemon')]
     public function index(HttpClientInterface $httpClient): Response
     {
+        $response = $httpClient->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
 
-        $client = new Client();
-        $response = $client->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
-
-        $content = $response->getBody()->getContents();
+        $content = $response->getContent();
         $responseArray = json_decode($content, true);
-        // J'ai utilisé la fonction array_column() pour extraire les URLs des pokémons depuis le tableau $responseArray['results'].
-        // J'ai créé une boucle foreach pour parcourir les URLs des pokémons.
-        // Pour chaque URL, j'ai fait une nouvelle requête à l'API pour récupérer les données détaillées du pokémon.
-        // J'ai créé un tableau associatif $pokemons contenant le nom et le sprite de chaque pokémon.
 
-        // J'utilise array_column
         $pokemonUrls = array_column($responseArray['results'], 'url');
-        // je crée une boucle foreach pour parcourir les urls
         $pokemons = [];
         foreach ($pokemonUrls as $url) {
-            $pokemonResponse = $client->request('GET', $url);
-            $pokemonData = json_decode($pokemonResponse->getBody()->getContents(), true);
+            $pokemonResponse = $httpClient->request('GET', $url);
+            $pokemonData = json_decode($pokemonResponse->getContent(), true);
             $pokemons[] = [
                 'name' => $pokemonData['name'],
                 'sprite' => $pokemonData['sprites']['front_default'],
+                'id' => basename(rtrim($url, '/')), // Extraire l'ID de l'URL
             ];
         }
-        usort($pokemons, function($a, $b) {
+
+        usort($pokemons, function ($a, $b) {
             return strcasecmp($a['name'], $b['name']);
         });
 
         return $this->render('team/index.html.twig', [
-            'pokemons' => $pokemons
+            'pokemons' => $pokemons,
         ]);
     }
 
-
     #[Route('/team/{id}', name: 'app_team_show')]
-    public function showCart(int $id, TeamRepository $teamRepository): Response
+    public function showTeam(int $id, TeamRepository $teamRepository): Response
     {
+        $team = $teamRepository->find($id);
 
         if (!$team) {
             throw $this->createNotFoundException('Team not found');
         }
 
-        return $this->render('team/index.html.twig', [
+        return $this->render('team/show.html.twig', [
             'team' => $team,
         ]);
     }
@@ -81,63 +67,86 @@ public function __construct(private RequestStack $requestStack)
     #[Route('/team/add', name: 'app_team_add')]
     public function addTeam(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
+        $user = $this->getUser();
+
+        if (!$user) {
+            $this->addFlash('error', 'Vous devez être connecté pour créer une équipe.');
+            return $this->redirectToRoute('app_login');
+        }
+
         $team = new Team();
-    
+        $team->setDresseur($user);
+
         $form = $this->createForm(TeamType::class, $team);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($team);
             $entityManager->flush();
-    
-            // Stocker l'identifiant de l'équipe dans la session
-            $session->set('id', $team->getId());
-    
+
+            $session->set('team_id', $team->getId());
+
+            $this->addFlash('success', 'Équipe créée avec succès.');
             return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
         }
-    
-        return $this->render('team/index.html.twig', [
-            'form' => $form->createView(),
+
+        return $this->render('team/add.html.twig', [
+            'form' => $form->createView()
         ]);
     }
-    
-    #[Route('/team/add-pokemon', name: 'app_team_add_pokemon', methods: ['POST'])]
-    public function addPokemonToTeam(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository, SessionInterface $session, ?int $id): Response
+
+    #[Route("/add-to-team/{id}", name: "add_to_team", methods: ["GET"])]
+    public function addToTeam(int $id, Request $request, TeamService $teamService, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
-        $pokemonSprite = $request->request->get('pokemon');
-     
+        $sprite = $request->query->get('sprite');
     
-        // Récupérer l'identifiant de l'équipe depuis la session
-        $id = $session->get('team_id');
-        if (!$team_id) {
-            addTeam($id);
+        // Récupérer l'ID de l'équipe depuis la session
+        $teamId = $session->get('team_id');
+        
+        // Vérifier si une équipe existe
+        if (!$teamId) {
+            $this->addFlash('error', 'Aucune équipe sélectionnée. Veuillez d\'abord créer une équipe.');
+            return $this->redirectToRoute('app_team_add');
         }
-        // Récupérer l'équipe à partir de l'identifiant
-    $team = $teamRepository->find($id);
-
-    if (!$team) {
-        throw $this->createNotFoundException('Team not found');
-    }
+        
+        // Récupérer l'équipe existante
+        $team = $entityManager->getRepository(Team::class)->find($teamId);
+        
+        if (!$team) {
+            $this->addFlash('error', 'Équipe non trouvée.');
+            return $this->redirectToRoute('app_team_add');
+        }
+        
+        // Construire l'URL complète du Pokémon
+        $url = "https://pokeapi.co/api/v2/pokemon/{$id}/";
+        
+        // Récupérer les détails du Pokémon depuis l'API
+        $pokemonDetails = $teamService->fetchPokemonDetails($url);
+        
+        // Vérifier si l'équipe a déjà 6 Pokémons
+        if (count($team->getPokemons()) >= 6) {
+            $this->addFlash('error', 'L\'équipe est déjà complète (6 Pokémons maximum).');
+            return $this->redirectToRoute('app_pokemon');
+        }
+        
+        // Créer un nouvel objet Pokemon et l'ajouter à l'équipe
+        $pokemon = new Pokemon();
+        $pokemon->setName($pokemonDetails['name']);
+        $pokemon->setApiId($pokemonDetails['id']);
+        $pokemon->setSprite($sprite); // Utilisez le sprite passé en paramètre
+        $pokemon->setDescription($pokemonDetails['description'] ?? ''); 
+        $pokemon->setLevel($pokemonDetails['level'] ?? '1'); 
+        $pokemon->setTeam($team); // N'oubliez pas d'associer le Pokémon à l'équipe
     
-        // Logique pour ajouter le pokémon à l'équipe
-        $team->addPokemon($pokemonSprite);
-        $entityManager->persist($team);
+        $team->addPokemon($pokemon); // Ajoutez le Pokémon à l'équipe
+        $pokemon->setTeam($team);
+    
+        $entityManager->persist($pokemon);
         $entityManager->flush();
-    
-        return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
+        
+        $this->addFlash('success', $pokemonDetails['name'] . ' a été ajouté à votre équipe !');
+        
+        return $this->redirectToRoute('app_pokemon');
     }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -1,36 +1,42 @@
+{# templates/team/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block body %}
-
-    <h1>Les icones</h1>
-
-    <ul>
-        {% for pokemon in pokemons %}
-            <li>
-            <form action="{{ path('app_team_add_pokemon') }}" method="post">
-                <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
-                {{ pokemon.name }}
-                
-    <input type="hidden" name="pokemon" value="{{ pokemon.sprite }}">
-    <button type="submit">Ajouter à l'équipe</button>
-</form>
-            </li>   
-        {% endfor %}
-    </ul>
-
-     {# <h1>Votre équipe de Pokémons</h1>
-
-    {% if team is empty %}
-        <p>Votre équipe est vide pour le moment.</p>
-    {% else %}
-        <ul>
-            {% for pokemon in team %}
-                <li>
-                    <h2>{{ pokemon.name }}</h2>
-                    <img src="{{ pokemon.sprites.front_default }}" alt="{{ pokemon.name }}">
-                 
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %} #}
+{% block title %}Liste des Pokémon
 {% endblock %}
+
+{% block body %}
+	<h1>Liste des Pokémon</h1>
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	{# {% if form is defined %}
+		        <h2>Créer une nouvelle équipe</h2>
+		        {{ form_start(form) }}
+		        {{ form_widget(form) }}
+		        <button type="submit" class="btn btn-primary">Créer l'équipe</button>
+		        {{ form_end(form) }}
+		    {% endif %} #}
+
+	<div class="pokemon-grid">
+		{% for pokemon in pokemons %}
+			<div class="pokemon-card">
+				<img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}" class="pokemon-sprite">
+				<h3>{{ pokemon.name|capitalize }}</h3>
+				<a href="{{ path('add_to_team', {'id': pokemon.id}) }}?sprite={{ pokemon.sprite|url_encode }}" class="btn btn-primary">Ajouter à la liste de Sacha</a>
+
+			</div>
+		{% endfor %}
+	</ul>
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+	{# on n'oublie pas ! #}
+</body></html>{% endblock %}
