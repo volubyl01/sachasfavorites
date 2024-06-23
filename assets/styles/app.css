@@ -1,12 +1,11 @@
-body {
-    background-color: lightgray;
-}
-/* public/img/BackgroundFonts.css*  */
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+/* body {
+    background-color: rgb(255, 255, 255);
+} */
+
 * {
 	font-family: "Farro";
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
 .navbar {
 	border-bottom: none !important;
@@ -14,7 +13,7 @@ body {
 
 
 body.home {
-	background-image: url("../img/Background_pokemon_good.png");
+	background-image: url("../images/Background_pokemon_good.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -22,7 +21,7 @@ body.home {
 }
 
 body.liste-pokemons {
-	background-image: url("../img/pokemmo-pngrepo-com.png");
+	background-image: url("../images/pokemmo-pngrepo-com.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -31,10 +30,48 @@ body.liste-pokemons {
 }
 
 body.new-pokemon {
-	background-image: url("../img/pokeball-pokemon-pngrepo-com.png") ;
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
+
+body.home {
+	background-image: url("../images/Background_pokemon_good.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.liste-pokemons {
+	background-image: url("../images/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+body.liste-energies {
+	background-image: url("../images/ciel_etoile.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.new-pokemon {
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+body.new-element {
+	background-image: url("../images/AdobeStock_585885970.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
 .bg-accueil {
 	background-color: #ed1b24;
 	opacity: 0.8;
@@ -74,15 +111,64 @@ body.new-pokemon {
 .ajouter {
 	background-image: var(--bs-gradient);
 }
-.charactersElectric {
-	background-image:url("../uploads/Image/electricity.jpg") ;
-	background-size: cover ;
-	background-repeat: no-repeat;
-	opacity:1.5;
+
+.offcanvas {
+    position: fixed;
+    top: 0;
+    right: -300px; 
+	/* // Changé de left à right pour l'ouvrir depuis la droite */
+    width: 300px;
+    height: 100%;
+    background-color: #f1f1f1;
+    transition: 0.3s;
+    z-index: 1000;
 }
-.charactersFire {
-    background-image:url("../uploads/Image/feu.webp");
-	background-size: cover ;
-	background-repeat: no-repeat;
-	opacity:1.5;
+
+.offcanvas.active {
+    right: 0; 
+	/* // Changé de left à right */
+}
+
+.offcanvas-header {
+    padding: 20px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.offcanvas-content {
+    padding: 20px;
+}
+
+#closeOffcanvas {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.offcanvas-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.offcanvas-overlay.active {
+    display: block;
+}
+
+#openOffcanvas {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
 }

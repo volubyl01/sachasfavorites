@@ -17,7 +17,7 @@ class Element
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $specificite = null;
+    private ?string $specificite=null;
 
     #[ORM\Column(nullable: true)]
     private ?int $level = null;

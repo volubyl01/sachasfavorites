@@ -6,3 +6,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Modifier le contenu textuel de l'élément
     titleElement.textContent = 'Nouveau titre';
 });
+

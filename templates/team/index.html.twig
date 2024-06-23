@@ -2,41 +2,33 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Pokémon
-{% endblock %}
+{% block title %}Liste des Pokémon{% endblock %}
 
 {% block body %}
-	<h1>Liste des Pokémon</h1>
+    <h1>Liste des Pokémon</h1>
 
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-	{# {% if form is defined %}
-		        <h2>Créer une nouvelle équipe</h2>
-		        {{ form_start(form) }}
-		        {{ form_widget(form) }}
-		        <button type="submit" class="btn btn-primary">Créer l'équipe</button>
-		        {{ form_end(form) }}
-		    {% endif %} #}
-
-	<div class="pokemon-grid">
-		{% for pokemon in pokemons %}
-			<div class="pokemon-card">
-				<img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}" class="pokemon-sprite">
-				<h3>{{ pokemon.name|capitalize }}</h3>
-				<a href="{{ path('add_to_team', {'id': pokemon.id}) }}?sprite={{ pokemon.sprite|url_encode }}" class="btn btn-primary">Ajouter à la liste de Sacha</a>
-
-			</div>
-		{% endfor %}
-	</ul>
-
-	{% for message in app.flashes('success') %}
-		<div class="alert alert-success">
-			{{ message }}
-		</div>
-	{% endfor %}
-	{# on n'oublie pas ! #}
-</body></html>{% endblock %}
+    <div class="pokemon-grid">
+        {% for pokemon in pokemons %}
+            <div class="pokemon-card">
+                <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}" class="pokemon-sprite">
+                <h3>{{ pokemon.name|capitalize }}</h3>
+                <form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post">
+                    <input type="hidden" name="name" value="{{ pokemon.name }}">
+                    <input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
+                    <button type="submit" class="btn btn-primary">Ajouter à l'équipe</button>
+                </form>
+                <button type="button" class="btn btn-outline-warning text-yellow">
+                    <a class="nodecoration text-dark" href="{{ path('app_team_add') }}">
+                        Ajouter une équipe
+                    </a>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
