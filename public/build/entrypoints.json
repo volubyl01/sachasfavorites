@@ -30,12 +30,6 @@
         "/build/runtime.js",
         "/build/test-audio.js"
       ]
-    },
-    "offcanvas": {
-      "js": [
-        "/build/runtime.js",
-        "/build/offcanvas.js"
-      ]
     }
   }
 }

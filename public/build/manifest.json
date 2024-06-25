@@ -4,7 +4,6 @@
   "build/bootstrap.js": "/build/bootstrap.js",
   "build/test.js": "/build/test.js",
   "build/test-audio.js": "/build/test-audio.js",
-  "build/offcanvas.js": "/build/offcanvas.js",
   "build/runtime.js": "/build/runtime.js",
   "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-da594f.js": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-da594f.js",
   "build/vendors-node_modules_bootstrap_dist_css_bootstrap_min_css-node_modules_core-js_modules_es_obj-107731.css": "/build/vendors-node_modules_bootstrap_dist_css_bootstrap_min_css-node_modules_core-js_modules_es_obj-107731.css",

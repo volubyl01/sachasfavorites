@@ -21,7 +21,6 @@
 		class="{{ bodyClass|default('') }}">
 		{# Nav - Body - Footer #}
 		{% include "partials/_nav.html.twig" %}
-
 		{% for label, messages in app.flashes %}
 			<div class="alert alert-{{ label }}">
 				{% for message in messages %}
@@ -40,7 +39,7 @@
 			{{ encore_entry_script_tags('app') }}
 			{{ encore_entry_script_tags('test') }}
 			{{ encore_entry_script_tags('test-audio') }}
-			{{ encore_entry_script_tags('offcanvas') }}
+			{# {{ encore_entry_script_tags('offcanvas') }} #}
 		{% endblock %}
 	</body>
 </html>

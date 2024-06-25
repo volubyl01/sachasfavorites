@@ -42,6 +42,7 @@
 					</div>
 					 {{ form_end(form) }}
 				</div>
+				{# fin colonne de recherche #}
 			</div>
 		</div>
 
@@ -51,7 +52,6 @@
 				{% for pokemon in pokemons %}
 					<tr
 						class="" scope="row">
-						{# illustration #}
 						<td class="w-lg-25 w-md-25 text-center align-middle">
 
 							<img class="my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:200px'>
@@ -105,7 +105,8 @@
 					</tr>
 				</td>
 			</tbody>
-		</tr>
+		</table>
+		
 	{% else %}
 		<tr>
 			<td class="bg-black text-light">Ce Pokemon n'est pas encore dans la Team !</td>

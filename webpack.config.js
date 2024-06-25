@@ -44,7 +44,7 @@ Encore.enableVueLoader() // Activer le chargeur Vue
 	.addEntry("bootstrap", "./assets/bootstrap.js")
 	.addEntry("test", "./assets/js/test.js")
 	.addEntry("test-audio", "./assets/js/test-audio.js")
-	.addEntry('offcanvas', './assets/js/offcanvas.js')
+	// .addEntry('offcanvas', './assets/js/offcanvas.js')
 	// .addEntry("main", "./assets/main.js")
 
 	// When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
