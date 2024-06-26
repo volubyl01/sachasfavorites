@@ -1,0 +1,40 @@
+{# templates/api/results.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de l'API{% endblock %}
+
+{% block body %}
+    <h1>Résultats de l'API</h1>
+    
+    {% if pokemons is defined and pokemons|length > 0 %}
+        <p>Nombre total de résultats : {{ data.count|default('N/A') }}</p>
+        
+        <ul>
+        {% for pokemon in pokemons %}
+            <li>
+                <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
+                {{ pokemon.name }}
+            </li>
+        {% endfor %}
+        </ul>
+        
+        {% if data is defined %}
+          <div class="pagination">
+    <a href="{{ path('api_results', {'page': data.currentPage - 1}) }}" 
+       class="{{ data.currentPage <= 1 ? 'disabled' : '' }}">
+        Précédent
+    </a>
+    
+    Page {{ data.currentPage|default(1) }} sur {{ data.totalPages|default(1) }}
+    
+    <a href="{{ path('api_results', {'page': data.currentPage + 1}) }}" 
+       class="{{ data.currentPage >= data.totalPages ? 'disabled' : '' }}">
+        Suivant
+    </a>
+</div>
+        {% endif %}
+    {% else %}
+        <p>Aucune donnée disponible.</p>
+    {% endif %}
+{% endblock %}
+

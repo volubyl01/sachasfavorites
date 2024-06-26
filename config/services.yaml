@@ -45,8 +45,8 @@ services:
 #         tags:
 #             - { name: 'api_platform.data_persister', priority: 10 } # Enregistrer comme un data persister
 # Déclaration de l'API REST - en cours
-    App\Service\TeamService:
-        arguments: [ '$httpClient' ]
+    # App\Service\TeamService:
+    #     arguments: [ '$httpClient' ]
        
     # Définition du service HttpClientInterface
     http_client:

@@ -15,10 +15,10 @@ class Pokemon
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique:true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -30,6 +30,16 @@ class Pokemon
     #[ORM\ManyToOne(targetEntity: Element::class, inversedBy: 'pokemons')]
     #[ORM\JoinColumn(name: 'element_id', referencedColumnName: 'id')]
     private ?Element $element = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sprite = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $apiId = null;
+
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'pokemons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Team $team = null;
 
     public function getId(): ?int
     {
@@ -92,6 +102,42 @@ class Pokemon
     public function setElement(?Element $element): static
     {
         $this->element = $element;
+
+        return $this;
+    }
+
+    public function getSprite(): ?string
+    {
+        return $this->sprite;
+    }
+
+    public function setSprite(?string $sprite): static
+    {
+        $this->sprite = $sprite;
+
+        return $this;
+    }
+
+    public function getApiId(): ?int
+    {
+        return $this->apiId;
+    }
+
+    public function setApiId(?int $apiId): static
+    {
+        $this->apiId = $apiId;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
 
         return $this;
     }

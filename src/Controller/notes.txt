@@ -1,0 +1,148 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Team;
+use App\Form\TeamType;
+use GuzzleHttp\Client;
+use App\Repository\TeamRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+class TeamController extends AbstractController
+{
+    public function __construct(private RequestStack $requestStack)
+    {
+    }
+
+    #[Route('/pokemon', name: 'app_pokemon')]
+    public function index(HttpClientInterface $httpClient): Response
+    {
+   {
+        $client = new Client();
+        $response = $client->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
+
+        $content = $response->getBody()->getContents();
+        $responseArray = json_decode($content, true);
+
+        $pokemonUrls = array_column($responseArray['results'], 'url');
+        $pokemons = [];
+        foreach ($pokemonUrls as $url) {
+            $pokemonResponse = $client->request('GET', $url);
+            $pokemonData = json_decode($pokemonResponse->getBody()->getContents(), true);
+            $pokemons[] = [
+                'name' => $pokemonData['name'],
+                'sprite' => $pokemonData['sprites']['front_default'],
+            ];
+        }
+
+        usort($pokemons, function($a, $b) {
+            return strcasecmp($a['name'], $b['name']);
+        });
+
+        return $this->render('team/index.html.twig', [
+            'pokemons' => $pokemons,
+        ]);
+    }
+    }
+
+    #[Route('/team/{id}', name: 'app_team_show')]
+    public function showTeam(int $id, TeamRepository $teamRepository): Response
+    {
+        $team = $teamRepository->find($id);
+
+        if (!$team) {
+            throw $this->createNotFoundException('Team not found');
+        }
+
+        return $this->render('team/show.html.twig', [
+            'team' => $team,
+        ]);
+    }
+
+    #[Route('/team/add', name: 'app_team_add')]
+    public function addTeam(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
+    {
+        $team = new Team();
+        
+        $form = $this->createForm(TeamType::class, $team);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($team);
+            $entityManager->flush();
+    
+            // Stocker l'identifiant de l'équipe dans la session
+            $session->set('team_id', $team->getId());
+    
+            $this->addFlash('success', 'Équipe créée avec succès.');
+            return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
+        }
+    
+        return $this->render('team/add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+    
+    #[Route('/team/add-pokemon', name: 'app_team_add_pokemon', methods: ['POST'])]
+    public function addPokemonToTeam(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository): Response
+    {
+        $pokemonSprite = $request->request->get('pokemon');
+        
+        $teamId = $this->requestStack->getSession()->get('team_id');
+        if (!$teamId) {
+            return $this->redirectToRoute('app_team_add');
+        }
+    
+        $team = $teamRepository->find($teamId);
+    
+        if (!$team) {
+            throw $this->createNotFoundException('Team not found');
+        }
+    
+        if (!in_array($pokemonSprite, $team->getPokemons())) {
+            $team->addPokemon($pokemonSprite);
+            $entityManager->flush();
+            $this->addFlash('success', 'Pokémon ajouté à l\'équipe avec succès.');
+        } else {
+            $this->addFlash('warning', 'Ce Pokémon est déjà dans l\'équipe.');
+        }
+    
+        return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
+    }
+
+    #[Route('/team/remove-pokemon', name: 'app_team_remove_pokemon', methods: ['POST'])]
+    public function removePokemonFromTeam(Request $request, EntityManagerInterface $entityManager, TeamRepository $teamRepository): Response
+    {
+        $pokemonSprite = $request->request->get('pokemon');
+        
+        $teamId = $this->requestStack->getSession()->get('team_id');
+        if (!$teamId) {
+            $this->addFlash('error', 'Aucune équipe sélectionnée.');
+            return $this->redirectToRoute('app_team_add');
+        }
+    
+        $team = $teamRepository->find($teamId);
+    
+        if (!$team) {
+            throw $this->createNotFoundException('Équipe non trouvée');
+        }
+    
+        $pokemons = $team->getPokemons();
+        if (in_array($pokemonSprite, $pokemons)) {
+            $team->removePokemon($pokemonSprite);
+            $entityManager->flush();
+            $this->addFlash('success', 'Pokémon retiré de l\'équipe avec succès.');
+        } else {
+            $this->addFlash('warning', 'Ce Pokémon n\'est pas dans l\'équipe.');
+        }
+    
+        return $this->redirectToRoute('app_team_show', ['id' => $team->getId()]);
+    }
+}

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\DresseurRepository;
@@ -34,6 +36,23 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    /**
+     * @var Collection<int, Team>
+     */
+    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'dresseurName')]
+    private Collection $teams;
+
+    public function __construct()
+    {
+        $this->teams = new ArrayCollection();
+    }
+    // dresseur est un objet
+    public function __toString(): string
+    {
+        return $this->username; // ou tout autre champ que vous voulez utiliser pour représenter le Dresseur
+    }
+
 
     public function getId(): ?int
     {
@@ -109,6 +128,36 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Team>
+     */
+    public function getTeams(): Collection
+    {
+        return $this->teams;
+    }
+
+    public function addTeam(Team $team): static
+    {
+        if (!$this->teams->contains($team)) {
+            $this->teams->add($team);
+            $team->setDresseur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTeam(Team $team): static
+    {
+        if ($this->teams->removeElement($team)) {
+            // set the owning side to null (unless already changed)
+            if ($team->getDresseur() === $this) {
+                $team->setDresseur(null);
+            }
+        }
+
+        return $this;
     }
 
  

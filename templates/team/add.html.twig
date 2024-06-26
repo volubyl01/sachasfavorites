@@ -1,0 +1,26 @@
+{# templates/team/add.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une Équipe{% endblock %}
+
+{% block body %}
+    <h1>Créer une Équipe</h1>
+
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-primary">Créer l'équipe</button>
+    {{ form_end(form) }}
+{% endblock %}

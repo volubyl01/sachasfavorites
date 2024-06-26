@@ -1,12 +1,6 @@
-body {
-    background-color: lightgray;
-}
-/* public/img/BackgroundFonts.css*  */
+
 * {
 	font-family: "Farro";
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
 .navbar {
 	border-bottom: none !important;
@@ -14,7 +8,7 @@ body {
 
 
 body.home {
-	background-image: url("../img/Background_pokemon_good.png");
+	background-image: url("../images/Background_pokemon_good.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -22,7 +16,7 @@ body.home {
 }
 
 body.liste-pokemons {
-	background-image: url("../img/pokemmo-pngrepo-com.png");
+	background-image: url("../images/pokemmo-pngrepo-com.png");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
@@ -31,10 +25,48 @@ body.liste-pokemons {
 }
 
 body.new-pokemon {
-	background-image: url("../img/pokeball-pokemon-pngrepo-com.png") ;
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
 	background-repeat: no-repeat;
 	background-size: cover;
 }
+
+
+body.home {
+	background-image: url("../images/Background_pokemon_good.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.liste-pokemons {
+	background-image: url("../images/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+body.liste-energies {
+	background-image: url("../images/ciel_etoile.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.new-pokemon {
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+body.new-element {
+	background-image: url("../images/AdobeStock_585885970.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
 .bg-accueil {
 	background-color: #ed1b24;
 	opacity: 0.8;
@@ -47,6 +79,9 @@ body.new-pokemon {
 }
 .bg-buttonM {
 	background-color: #2774bc;
+}
+.bg-discover {
+	color:#149B4A
 }
 .farro-light {
 	font-family: "Farro", sans-serif;
@@ -74,15 +109,4 @@ body.new-pokemon {
 .ajouter {
 	background-image: var(--bs-gradient);
 }
-.charactersElectric {
-	background-image:url("../uploads/Image/electricity.jpg") ;
-	background-size: cover ;
-	background-repeat: no-repeat;
-	opacity:1.5;
-}
-.charactersFire {
-    background-image:url("../uploads/Image/feu.webp");
-	background-size: cover ;
-	background-repeat: no-repeat;
-	opacity:1.5;
-}
+

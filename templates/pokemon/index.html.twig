@@ -19,7 +19,7 @@
 				<div class=" bg-intro col-lg-7 col-md-5 col-sm-5 text-center pt-4 p-2 border rounded-3 h-50 ">
 					<p class=" text-primary ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo adipisci fuga nulla asperiores aperiam? Eius libero natus veritatis ratione! Rem, nulla dolore! Iusto ab adipisci minima quia impedit, rem minus.Sunt aperiam ea aliquam commodi illo neque natus ex incidunt vitae magnam labore, in nam alias a, nobis exercitationem nisi repellat dignissimos. Voluptas doloribus atque sint modi ea? Saepe, quia.</p>
 					<button type="button" class="btn btn-outline-warning text-yellow">
-						<a class="nodecoration text-dark" href="{{ path('app_liste_index') }}">
+						<a class="nodecoration text-dark" href="{{ path('api_results') }}">
 							Consulter la liste
 						</a>
 					</button>
@@ -30,7 +30,6 @@
 				<div class="col-lg-4 col-md-6 col-sm-4 justify-content-center pt-4 bg-success p-2 border rounded">
 					<div class="fs-5 text-center justify-content-between">
 						{{form_start(form)}}
-
 						{{ form_widget(form) }}
 					</div>
 					<div class="my-3 text-center">
@@ -41,7 +40,9 @@
 							</a>
 						</button>
 					</div>
+					 {{ form_end(form) }}
 				</div>
+				{# fin colonne de recherche #}
 			</div>
 		</div>
 
@@ -51,7 +52,6 @@
 				{% for pokemon in pokemons %}
 					<tr
 						class="" scope="row">
-						{# illustration #}
 						<td class="w-lg-25 w-md-25 text-center align-middle">
 
 							<img class="my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="" style='width:200px'>
@@ -60,13 +60,22 @@
 						<td class="w-lg-25 w-sm-25 align-center bg-image align-middle">
 							<div class="border border-warning align-center text-center p-5 rounded ">
 
-								<div class=" display-5 mx-auto text-primary my-3">{{pokemon.element.specificite}}</div>
-
-								<div class="img-fluid">
-									<img class="rounded-circle" src="{{asset('uploads/image/') ~ pokemon.element.illustration}}" alt="" style='width:13rem;height:13rem'>
-								</div>
-								<div class="display-5 mx-auto my-3 text-primary">{{pokemon.level}}</div>
-							</div>
+								<div class="display-5 mx-auto text-primary my-3">
+                                    {% if pokemon.element %}
+                                        {{ pokemon.element.specificite|default('Pas de spécificité') }}
+                                    {% else %}
+                                        Pas d'élément
+                                    {% endif %}
+                                </div>
+                                <div class="img-fluid">
+                                    {% if pokemon.element and pokemon.element.illustration %}
+                                        <img class="rounded-circle" src="{{ asset('uploads/image/' ~ pokemon.element.illustration) }}" alt="{{ pokemon.element.specificite }}" style='width:13rem;height:13rem'>
+                                    {% else %}
+                                        <div class="rounded-circle bg-secondary" style='width:13rem;height:13rem'></div>
+                                    {% endif %}
+                                </div>
+                                <div class="display-5 mx-auto my-3 text-primary">{{ pokemon.level }}</div>
+                            </div>
 						</td>
 
 						<td class="w-50 align-middle text-center">
@@ -96,7 +105,8 @@
 					</tr>
 				</td>
 			</tbody>
-		</tr>
+		</table>
+		
 	{% else %}
 		<tr>
 			<td class="bg-black text-light">Ce Pokemon n'est pas encore dans la Team !</td>

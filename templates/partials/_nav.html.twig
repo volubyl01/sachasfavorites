@@ -1,7 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-body-transparent navbarMore">
-	<div class="container-fluid">
+
+<nav class="navbar navbar-expand-lg bg-body-transparent">
+	<div class="container-fluid justify-content-center">
 		<a class="navbar-brand" href="/">
-			<img src="{{ asset('img/PW_logo.png') }}" width="120" height="auto" class="d-inline-block align-top" alt="">
+			<img src="{{asset('assets/images/PW_logo.png') }}" width="120" height="auto" class="d-inline-block align-top" alt="">
 		</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -57,7 +58,7 @@
 					{# a rajouter ?? #}
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="nav-item text-center text-danger text-decoration-none">
-							<a class="nav-link fs-3 pt-1 " href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">Rechercher sur YouTube</a>
+							<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}"><h2 class='pt-1'>Rechercher sur YouTube</h2></a>
 						</div>
 					</ul>
 				</div>
@@ -65,3 +66,4 @@
 		{% endif %}
 	</div>
 </nav>
+

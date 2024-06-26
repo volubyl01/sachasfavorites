@@ -56,6 +56,19 @@ class ElementController extends AbstractController
             'element' => $element,
         ]);
     }
+    #[Route('/element/{id}', name: 'app_element_show')]
+    public function showElement(int $id, ElementRepository $elementRepository): Response
+    {
+        $element = $elementRepository->find($id);
+
+        if (!$element) {
+            throw $this->createNotFoundException('Element not found');
+        }
+
+        return $this->render('element/show.html.twig', [
+            'element' => $element,
+        ]);
+    }
 // FONCTION EDITION
     #[Route('/{id}/edit', name: 'app_element_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Element $element, EntityManagerInterface $entityManager): Response
