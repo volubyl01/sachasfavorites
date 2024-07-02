@@ -23,12 +23,11 @@ class Team
 
     #[ORM\OneToMany(targetEntity: Pokemon::class, mappedBy: 'team', cascade: ["persist", "remove"])]
     private Collection $pokemons;
-
+// Construction d'une collection d'objets de Pokemon : répercussion dans la méthode addToTean
     public function __construct()
     {
         $this->pokemons = new ArrayCollection();
     }
-
     /**
      * @return Collection|Pokemon[]
      */

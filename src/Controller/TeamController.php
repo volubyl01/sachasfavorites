@@ -18,11 +18,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
-    public function __construct(private RequestStack $requestStack)
+    public function __construct(
+        private RequestStack $requestStack, 
+        private EntityManagerInterface $entityManager)
     {
+        $this->entityManager = $entityManager;
+    
     }
 
-    #[Route('/pokemon', name: 'app_pokemon')]
+    #[Route('/team', name: 'app_team_index')]
     public function index(HttpClientInterface $httpClient): Response
     {
         $response = $httpClient->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
@@ -148,4 +152,47 @@ class TeamController extends AbstractController
         
         return $this->redirectToRoute('app_pokemon');
     }
+
+    #[Route('/{id}', name: 'app_team_delete', methods: ['POST'])]
+    public function delete(Request $request, Team $team, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $team->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($team);
+            $entityManager->flush();
+            $this->addFlash('success', 'The team has been deleted');
+        }
+
+        return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
+    }
 }
+// ******** A COMPLETER
+    // private function handleTeamForm(Team $team, $form): void
+    // {
+    //     // A compléter
+    // }
+    // #[Route('/{id}/edit', name: 'app_team_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, Team $team): Response
+    // {
+        // $form = $this->createForm(TeamType::class, $team);
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $this->handleTeamForm($team, $form);
+        //     $this->entityManager->flush();
+
+        //     $this->addFlash('success', 'The team has been updated');
+        //     return $this->redirectToRoute('app_team_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+    //   *******A compléter
+
+    //     return $this->render('pokemon/edit.html.twig', [
+    // // A compléter
+    //     ]);
+    // }
+  
+
+
+
+    
+
