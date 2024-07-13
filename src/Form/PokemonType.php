@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Image;
+
 use App\Entity\Element;
 use App\Entity\Pokemon;
 use Symfony\Component\Form\FormBuilder;

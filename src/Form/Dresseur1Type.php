@@ -2,11 +2,13 @@
 
 namespace App\Form;
 
+use App\Entity\Team;
 use App\Entity\Dresseur;
 use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,13 +24,13 @@ class Dresseur1Type extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('roles', ChoiceType::class, [
-                'expanded'=>true,
-                'multiple'=>true,
+                'expanded' => true,
+                'multiple' => true,
 
-                'choices'=> [
-                    'administrateur' =>"ROLE_ADMIN",
-                    'invité'=>"ROLE_GUEST",
-                    'modérateur'=>"ROLE_MODERATEUR"
+                'choices' => [
+                    'administrateur' => "ROLE_ADMIN",
+                    'invité' => "ROLE_GUEST",
+                    'modérateur' => "ROLE_MODERATEUR"
                 ],
             ])
             ->add('password', PasswordType::class, [
@@ -48,8 +50,10 @@ class Dresseur1Type extends AbstractType
                     ]),
                 ],
             ])
-          
-        ;
+            ->add('team', EntityType::class, [
+                'class' => Team :: class,
+                'name' => true
+            ]);   
     }
 
     public function configureOptions(OptionsResolver $resolver): void
