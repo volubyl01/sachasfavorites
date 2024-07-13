@@ -19,7 +19,7 @@
 				<div class=" bg-intro col-lg-7 col-md-5 col-sm-5 text-center pt-4 p-2 border rounded-3 h-50 ">
 					<p class=" text-primary ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo adipisci fuga nulla asperiores aperiam? Eius libero natus veritatis ratione! Rem, nulla dolore! Iusto ab adipisci minima quia impedit, rem minus.Sunt aperiam ea aliquam commodi illo neque natus ex incidunt vitae magnam labore, in nam alias a, nobis exercitationem nisi repellat dignissimos. Voluptas doloribus atque sint modi ea? Saepe, quia.</p>
 					<button type="button" class="btn btn-outline-warning text-yellow">
-						<a class="nodecoration text-dark" href="{{ path('api_results') }}">
+						<a class="nodecoration text-dark" href="{{ path('app_api_results') }}">
 							Consulter la liste
 						</a>
 					</button>
@@ -58,7 +58,9 @@
                 {% for pokemon in pokemons %}
                     <tr class="row">
                         <td class="col-4 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
-                            <img class="img-fluid my-2 inline-block rounded-circle" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+                        <div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
+                            <img class="img-fluid my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+                            </div>
                             <div class="my-2 h3 mx-auto text-primary">{{ pokemon.name }}</div>
                         </td>
                         <td class="col-4 col-md-4 align-center bg-image align-middle mb-3 mb-md-0 ">

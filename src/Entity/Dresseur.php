@@ -40,7 +40,8 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Team>
      */
-    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'dresseurName')]
+    // orphanRemoval: true à la relation OneToMany. Cela signifie que si une Team est retirée de la collection, elle sera également supprimée de la base de données.
+    #[ORM\OneToMany(targetEntity: Team::class, mappedBy: 'dresseur', orphanRemoval: true)]
     private Collection $teams;
 
     public function __construct()
@@ -50,7 +51,7 @@ class Dresseur implements UserInterface, PasswordAuthenticatedUserInterface
     // dresseur est un objet
     public function __toString(): string
     {
-        return $this->username; // ou tout autre champ que vous voulez utiliser pour représenter le Dresseur
+        return $this->username; // ou tout autre champ utilisé pour représenter le Dresseur
     }
 
 

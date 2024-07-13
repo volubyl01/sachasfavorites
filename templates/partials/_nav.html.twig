@@ -20,7 +20,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="{{ path('app_pokemon_index') }}">
+					<a class="nav-link" href="{{ path('app_team_index') }}">
 						<h5 class="fs-3 text-danger">La Team</h5>
 					</a>
 				</li>
@@ -55,15 +55,21 @@
 				</li>
 
 				{% if is_granted('ROLE_USER') %}
-					{# a rajouter ?? #}
-					{% if is_granted('ROLE_ADMIN') %}
-						<div class="nav-item text-center text-danger text-decoration-none">
-							<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}"><h2 class='pt-1'>Rechercher sur YouTube</h2></a>
-						</div>
-					</ul>
-				</div>
-			{% endif %}
-		{% endif %}
+    <div class="nav-item text-center text-danger text-decoration-none">
+        <a class="text-center text-danger text-decoration-none" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
+            <h2 class='pt-1 fs-3'>Mon profil</h2>
+        </a>
+    </div>
+    
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="nav-item text-center text-danger text-decoration-none">
+            <a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
+                <h2 class='pt-1 fs-3'>Rechercher sur YouTube</h2>
+            </a>
+        </div>
+    {% endif %}
+{% endif %}
+
 	</div>
 </nav>
 

@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Team;
 use App\Entity\Dresseur;
 use App\Form\Dresseur1Type;
 use App\Repository\DresseurRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/dresseur')]
 class DresseurController extends AbstractController
@@ -47,6 +48,7 @@ class DresseurController extends AbstractController
     {
         return $this->render('dresseur/show.html.twig', [
             'dresseur' => $dresseur,
+            'teams' => $dresseur->getTeams(),
         ]);
     }
 
