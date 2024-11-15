@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Découvrir
+	{{ pokemon.name }}
+{% endblock %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('app') }}
+	<style>
+		body {
+			background-image: url('{{ asset('uploads/Image/' ~ illustration) }}');
+			background-size: cover;
+			background-position: center;
+			background-attachment: fixed;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="container mx-auto">
+		<div class="row">
+			<div class="col-5 bg-accueil text-light border-success border-4 border rounded-pill mx-auto mb-2">
+				<h1 class="display-5 text-center fw-bolder">Découvrir
+					{{ pokemon.name }}</h1>
+			</div>
+		</div>
+		<div class="row justify-content-between">
+			{# colonne gauche #}
+			<div class="col-md-5 bg-light text-primary text-center my-3 border rounded-4">
+				<h3>Son histoire</h3>
+				<h5>{{ pokemon.description }}</h5>
+				<div class="text-primary">
+					<h3>Son élément</h3>
+					<h2>{{ pokemon.element.specificite ?? 'Non spécifié' }}</h2>
+					<h3>Sa force</h3>
+					<h2>{{ pokemon.level }}</h2>
+				</div>
+				{# bouton vers page Team #}
+				<a href="{{ path('app_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a>
+
+				<button class="btn btn-primary btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+  En savoir plus
+</button>
+			</div>
+
+			{# Colonne droite #}
+			<div class="col-md-5 text-primary text-center my-3">
+				<div class="text-center mb-5">
+					<img src="{{ asset('uploads/Image/' ~ pokemon.image) }}" class="img-fluid" alt="">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Offcanvas #}
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+    </div>
+    <div class="dropdown mt-3">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('bootstrap') }}
+	{# {{ encore_entry_script_tags('offcanvas') }} #}
+{% endblock %}

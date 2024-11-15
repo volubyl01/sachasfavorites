@@ -1,0 +1,89 @@
+{# templates/pokemon/combined_view.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokémon - Résultats API{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .pokemon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .pokemon-card {
+            flex: 0 0 calc(20% - 20px);
+            max-width: calc(20% - 20px);
+            text-align: center;
+        }
+        @media (max-width: 1200px) {
+            .pokemon-card {
+                flex: 0 0 calc(25% - 20px);
+                max-width: calc(25% - 20px);
+            }
+        }
+        @media (max-width: 992px) {
+            .pokemon-card {
+                flex: 0 0 calc(33.333% - 20px);
+                max-width: calc(33.333% - 20px);
+            }
+        }
+        @media (max-width: 768px) {
+            .pokemon-card {
+                flex: 0 0 calc(50% - 20px);
+                max-width: calc(50% - 20px);
+            }
+        }
+        @media (max-width: 576px) {
+            .pokemon-card {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">Résultats de l'API Pokémon</h1>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% if data is defined and data.results is defined %}
+        <div class="container">
+            <div class="pokemon-grid">
+                {% for pokemon in data.results %}
+                    <div class="pokemon-card">
+                        <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
+                        <h3>{{ pokemon.name|capitalize }}</h3>
+                        <form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post">
+                            <input type="hidden" name="name" value="{{ pokemon.name }}">
+                            <input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
+                            <button type="submit" class="btn btn-primary">Ajouter à l'équipe</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {# Pagination #}
+            <div class="pagination d-flex justify-content-center mt-4">
+                {% if data.previous %}
+                    <a href="{{ path('app_api_results', {'page': data.currentPage - 1}) }}" class="btn btn-secondary me-2">Précédent</a>
+                {% endif %}
+                <span class="align-self-center">Page {{ data.currentPage }} sur {{ data.totalPages }}</span>
+                {% if data.next %}
+                    <a href="{{ path('app_api_results', {'page': data.currentPage + 1}) }}" class="btn btn-secondary ms-2">Suivant</a>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <p class="text-center">Aucun résultat disponible.</p>
+    {% endif %}
+{% endblock %}

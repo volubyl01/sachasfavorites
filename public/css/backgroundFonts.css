@@ -1,0 +1,96 @@
+
+* {
+	font-family: "Farro";
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+.navbar {
+	border-bottom: none !important;
+}
+
+
+body.home {
+	background-image: url("../img/Background_pokemon_good.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.liste-pokemons {
+	background-image: url("../img/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+body.liste-energies {
+	background-image: url("../img/ciel_etoile.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.new-pokemon {
+	background-image: url("../img/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+body.new-element {
+	background-image: url("../img/AdobeStock_585885970.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.bg-accueil {
+	background-color: #ed1b24;
+	opacity: 0.8;
+}
+.bg-intro {
+	background-color: #fbe163;
+}
+.txt-edit {
+	color: #fbe163;
+}
+.bg-buttonM {
+	background-color: #2774bc;
+}
+.farro-light {
+	font-family: "Farro", sans-serif;
+	font-weight: 300;
+	font-style: normal;
+}
+
+.farro-regular {
+	font-family: "Farro", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.farro-medium {
+	font-family: "Farro", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.farro-bold {
+	font-family: "Farro", sans-serif;
+	font-weight: 700;
+	font-style: normal;
+}
+.ajouter {
+	background-image: var(--bs-gradient);
+}
+.charactersElectric {
+    background-image:url("../uploads/Image/electricity.jpg") ;
+	background-repeat: no-repeat;
+	opacity:1.5;
+}
+.charactersFire {
+    background-image:url("../uploads/Image/feu.webp");
+	background-size: cover ;
+	background-repeat: no-repeat;
+	opacity:1.5;
+}

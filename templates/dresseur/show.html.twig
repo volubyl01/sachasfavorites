@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ dresseur.username }}{% endblock %}
+
+{% block body %}
+    <h1>Dresseur</h1>
+
+    <table class="table">
+        <tbody>
+           
+
+      <h1>{{ dresseur.username }}</h1>
+   
+                <h6>Id</h6>
+                <h6>{{ dresseur.id }}</h6>
+            </tr>
+
+    <h2>Les équipes de {{ dresseur.username }}</h2>
+    <ul>
+        {% for team in teams %}
+            <li>{{ team.name }}</li> {# ou tout autre champ de l'entité Team #}
+        {% else %}
+            <li>Aucune équipe trouvée.</li>
+        {% endfor %}
+    </ul>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dresseur_index') }}">back to list</a>
+
+    <a href="{{ path('app_dresseur_edit', {'id': dresseur.id}) }}">edit</a>
+
+    {{ include('dresseur/_delete_form.html.twig') }}
+{% endblock %}

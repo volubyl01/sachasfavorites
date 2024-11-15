@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}Sacha's favorites
+			{% endblock %}
+		</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700" rel="stylesheet">
+
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+	</head>
+
+	<body
+		class="{{ bodyClass|default('') }}">
+		{# Nav - Body - Footer #}
+		{% include "partials/_nav.html.twig" %}
+		{% for label, messages in app.flashes %}
+			<div class="alert alert-{{ label }}">
+				{% for message in messages %}
+					<p>{{ message }}</p>
+				{% endfor %}
+			</div>
+		{% endfor %}
+
+		{% block body %}{% endblock %}
+
+		{% include "partials/_footer.html.twig" %}
+
+		{# on inclue les scripts js avec encore#}
+		{% block javascripts %}
+			{{ encore_entry_script_tags('bootstrap') }}
+			{{ encore_entry_script_tags('app') }}
+			{{ encore_entry_script_tags('test') }}
+			{{ encore_entry_script_tags('test-audio') }}
+			{# {{ encore_entry_script_tags('offcanvas') }} #}
+		{% endblock %}
+	</body>
+</html>

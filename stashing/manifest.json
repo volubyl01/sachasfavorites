@@ -1,0 +1,9 @@
+{
+  "build/app.js": "/build/app.js",
+  "build/bootstrap.js": "/build/bootstrap.js",
+  "build/test.js": "/build/test.js",
+  "build/test-audio.js": "/build/test-audio.js",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js.js": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js.js",
+  "build/vendors-node_modules_core-js_modules_es_object_to-string_js-node_modules_core-js_modules_es_p-2a1352.js": "/build/vendors-node_modules_core-js_modules_es_object_to-string_js-node_modules_core-js_modules_es_p-2a1352.js"
+}

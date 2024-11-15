@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sacha's Favorites
+{% endblock %}
+
+{% block body %}
+	<main role="main" class="text-center ">
+		<div class="col-sm-4 col-md-4 col-lg-4 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto p-3">
+			<h1 class="display-5 fw-bold  mx-auto text-nowrap  ">Sacha's Favorites</h1>
+		</div>
+		<div classe="container text-center mt-5">
+			<div class="row justify-content-center d-flex flex-column">
+				<div class="col-5 text-white fw-bolder  rounded mx-auto">
+					<h2 class="bg-light opacity-50 text-primary border-0 rounded" id="title">Mes Pokemons favoris  dans le Monde</h2>
+				</div>
+
+			</div>
+
+			<div class="col-5  bg-discover mx-auto">
+				<a class="btn btn-success text-center text-white rounded-5 mx-auto" href="{{path('app_pokemon_index')}}">
+					<h2 class="pt-2">Découvrir !</h2>
+					{# <div data-controller="hello"></div> voir fichier par defaut hello_controller.js#} 
+				</a>
+			</div>
+			<div>
+			<iframe width="80%" height="188" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https://soundcloud.com/richarddjames/blackbox-life-recorder-22?si=3d934b5744464e7abb6aaf9bfad177b1&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&download=true"></iframe>
+			</div>
+
+		</main>
+	{% endblock %}
+
+	{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}

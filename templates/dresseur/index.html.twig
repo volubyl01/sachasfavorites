@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dresseur index{% endblock %}
+
+{% block body %}
+    <h1>Dresseur index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Password</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for dresseur in dresseurs %}
+            <tr>
+                <td>{{ dresseur.id }}</td>
+                <td>{{ dresseur.username }}</td>
+                <td>{{ dresseur.roles ? dresseur.roles|json_encode : '' }}</td>
+                <td>{{ dresseur.password }}</td>
+                <td>
+                    <a href="{{ path('app_dresseur_show', {'id': dresseur.id}) }}">show</a>
+                    <a href="{{ path('app_dresseur_edit', {'id': dresseur.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dresseur_new') }}">Create new</a>
+{% endblock %}

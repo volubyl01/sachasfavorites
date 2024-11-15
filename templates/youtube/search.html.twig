@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{# Les styles #}
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.video-grid {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 20px;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+		.video-card {
+			flex: 0 0 calc(20% - 20px);
+			max-width: calc(20% - 20px);
+			text-align: center;
+		}
+		@media(max-width: 1200px) {
+			.video-card {
+				flex: 0 0 calc(25% - 20px);
+				max-width: calc(25% - 20px);
+			}
+		}
+		@media(max-width: 992px) {
+			.video-card {
+				flex: 0 0 calc(33.333% - 20px);
+				max-width: calc(33.333% - 20px);
+			}
+		}
+		@media(max-width: 768px) {
+			.video-card {
+				flex: 0 0 calc(50% - 20px);
+				max-width: calc(50% - 20px);
+			}
+		}
+		@media(max-width: 576px) {
+			.video-card {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
+		}
+	</style>
+{% endblock %}
+{% block body %}
+<div class="container mx-auto">
+	<h1>Recherche sur YouTube</h1>
+
+	{{ form_start(form) }}
+	{{form_widget(form)}}
+	<button type="submit" class="btn btn-primary">
+		Rechercher</button>
+	{{ form_end(form) }}
+</div>
+	{% if videos is defined and videos|length > 0 %}
+		<h2>Résultats de la recherche pour "{{ form.query.vars.value }}"</h2>
+
+		<ul>
+			<div class="container">
+				<div class="video-grid">
+					{% for video in videos %}
+						<div class="video-card">
+							<div class="rounded-circle">
+								<a href="https://www.youtube.com/watch?v={{ video.id }}" target="_blank">
+									<img src="{{ video.thumbnailUrl }}" alt="{{ video.title }}" class="rounded-circle">
+									<h3>{{ video.title }}</h3>
+									<p>{{ video.description }}</p>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</ul>
+		{% elseif form.query.vars.value is defined %}
+			<p>Aucun résultat trouvé pour "{{ form.query.vars.value }}"</p>
+		{% endif %}
+	</div>
+{% endblock %}

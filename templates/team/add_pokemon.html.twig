@@ -1,0 +1,17 @@
+{# templates/team/add_pokemon.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Pokémon{% endblock %}
+
+{% block body %}
+    <h1>Ajouter {{ pokemonName }} à l'équipe</h1>
+    <div class="pokemon-details">
+        <img src="{{ pokemonSprite }}" alt="{{ pokemonName }}">
+        <p>Voulez-vous vraiment ajouter {{ pokemonName }} à votre équipe ?</p>
+        <form method="post" action="{{ path('app_team_add_pokemon', { name: pokemonName, sprite: pokemonSprite }) }}">
+            <button type="submit" class="btn btn-success">Confirmer</button>
+            <a href="{{ path('app_pokemon') }}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+{% endblock %}
+

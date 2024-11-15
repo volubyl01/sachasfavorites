@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Element
+{% endblock %}
+
+{% block body %}
+	<body style="background-image: url('{{ asset('uploads/Image/' ~ element.illustration) }}'); background-size: 150%; background-position: center;">
+		<div class="container">
+			<div class="col-3 bg-accueil text-light  border-success border-4 border rounded-pill mx-auto mb-2">
+				<h1 class="display-5 text-center fw-bolder">{{ element.specificite }}
+				</div>
+				<div class="text-center">
+					<a href="{{ path('app_element_index') }}">back to list</a>
+
+					<a href="{{ path('app_element_edit', {'id': element.id}) }}">edit</a>
+
+					{{ include('element/_delete_form.html.twig') }}
+				</div>
+			</div>
+		</div>
+	</body>
+{% endblock %}

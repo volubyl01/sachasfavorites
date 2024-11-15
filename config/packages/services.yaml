@@ -1,0 +1,20 @@
+# services:
+#     Symfony\Component\HttpClient\HttpClient: ~
+
+#     App\Controller\API\ApiService:
+#         arguments:
+#             $httpClient: '@Symfony\Contracts\HttpClient\HttpClientInterface'
+
+# config/services.yaml
+# services:
+#     # implémentation du service datapersister :
+#     api_platform.data_persister:
+#         alias: 'api_platform.doctrine.orm.data_persister'
+#         public: false
+
+#     # implémentation du service de datapersister
+#     App\DataPersister\PokemonFeuDataPersister:
+#         arguments:
+#             $decorated: '@api_platform.data_persister' # Injecter le service data persister chaîné
+#         tags:
+#             - { name: 'api_platform.data_persister', priority: 10 } # Enregistrer comme un data persister

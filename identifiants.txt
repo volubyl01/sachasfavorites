@@ -1,0 +1,67 @@
+ROLE admin : Cécile
+Password : ouibiensur
+
+***********************************************************************
+Pour obtenir une clé API pour l'API YouTube, voici les étapes à suivre:
+
+1. Allez sur la console Google Cloud à l'adresse https://console.cloud.google.com/
+
+2. Créez un nouveau projet ou sélectionnez un projet existant.
+
+3. Dans le menu de gauche, allez dans "API et services" > "Bibliothèque".
+
+4. Recherchez "YouTube Data API v3" et cliquez sur "Activer".[1][4][5]
+
+5. Une fois l'API activée, allez dans "Identifiants" dans le menu de gauche.
+
+6. Cliquez sur "Créer des identifiants" > "Clé API".[4][5]
+
+7. Un écran de configuration s'affiche. Vous pouvez éventuellement restreindre la clé API à certaines applications ou adresses IP pour plus de sécurité.[4]
+
+8. Cliquez sur "Créer" pour générer la clé API.
+
+9. Copiez la clé API générée, vous en aurez besoin pour faire des appels à l'API YouTube.[1][4][5]
+
+10. Si vous souhaitez utiliser l'API avec votre compte YouTube personnel, vous devrez également créer des identifiants OAuth en suivant des étapes supplémentaires.[2]
+
+C'est la procédure standard pour obtenir une clé API YouTube qui vous permettra d'interagir avec les données YouTube via leur API. Assurez-vous de suivre les bonnes pratiques de sécurité en restreignant l'accès si nécessaire.[1][4][5]
+
+Citations:
+[1] https://webhosting.de/fr/youtube-api-key-places/
+[2] https://www.kulturechronik.fr/installer-et-utiliser-youtube-sur-kodi/
+[3] https://www.youtube.com/watch?v=aPxgHCcTWzo
+[4] https://www.youtube.com/watch?v=7_22jCiq4nk
+[5] https://www.sebastiencoenon.fr/blog/nouveautes/52-creation-d-une-cle-api-youtube
+
+*********************************************************************************************
+
+L'adresse de base de l'API YouTube est https://www.googleapis.com/youtube/v3/
+
+## Utiliser Postman pour tester l'API YouTube
+
+Oui, vous pouvez utiliser Postman pour tester l'API YouTube. Voici les étapes à suivre:
+
+1. Ouvrez Postman et créez une nouvelle requête GET.
+
+2. Dans la barre d'adresse, entrez l'URL de l'endpoint YouTube que vous souhaitez tester, par exemple:
+```
+https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=codingTutorials&key=YOUR_API_KEY
+```
+Remplacez "YOUR_API_KEY" par votre clé API YouTube valide.
+
+3. Cliquez sur "Send" pour envoyer la requête. Postman affichera la réponse de l'API dans le volet inférieur.
+
+4. Vous pouvez examiner le code de statut, les en-têtes et le corps de la réponse JSON pour vérifier que l'API fonctionne correctement.[5]
+
+5. Pour tester d'autres endpoints ou méthodes (POST, PUT, DELETE), modifiez l'URL et le type de requête en conséquence dans Postman.
+
+6. Vous pouvez également ajouter des tests dans l'onglet "Tests" de Postman pour valider automatiquement les réponses de l'API en fonction de critères spécifiques.[5]
+
+Donc Postman est un excellent outil pour interagir avec l'API YouTube, envoyer des requêtes, inspecter les réponses et même écrire des tests d'automatisation pour valider le comportement de l'API.[3][5]
+
+Citations:
+[1] https://www.reddit.com/r/webdev/comments/15i2mdm/je_viens_de_commencer_%C3%A0_jouer_avec_lapi_youtube/?tl=fr
+[2] https://www.creabilis.com/blog/2015/05/comment-recuperer-les-videos-dune-chaine-youtube-sur-son-site-avec-lapi-youtube-data/
+[3] https://www.youtube.com/watch?v=S19QqBytWC4
+[4] https://developers.google.com/youtube/terms/api-services-terms-of-service-emea-fr
+[5] https://www.youtube.com/playlist?list=PLBw1ubD1J1UgVniCSUlg_LKRzlF11CZZB

@@ -1,0 +1,114 @@
+@import "~bootstrap/scss/bootstrap";
+/* @import "~bootstrap/dist/css/bootstrap.min.css"; */
+
+/* body {
+    background-color: rgb(255, 255, 255);
+} */
+
+* {
+	font-family: "Farro";
+}
+.navbar {
+	border-bottom: none !important;
+}
+
+
+body.home {
+	background-image: url("../images/Background_pokemon_good.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.liste-pokemons {
+	background-image: url("../images/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+
+body.new-pokemon {
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+body.home {
+	background-image: url("../images/Background_pokemon_good.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.liste-pokemons {
+	background-image: url("../images/pokemmo-pngrepo-com.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+
+}
+body.liste-energies {
+	background-image: url("../images/ciel_etoile.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+
+body.new-pokemon {
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+body.new-element {
+	background-image: url("../images/AdobeStock_585885970.png") ;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+.bg-accueil {
+	background-color: #ed1b24;
+	opacity: 0.8;
+}
+.bg-intro {
+	background-color: #fbe163;
+}
+.txt-edit {
+	color: #fbe163;
+}
+.bg-buttonM {
+	background-color: #2774bc;
+}
+.farro-light {
+	font-family: "Farro", sans-serif;
+	font-weight: 300;
+	font-style: normal;
+}
+
+.farro-regular {
+	font-family: "Farro", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.farro-medium {
+	font-family: "Farro", sans-serif;
+	font-weight: 500;
+	font-style: normal;
+}
+
+.farro-bold {
+	font-family: "Farro", sans-serif;
+	font-weight: 700;
+	font-style: normal;
+}
+.ajouter {
+	background-image: var(--bs-gradient);
+}

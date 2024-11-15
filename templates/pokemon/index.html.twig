@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon Favorites
+{% endblock %}
+
+
+{% block body %}
+<body class="liste-pokemons">
+	
+	<div class="text-dark container">
+
+		<div class="col-5 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
+			<h1 class="display-5 text-center fw-bolder">Sacha's Favorites</h1>
+		</div>
+
+
+		<div class="container-fluid ">
+			<div class="row justify-content-between align-items-center   ">
+				<div class=" bg-intro col-lg-7 col-md-5 col-sm-5 text-center pt-4 p-2 border rounded-3 h-50 ">
+					<p class=" text-primary ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo adipisci fuga nulla asperiores aperiam? Eius libero natus veritatis ratione! Rem, nulla dolore! Iusto ab adipisci minima quia impedit, rem minus.Sunt aperiam ea aliquam commodi illo neque natus ex incidunt vitae magnam labore, in nam alias a, nobis exercitationem nisi repellat dignissimos. Voluptas doloribus atque sint modi ea? Saepe, quia.</p>
+					<button type="button" class="btn btn-outline-warning text-yellow">
+						<a class="nodecoration text-dark" href="{{ path('app_api_results') }}">
+							Consulter la liste
+						</a>
+					</button>
+
+
+				</div>
+				{# colonne de recherche#}
+				<div class="col-lg-4 col-md-6 col-sm-4 justify-content-center pt-4 bg-success p-2 border rounded">
+					<div class="fs-5 text-center justify-content-between">
+						{{form_start(form)}}
+						{{ form_widget(form) }}
+					</div>
+                    {# créationd pokemon #}
+					<div class="my-3 text-center">
+						<button type="submit button" class="btn btn-outline-warning my-3 text-dark">Lancer la recherche</button>
+						<button type="button" class="btn btn-outline-warning text-yellow">
+							<a class="nodecoration text-dark" href="{{ path('app_pokemon_new') }}">
+								Ajouter un personnage
+							</a>
+						</button>
+					</div>
+					 {{ form_end(form) }}
+				</div>
+				{# fin colonne de recherche #}
+			</div>
+		</div>
+
+<div class="table-responsive">
+    <table class="table table-hover opacity-3 border-start border-end border-5 border-radius border-success my-5">
+        <tbody>
+            {% if pokemons is empty %}
+                <tr>
+                    <td colspan="3" class="bg-black text-light text-center">Aucun Pokemon n'est encore dans la Team !</td>
+                </tr>
+            {% else %}
+                {% for pokemon in pokemons %}
+                    <tr class="row">
+                        <td class="col-4 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
+                        <div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
+                            <img class="img-fluid my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+                            </div>
+                            <div class="my-2 h3 mx-auto text-primary">{{ pokemon.name }}</div>
+                        </td>
+                        <td class="col-4 col-md-4 align-center bg-image align-middle mb-3 mb-md-0 ">
+                            <div class="border border-warning align-center text-center p-3 p-md-5 rounded">
+                                <div class="h3 mx-auto text-primary my-3">
+                                    {% if pokemon.element %}
+                                        {{ pokemon.element.specificite|default('Pas de spécificité') }}
+                                    {% else %}
+                                        Pas d'élément
+                                    {% endif %}
+                                </div>
+                                <div class="img-fluid">
+                                    {% if pokemon.element and pokemon.element.illustration %}
+                                        <img class="rounded-circle img-fluid" src="{{ asset('uploads/image/' ~ pokemon.element.illustration) }}" alt="{{ pokemon.element.specificite }}" style="width: 13rem; height: 13rem;">
+                                    {% else %}
+                                        <div class="rounded-circle bg-secondary mx-auto" style="width: 13rem; height: 13rem;"></div>
+                                    {% endif %}
+                                </div>
+                                <div class="h3 mx-auto my-3 text-primary">{{ pokemon.level }}</div>
+                            </div>
+                        </td>
+                        <td class="col-4 col-md-4 align-middle text-center d-flex flex-column justify-content-center align-items-center">
+                            <div class='fs-5 text-primary'>
+                                <div class="h3 mx-auto text-primary my-3">
+                                    <p>Son histoire</p>
+                                </div>
+                                {{ pokemon.description |u.truncate(110) }}
+                                [...]
+                                <p class="mt-3">
+                                    <a class="btn btn-success" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
+                                        Voir la suite
+                                    </a>
+                                </p>
+                                {% if is_granted('ROLE_USER') %}
+                                    <div class='mt-3'>
+                                        <a class="btn btn-success btn-sm" href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">
+                                            Modifier
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+</div></tbody></table></div></body>{% endblock %}

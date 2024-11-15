@@ -1,0 +1,44 @@
+{# templates/api/results.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de l'API
+{% endblock %}
+
+{% block body %}
+<h1>Tous les Pokemons !</h1>
+
+{% if pokemons is defined and pokemons|length > 0 %}
+	<p>Nombre total de résultats :
+		{{ data.count|default('N/A') }}</p>
+
+	<ul>
+		{% for pokemon in pokemons %}
+			<li>
+				<img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
+				{{ pokemon.name }}
+			</li>
+			<div class="pokemon-grid">
+				{% for pokemon in pokemons %}
+					<div class="pokemon-card">
+						<img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}" class="pokemon-sprite">
+						<h3>{{ pokemon.name|capitalize }}</h3>
+						<form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post">
+							<input type="hidden" name="name" value="{{ pokemon.name }}">
+							<input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
+							<button type="submit" class="btn btn-primary">Ajouter ce Pokemon à l'équipe</button>
+						</form>
+						<button type="button" class="btn btn-outline-warning text-yellow">
+							<a class="nodecoration text-dark" href="{{ path('app_team_add') }}">
+								Ajouter une équipe
+							</a>
+						</button>
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</ul>
+
+	{# Pagination #}
+	{% if data is defined %}
+		<div class="pagination">
+			<a href="{{ path('app_api_results', {'page': data.currentPage - 1}) }}"

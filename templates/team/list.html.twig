@@ -1,0 +1,24 @@
+{# templates/pokemon/list.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des Pokémons</title>
+</head>
+<body>
+    <h1>Choisissez un Pokémon pour votre équipe</h1>
+    <ul>
+    {% for pokemon in pokemons %}
+        <li>
+            {{ pokemon.name }}
+            <a href="{{ path('add_to_team', {'url': pokemon.url}) }}">Ajouter à l'équipe</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+</body>
+</html>
