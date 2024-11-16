@@ -25,7 +25,7 @@
 ###< symfony/asset-mapper ###
 
 ###> symfony/nodes_modules ###
-nodes_modules
+/nodes_modules
 ###> symfony/nodes_modules
 ###> symfony/webpack-encore-bundle ###
 /public/build/
