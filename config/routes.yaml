@@ -4,11 +4,10 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+app_home:
+    path: /
+    controller: App\Controller\PokemonController::index
 
-
-app_pokemon_add:
-    path: /app_pokemon_add
-    controller: App\Controller\TeamController::aaddPokemonToTeam
 
 app_team_show:
     path: /team/
@@ -22,7 +21,7 @@ app_dresseur_new:
     path: /new-dresseur
     controller: App\Controller\DresseurController::new
 
-app_uploads_image:
-    path: /uploads/Image/
+
+
  
 
