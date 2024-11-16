@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ApiTeamType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
       
             $resolver->setDefaults([
@@ -20,7 +20,7 @@ class ApiTeamType extends AbstractType
         
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }
