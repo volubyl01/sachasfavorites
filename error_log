@@ -7,3 +7,21 @@ Stack trace:
 #4 /home/wiku0320/public_html/sachasfavorites/bin/console(15): require_once('/home/wiku0320/...')
 #5 {main}
   thrown in /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php on line 553
+[16-Nov-2024 09:33:19 UTC] PHP Fatal error:  Uncaught Symfony\Component\Dotenv\Exception\PathException: Unable to read the "/home/wiku0320/public_html/sachasfavorites/.env" environment file. in /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php:553
+Stack trace:
+#0 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php(106): Symfony\Component\Dotenv\Dotenv->doLoad()
+#1 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php(149): Symfony\Component\Dotenv\Dotenv->loadEnv()
+#2 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/runtime/SymfonyRuntime.php(107): Symfony\Component\Dotenv\Dotenv->bootEnv()
+#3 /home/wiku0320/public_html/sachasfavorites/vendor/autoload_runtime.php(16): Symfony\Component\Runtime\SymfonyRuntime->__construct()
+#4 /home/wiku0320/public_html/sachasfavorites/bin/console(15): require_once('/home/wiku0320/...')
+#5 {main}
+  thrown in /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php on line 553
+[16-Nov-2024 09:47:11 UTC] PHP Fatal error:  Uncaught Symfony\Component\Dotenv\Exception\PathException: Unable to read the "/home/wiku0320/public_html/sachasfavorites/.env" environment file. in /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php:553
+Stack trace:
+#0 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php(106): Symfony\Component\Dotenv\Dotenv->doLoad()
+#1 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php(149): Symfony\Component\Dotenv\Dotenv->loadEnv()
+#2 /home/wiku0320/public_html/sachasfavorites/vendor/symfony/runtime/SymfonyRuntime.php(107): Symfony\Component\Dotenv\Dotenv->bootEnv()
+#3 /home/wiku0320/public_html/sachasfavorites/vendor/autoload_runtime.php(16): Symfony\Component\Runtime\SymfonyRuntime->__construct()
+#4 /home/wiku0320/public_html/sachasfavorites/bin/console(15): require_once('/home/wiku0320/...')
+#5 {main}
+  thrown in /home/wiku0320/public_html/sachasfavorites/vendor/symfony/dotenv/Dotenv.php on line 553
