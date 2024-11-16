@@ -13,7 +13,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Farro:wght@300;400;500;700" rel="stylesheet">
 
 		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
+            {{ encore_entry_link_tags('app') }}
 		{% endblock %}
 	</head>
 
@@ -35,8 +35,8 @@
 
 		{# on inclue les scripts js avec encore#}
 		{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
 			{{ encore_entry_script_tags('bootstrap') }}
-			{{ encore_entry_script_tags('app') }}
 			{{ encore_entry_script_tags('test') }}
 			{{ encore_entry_script_tags('test-audio') }}
 			{# {{ encore_entry_script_tags('offcanvas') }} #}

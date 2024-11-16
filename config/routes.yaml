@@ -4,9 +4,7 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-app_pokemon:
-    path: /pokemon
-    controller: App\Controller\TeamController::index
+
 
 app_pokemon_add:
     path: /app_pokemon_add
@@ -23,3 +21,8 @@ app_youtube_search:
 app_dresseur_new:
     path: /new-dresseur
     controller: App\Controller\DresseurController::new
+
+app_uploads_image:
+    path: /uploads/Image/
+ 
+

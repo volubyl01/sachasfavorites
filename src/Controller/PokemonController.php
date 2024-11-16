@@ -45,7 +45,7 @@ class PokemonController extends AbstractController
         $this->httpClient = $httpClient;
     }
 
-    #[Route('/', name: 'app_pokemon_index', methods: ['GET'])]
+    #[Route('/pokemon', name: 'app_pokemon_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
         $form = $this->createForm(SearchingType::class, null, ['method' => 'GET']);
