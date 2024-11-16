@@ -18,37 +18,37 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/pokemonliste')]
 class ApiController extends AbstractController
 {
-    #[Route('/', name: 'app_liste_index')]
-    public function index()
-    {
-        $client = new Client();
-        $response = $client->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
+    // #[Route('/', name: 'app_liste_index')]
+    // public function index()
+    // {
+    //     $client = new Client();
+    //     $response = $client->request('GET', 'https://pokeapi.co/api/v2/pokemon/');
 
-        $content = $response->getBody()->getContents();
-        $responseArray = json_decode($content, true);
-        // J'utilise array_column() pour extraire les URLs des pokémons depuis le tableau $responseArray['results'].
-        $pokemonUrls = array_column($responseArray['results'], 'url');
-        // je crée une boucle foreach pour parcourir les urls
-        // Pour chaque URL, j'ai fait une nouvelle requête à l'API pour récupérer les données détaillées du pokémon.
-        // J'ai créé un tableau associatif $pokemons contenant le nom et le sprite de chaque pokémon.
-        $pokemons = [];
-        foreach ($pokemonUrls as $url) {
-            $pokemonResponse = $client->request('GET', $url);
-            $pokemonData = json_decode($pokemonResponse->getBody()->getContents(), true);
-            $pokemons[] = [
-                'name' => $pokemonData['name'],
-                'sprite' => $pokemonData['sprites']['front_default'],
-            ];
-        }
-        // on souhaite que la liste soit ordonnée alphabétiquement
-        usort($pokemons, function ($a, $b) {
-            return strcasecmp($a['name'], $b['name']);
-        });
+    //     $content = $response->getBody()->getContents();
+    //     $responseArray = json_decode($content, true);
+    //     // J'utilise array_column() pour extraire les URLs des pokémons depuis le tableau $responseArray['results'].
+    //     $pokemonUrls = array_column($responseArray['results'], 'url');
+    //     // je crée une boucle foreach pour parcourir les urls
+    //     // Pour chaque URL, j'ai fait une nouvelle requête à l'API pour récupérer les données détaillées du pokémon.
+    //     // J'ai créé un tableau associatif $pokemons contenant le nom et le sprite de chaque pokémon.
+    //     $pokemons = [];
+    //     foreach ($pokemonUrls as $url) {
+    //         $pokemonResponse = $client->request('GET', $url);
+    //         $pokemonData = json_decode($pokemonResponse->getBody()->getContents(), true);
+    //         $pokemons[] = [
+    //             'name' => $pokemonData['name'],
+    //             'sprite' => $pokemonData['sprites']['front_default'],
+    //         ];
+    //     }
+    //     // on souhaite que la liste soit ordonnée alphabétiquement
+    //     usort($pokemons, function ($a, $b) {
+    //         return strcasecmp($a['name'], $b['name']);
+    //     });
 
-        return $this->render('api/results.html.twig', [
-            'pokemons' => $pokemons
-        ]);
-    }
+    //     return $this->render('api/results.html.twig', [
+    //         'pokemons' => $pokemons
+    //     ]);
+    // }
     // APi paginée
     #[Route('/results', name: 'app_api_results')]
     public function getResults(Request $request, HttpClientInterface $httpClient): Response

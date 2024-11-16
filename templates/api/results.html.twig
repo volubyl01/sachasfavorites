@@ -39,6 +39,15 @@
 	</ul>
 
 	{# Pagination #}
-	{% if data is defined %}
-		<div class="pagination">
-			<a href="{{ path('app_api_results', {'page': data.currentPage - 1}) }}"
+	{# {% if data is defined %}
+    <div class="pagination">
+        {% if data.currentPage > 1 %}
+            <a href="{{ path('app_api_results', {'page': data.currentPage - 1}) }}">Previous</a>
+        {% endif %}
+        <span>Page {{ data.currentPage }} of {{ data.totalPages }}</span>
+        {% if data.currentPage < data.totalPages %}
+            <a href="{{ path('app_api_results', {'page': data.currentPage + 1}) }}">Next</a>
+        {% endif %}
+    </div>
+{% endif %} #}
+

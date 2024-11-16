@@ -42,7 +42,7 @@ Encore
 	.enableSingleRuntimeChunk()
 
 	// pour Bootstrap
-	// .enableSassLoader()
+	Encore.enableSassLoader() 
 
 	/*
 	 * FEATURE CONFIG
