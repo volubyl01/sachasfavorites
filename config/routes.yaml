@@ -6,7 +6,7 @@ controllers:
 
 app_home:
     path: /
-    controller: App\Controller\PokemonController::index
+    controller: App\Controller\HomeController::index
 
 
 app_team_show:

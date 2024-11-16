@@ -1,7 +1,8 @@
 import '@popperjs/core';
 // // importer bootstrap.js
 import 'bootstrap';
-import '../styles/app.css';
+import '../styles/app.scss'; // Assurez-vous d'importer vos styles ici
+
 
 // importer le css de bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
