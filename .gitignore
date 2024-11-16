@@ -25,7 +25,7 @@
 ###< symfony/asset-mapper ###
 
 ###> symfony/nodes_modules ###
-/nodes_modules
+nodes_modules
 ###> symfony/nodes_modules
 ###> symfony/webpack-encore-bundle ###
 /public/build/
@@ -33,9 +33,3 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-
-node_modules
-node_modules
-node_modules
-node_modules
-node_modules
