@@ -4,50 +4,56 @@
 {% endblock %}
 
 {% block body %}
-		<div class="col-5 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
-			<h1 class="display-5 text-center fw-bolder">Les énergies</h1>
-		</div>
-		<div class="text-center">
-		<button type="button" class="btn btn-outline-warning text-yellow ">
-				<a class="nodecoration text-light" href="{{ path('app_element_new') }}">
-								Ajouter une énergie
-				</a>
-		</button>
-		</div>
-	
+	<div class="col-5 bg-accueil text-white fw-bolder border-success border-4 border rounded-pill mx-auto mb-2">
+		<h1 class="display-5 text-center fw-bolder">Les énergies</h1>
+	</div>
 
-		<div class="container-fluid">
-			<div class="container">
-				<table class="table table-responsive table-hover opacity-3 border-start border-end  border-5 border-radius border-success my-5">
-					<thead>
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<div class="text-center">
+			<p>Bienvenue,
+				{{ app.user.username }}!</p>
+			<button type="button" class="btn btn-outline-warning text-yellow ">
+				<a class="nodecoration text-light" href="{{ path('app_element_new') }}">
+					Ajouter une énergie
+				</a>
+			</button>
+		</div>
+	{% endif %}
+
+	<div class="container-fluid">
+		<div class="container">
+			<table class="table table-responsive table-hover opacity-3 border-start border-end  border-5 border-radius border-success my-5">
+				<thead>
+					<tr>
+
+						{# <th>Specificite</th>
+																			<th>Illustration</th>
+																			<th>actions</th> #}
+					</tr>
+				</thead>
+				<tbody>
+					{% for element in elements %}
 						<tr>
 
-							{# <th>Specificite</th>
-							<th>Illustration</th>
-							<th>actions</th> #}
+							<td>{{ element.specificite }}</td>
+							<td class="img-fluid">
+								<img src="{{asset('uploads/image/') ~ element.illustration}}" alt="" style='width:100px;height:100px'>
+							</td>
+							<td>
+								<a href="{{ path('app_element_show', {'id': element.id}) }}">show</a>
+								<a href="{{ path('app_element_edit', {'id': element.id}) }}">edit</a>
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						{% for element in elements %}
-							<tr>
-
-								<td>{{ element.specificite }}</td>
-								<td class="img-fluid">
-									<img src="{{asset('uploads/image/') ~ element.illustration}}" alt="" style='width:100px;height:100px'>
-								</td>
-								<td>
-									<a href="{{ path('app_element_show', {'id': element.id}) }}">show</a>
-									<a href="{{ path('app_element_edit', {'id': element.id}) }}">edit</a>
-								</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="3">Cet element n'existe pas</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-				</table>
-			</div>
+					{% else %}
+						<tr>
+							<td colspan="3">Cet element n'existe pas</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
+	</div>
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 		<a href="{{ path('app_element_new') }}">Créer un élément</a>
+	{% endif %}
 {% endblock %}
