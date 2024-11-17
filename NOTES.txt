@@ -1,0 +1,275 @@
+<?php
+
+namespace App\Entity;
+
+use App\Repository\ElementRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Pokemon;
+
+#[ORM\Entity(repositoryClass: ElementRepository::class)]
+class Element
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $specificite = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $level = null;
+
+    // Correction ici : 'mappedBy' doit correspondre à la propriété dans l'entité Pokemon
+    #[ORM\ManyToMany(targetEntity: Pokemon::class, mappedBy: 'elements')]
+    private Collection $pokemons;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $illustration = null;
+
+    public function __construct()
+    {
+        $this->pokemons = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getSpecificite(): ?string
+    {
+        return $this->specificite;
+    }
+
+    public function setSpecificite(?string $specificite): self
+    {
+        $this->specificite = $specificite;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(?int $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pokemon>
+     */
+    public function getPokemons(): Collection
+    {
+        return $this->pokemons;
+    }
+
+    public function addPokemon(Pokemon $pokemon): self
+    {
+        if (!$this->pokemons->contains($pokemon)) {
+            $this->pokemons->add($pokemon);
+            // Assurez-vous que la méthode setElements est définie dans Pokemon
+            $pokemon->addElement($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokemon(Pokemon $pokemon): self
+    {
+        if ($this->pokemons->removeElement($pokemon)) {
+            // Set the owning side to null (unless already changed)
+            if ($pokemon->hasElement($this)) { // Assurez-vous que hasElement est défini dans Pokemon
+                $pokemon->removeElement($this);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIllustration(): ?string
+    {
+        return $this->illustration;
+    }
+
+    public function setIllustration(?string $illustration): static
+    {
+        $this->illustration = $illustration;
+
+        return $this;
+    }
+}
+============================================================================
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PokemonRepository;
+
+#[ORM\Entity(repositoryClass: PokemonRepository::class)]
+class Pokemon
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 255)]
+    private ?int $level = null; // Correction : Changez le type en int
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\ManyToMany(targetEntity: Element::class, inversedBy: 'pokemons')]
+    private Collection $elements; // Correction : Utilisation de ManyToMany
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $sprite = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $apiId = null;
+
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'pokemons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Team $team = null;
+
+    public function __construct()
+    {
+        $this->elements = new ArrayCollection(); // Initialiser la collection
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static // Correction : rendre le paramètre nullable
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLevel(): ?int // Correction : changer le type de retour en int
+    {
+        return $this->level;
+    }
+
+    public function setLevel(int $level): static
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Element>
+     */
+    public function getElements(): Collection
+    {
+        return $this->elements;
+    }
+
+    public function addElement(Element $element): self
+    {
+        if (!$this->elements->contains($element)) {
+            $this->elements[] = $element;
+            // Assurez-vous que l'élément sait qu'il est associé à ce Pokémon
+            // Cela nécessite que la méthode addPokemon soit définie dans Element
+            $element->addPokemon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeElement(Element $element): self
+    {
+        if ($this->elements->removeElement($element)) {
+            // Assurez-vous que l'élément sait qu'il n'est plus associé à ce Pokémon
+            if ($element->getPokemons()->contains($this)) { // Vérifiez que cette méthode existe dans Element
+                $element->removePokemon($this);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getSprite(): ?string
+    {
+        return $this->sprite;
+    }
+
+    public function setSprite(?string $sprite): static
+    {
+        $this->sprite = $sprite;
+
+        return $this;
+    }
+
+    public function getApiId(): ?int
+    {
+        return $this->apiId;
+    }
+
+    public function setApiId(?int $apiId): static
+    {
+        $this->apiId = $apiId;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+   public function setTeam(?Team $team): self
+   {
+       $this->team = $team;
+
+       return $this;
+   }
+}
