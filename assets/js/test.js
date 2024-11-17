@@ -4,6 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const titleElement = document.querySelector('#title');
 
     // Modifier le contenu textuel de l'élément
-    titleElement.textContent = 'Nouveau titre';
+    titleElement.textContent = 'Les Pokemons dans le Monde';
 });
 

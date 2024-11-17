@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var titleElement = document.querySelector('#title');
 
   // Modifier le contenu textuel de l'élément
-  titleElement.textContent = 'Nouveau titre';
+  titleElement.textContent = 'Faites vos équipes';
 });
 
 /***/ })
