@@ -60,13 +60,13 @@
 						{% else %}
 							{% for pokemon in pokemons %}
 								<tr class="row">
-									<td class="col-4 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
+									<td class="col-12 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
 										<div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
 											<img class="img-fluid my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 										</div>
 										<div class="my-2 h3 mx-auto text-primary">{{ pokemon.name }}</div>
 									</td>
-									<td class="col-4 col-md-4 align-center bg-image align-middle mb-3 mb-md-0 ">
+									<td class="col-12 col-md-4 align-center bg-image align-middle mb-3 mb-md-0 ">
 										<div class="border border-warning align-center text-center p-3 p-md-5 rounded">
 											<div class="h3 mx-auto text-primary my-3">
 												{% if pokemon.element %}
@@ -85,7 +85,7 @@
 											<div class="h3 mx-auto my-3 text-primary">{{ pokemon.level }}</div>
 										</div>
 									</td>
-									<td class="col-4 col-md-4 align-middle text-center d-flex flex-column justify-content-center align-items-center">
+									<td class="col-12 col-md-4 align-middle text-center d-flex flex-column justify-content-center align-items-center">
 										<div class='fs-5 text-primary'>
 											<div class="h3 mx-auto text-primary my-3">
 												<p>Son histoire</p>

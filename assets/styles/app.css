@@ -6,20 +6,6 @@
 	border-bottom: none !important;
 }
 
-/* Backgrouh Home Image Fixe */
-/* body.home {
-	background-image: url("../images/Background_pokemon_good.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-} */
-
-/* Background Home Image animée */
-
-
-
-
 body.liste-pokemons {
 	background-image: url("../images/pokemmo-pngrepo-com.png");
 	background-repeat: no-repeat;
