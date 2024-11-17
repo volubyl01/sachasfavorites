@@ -4,13 +4,10 @@ controllers:
         namespace: App\Controller
     type: attribute
 
-app_home:
-    path: /
-    controller: App\Controller\HomeController::index
 
 
 app_team_show:
-    path: /team/
+    path: /team
     controller: App\Controller\TeamController::index
 
 app_youtube_search:

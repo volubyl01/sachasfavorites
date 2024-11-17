@@ -8,23 +8,12 @@
         "/build/app.js"
       ]
     },
-    "bootstrap": {
-      "js": [
-        "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js.js",
-        "/build/bootstrap.js"
-      ]
-    },
     "test": {
       "js": [
         "/build/runtime.js",
         "/build/test.js"
       ]
-    },
-    "test-audio": {
-      "js": [
-        "/build/runtime.js"
-      ]
     }
+
   }
 }

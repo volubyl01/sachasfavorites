@@ -1,10 +1,4 @@
-import '@popperjs/core';
-// // importer bootstrap.js
-import 'bootstrap';
 
-
-// importer le css de bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 // import { startStimulusApp } from '@symfony/stimulus-bridge';
 

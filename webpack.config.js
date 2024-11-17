@@ -21,9 +21,8 @@ Encore
 	 * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
 	 */
 	.addEntry("app", "./assets/app.js")
-	.addEntry("bootstrap", "./assets/bootstrap.js") // Add this line if you need Bootstrap
+	// .addEntry("bootstrap", "./assets/bootstrap.js") // Add this line if you need Bootstrap
 	.addEntry("test", "./assets/js/test.js")
-	.addEntry("test-audio", "./assets/js/test-audio.js")
 	.addEntry("offcanvas", "./assets/js/offcanvas.js")
 	.addStyleEntry("app_css", "./assets/styles/app.css")
 	.enableStimulusBridge("./assets/controllers/controllers.json") // Assurez-vous que ce chemin est correct
