@@ -24,4 +24,3 @@ class HomeController extends AbstractController
         ]);
     }
 }
-// A supprimer : lignes inutiles et configuration de l'index
