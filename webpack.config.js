@@ -24,7 +24,7 @@ Encore
 	// .addEntry("bootstrap", "./assets/bootstrap.js") // Add this line if you need Bootstrap
 	.addEntry("test", "./assets/js/test.js")
 	.addEntry("offcanvas", "./assets/js/offcanvas.js")
-	.addStyleEntry("app_css", "./assets/styles/app.css")
+	.addEntry("app_css", "./assets/styles/app.css")
 	.enableStimulusBridge("./assets/controllers/controllers.json") // Assurez-vous que ce chemin est correct
 	.configureBabelPresetEnv((config) => {
 		config.useBuiltIns = "usage"; // Ajoutez cette ligne si nécessaire
