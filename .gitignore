@@ -26,7 +26,7 @@
 
 ###> symfony/nodes_modules ###
 
-symfony/nodes_modules
+
 ###> symfony/webpack-encore-bundle ###
 # /public/build/
 npm-debug.log
