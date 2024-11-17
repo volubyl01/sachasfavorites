@@ -1,0 +1,34 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.620a04ca.js",
+        "/build/212.ed041df8.js",
+        "/build/app.bccdbd5f.js"
+      ],
+      "css": [
+        "/build/app.2ee8d171.css"
+      ]
+    },
+    "test": {
+      "js": [
+        "/build/runtime.620a04ca.js",
+        "/build/test.97169bf6.js"
+      ]
+    },
+    "offcanvas": {
+      "js": [
+        "/build/runtime.620a04ca.js",
+        "/build/offcanvas.47cbe392.js"
+      ]
+    },
+    "app_css": {
+      "js": [
+        "/build/runtime.620a04ca.js"
+      ],
+      "css": [
+        "/build/app_css.2ee8d171.css"
+      ]
+    }
+  }
+}
