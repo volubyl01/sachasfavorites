@@ -1,23 +1,34 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    #csrf_protection: true
+    csrf_protection: true
+    http_method_override: false
+    handle_all_throwables: true
 
-    # Note that the session will be started ONLY if you read or write from it.
-    session: true
+    # Configurer la session
+    session:
+        handler_id: null
+        cookie_secure: auto
+        cookie_samesite: lax
+        storage_factory_id: session.storage.factory.native
 
+    # Configurer l'Asset Mapper
     asset_mapper:
         paths: ['assets/']
 
+    # Activer ESI si nécessaire
+    # esi: true
 
-    #esi: true
-    #fragments: true
+    # Activer les fragments si nécessaire
+    # fragments: true
 
+    # Configurer les paramètres de sécurité
+    trusted_hosts: null
+    trusted_proxies: null
+    trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
 
 when@test:
     framework:
         test: true
         session:
             storage_factory_id: session.storage.factory.mock_file
-
-
