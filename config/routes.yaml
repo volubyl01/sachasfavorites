@@ -4,6 +4,11 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+app_element_index:
+    path: /element
+    controller: App\Controller\ElementController::index
+
+
 app_home:
     path: /
     controller: App\Controller\HomeController::index
