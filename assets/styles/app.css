@@ -1,4 +1,3 @@
-
 * {
 	font-family: "Farro";
 }
@@ -30,15 +29,13 @@ body.liste-pokemons {
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
-
 }
 
 body.new-pokemon {
-	background-image: url("../images/pokeball-pokemon-pngrepo-com.webp") ;
+	background-image: url("../images/pokeball-pokemon-pngrepo-com.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-
 
 body.home {
 	background-image: url("../images/Background_pokemon_good.webp");
@@ -57,17 +54,16 @@ body.liste-energies {
 }
 
 body.new-element {
-	background-image: url("../images/AdobeStock_585885970.webp") ;
+	background-image: url("../images/AdobeStock_585885970.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
-body.transitions {
+body.neutrals {
 	background-image: url("../images/vecteezy_abstract-white-line-background-wall-vector-illustration_7696710.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
 	background-attachment: fixed;
-
 }
 
 .bg-accueil {
@@ -84,7 +80,7 @@ body.transitions {
 	background-color: #2774bc;
 }
 .bg-discover {
-	color:#149B4A
+	color: #149b4a;
 }
 .farro-light {
 	font-family: "Farro", sans-serif;
@@ -112,4 +108,3 @@ body.transitions {
 .ajouter {
 	background-image: var(--bs-gradient);
 }
-

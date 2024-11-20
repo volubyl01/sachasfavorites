@@ -83,4 +83,10 @@ Encore
 // uncomment if you're having problems with a jQuery plugin
 	Encore.autoProvidejQuery()
 
+	// on s'assure que webpack gère les images : 
+	.copyFiles({
+		from: './assets/images',
+		to: 'images/[path][name].[ext]'
+	})
+
 module.exports = Encore.getWebpackConfig();

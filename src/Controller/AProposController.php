@@ -12,11 +12,11 @@ class AProposController extends AbstractController
     #[Route('/apropos', name: 'app_a_propos')]
     public function index(): Response
     {
-         // Récupérer l'utilisateur connecté
+        // Récupérer l'utilisateur connecté
         $user = $this->getUser();
         return $this->render('a_propos/index.html.twig', [
-                    'username_dresseur' => $user ? $user->getUserIdentifier() : 'Visiteur',
-                     'bodyClass'=> 'transitions'
+            'username_dresseur' => $user ? $user->getUserIdentifier() : 'Visiteur',
+            'bodyClass' => 'neutrals'
         ]);
     }
 }

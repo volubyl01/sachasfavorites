@@ -8,6 +8,7 @@
     "@symfony/stimulus-bridge": "^3.2.2",
     "@symfony/webpack-encore": "^5.0.1",
     "core-js": "^3.0.0",
+    "file-loader": "^6.0.0",
     "regenerator-runtime": "^0.13.2",
     "sass": "^1.81.0",
     "sass-loader": "^16.0.3",
