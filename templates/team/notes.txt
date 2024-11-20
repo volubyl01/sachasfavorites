@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des teams
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-center text-primary">Liste des teams</h1>
+
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+
+	<div class="container">
+		<div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+			{% for pokemon in pokemons %}
+				<div class="col">
+					<div class="card h-100">
+						<div class="d-flex justify-content-center align-items-center border border-danger">
+							<img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}" class="w-25 card-img-top">
+							<h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
+						</div>
+						<div class="card-body text-center">
+							<form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post" class="">
+								<input type="hidden" name="name" value="{{ pokemon.name }}">
+								<input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
+								<button type="submit" class="btn btn-primary mb-2 mx-auto">Ajouter ce Pokemon à l'équipe</button>
+							</form>
+
+							<a href="{{ path('app_team_add') }}" class="btn btn-outline-warning">Ajouter une équipe</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

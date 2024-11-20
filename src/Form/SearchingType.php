@@ -27,7 +27,7 @@ class SearchingType extends AbstractType
     {
         $resolver->setDefaults([
 
-            'csrf_protection' => false,
+            'csrf_protection' => true,
             'data_class' => null,
         ]);
     }

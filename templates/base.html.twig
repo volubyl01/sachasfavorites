@@ -19,9 +19,11 @@
 			{{ encore_entry_link_tags('app_css') }}
 		{% endblock %}
 	</head>
-	<body
-		class="{{ bodyClass|default('') }}">
-		
+	<body class="d-flex flex-column min-vh-100 {% block body_class %}{{ body_class|default('') }}{% endblock %}">
+	
+
+		{# class="{{ bodyClass|default('') }}"> #}
+
 		{% include "partials/_nav.html.twig" %}
 
 		{% for label, messages in app.flashes %}
@@ -31,20 +33,17 @@
 				{% endfor %}
 			</div>
 		{% endfor %}
+		<!-- Ajout d'un conteneur flex ici -->
+		<main
+			class="flex-grow-1">
+			<!-- Conteneur pour le contenu principal -->
+			{% block body %}{% endblock %}
+		</main>
 
-		<div
-			class="d-flex flex-column min-vh-100">
-			<!-- Ajout d'un conteneur flex ici -->
 
-			<div
-				class="flex-grow-1">
-				<!-- Conteneur pour le contenu principal -->
-				{% block body %}{% endblock %}
-			</div>
-			<footer class="mt-auto">
-				{% include "partials/_footer.html.twig" %}
-			</footer>
-		</div>
+		{% include "partials/_footer.html.twig" %}
+
+
 		{# on inclue les scripts js avec encore#}
 		{% block javascripts %}
 			{% block importmap %}

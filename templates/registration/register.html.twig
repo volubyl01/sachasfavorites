@@ -3,17 +3,22 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="mx-auto col-5 border border-danger px-5 py-5">
+    <h3 class="text-center">Inscription</h3>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
+    
+        {{ form_row(registrationForm.username, {
+            label:'Dresseur'
+        }) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+        <button type="submit" class="btn">Enregistrer</button>
+        </div>
     {{ form_end(registrationForm) }}
 {% endblock %}

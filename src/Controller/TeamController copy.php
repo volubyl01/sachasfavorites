@@ -22,7 +22,7 @@ class TeamController extends AbstractController
     {
     }
 
-    #[Route('/team/create', name: 'app_team_index')]
+    #[Route('/team', name: 'app_team_index')]
     public function index(HttpClientInterface $httpClient): Response
     {
         $response = $httpClient->request('GET', 'https://pokeapi.co/api/v2/pokemon/');

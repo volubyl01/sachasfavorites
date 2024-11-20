@@ -5,7 +5,25 @@
 .navbar {
 	border-bottom: none !important;
 }
+/* paramétrages pour laisser le footer en bas de page */
+/* html, body {
+    height: 100%;
+}
 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+footer {
+    flex-shrink: 0;
+} */
+/* ----------------------------------------- */
 body.liste-pokemons {
 	background-image: url("../images/pokemmo-pngrepo-com.png");
 	background-repeat: no-repeat;
@@ -30,14 +48,6 @@ body.home {
 	background-attachment: fixed;
 }
 
-body.liste-pokemons {
-	background-image: url("../images/pokemmo-pngrepo-com.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-
-}
 body.liste-energies {
 	background-image: url("../images/ciel_etoile.jpeg");
 	background-repeat: no-repeat;
@@ -46,11 +56,6 @@ body.liste-energies {
 	background-attachment: fixed;
 }
 
-body.new-pokemon {
-	background-image: url("../images/pokeball-pokemon-pngrepo-com.png") ;
-	background-repeat: no-repeat;
-	background-size: cover;
-}
 body.new-element {
 	background-image: url("../images/AdobeStock_585885970.png") ;
 	background-repeat: no-repeat;

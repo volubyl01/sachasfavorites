@@ -13,8 +13,9 @@
             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
         </div>
     {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+<form >
+<div class="mx-auto col-5 border border-danger px-5 py-5">
+    <h3 class=" mb-3 font-weight-normal text-center">Identifiez-vous</h3>
     <label for="inputUsername">Username</label>
     <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
     <label for="inputPassword">Password</label>
@@ -33,5 +34,7 @@
     <button class="btn btn-lg btn-primary" type="submit">
         Sign in
     </button>
-</form>
+    </div>
+    </form>
+
 {% endblock %}
