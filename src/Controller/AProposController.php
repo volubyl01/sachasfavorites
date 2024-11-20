@@ -15,7 +15,8 @@ class AProposController extends AbstractController
          // Récupérer l'utilisateur connecté
         $user = $this->getUser();
         return $this->render('a_propos/index.html.twig', [
-                    'username_dresseur' => $user ? $user->getUserIdentifier() : 'Visiteur'
+                    'username_dresseur' => $user ? $user->getUserIdentifier() : 'Visiteur',
+                     'bodyClass'=> 'transitions'
         ]);
     }
 }
