@@ -8,27 +8,27 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<div class="d-flex justify-content-between mx-5">
+				<div class="d-flex justify-content-between">
 					<li class="nav-item">
 						<a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">
-							<h5 class="fs-3 text-danger">Home</h5>
+							<h5 class="fs-5 text-danger">Home</h5>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_a_propos') }}">
-							<h5 class="fs-3 text-danger">A propos</h5>
+							<h5 class="fs-5 text-danger">A propos</h5>
 						</a>
 					</li>
 				</div>
 				<div class="d-flex justify-content-between mx-5">
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_team_index') }}">
-							<h5 class="fs-3 text-danger">Les Teams</h5>
+							<h5 class="fs-5 text-danger">Les Teams</h5>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_element_index') }}">
-							<h5 class="fs-3 text-danger">Les énergies</h5>
+							<h5 class="fs-5 text-danger">Les énergies</h5>
 						</a>
 					</li>
 				</div>
@@ -37,19 +37,19 @@
 					{% if app.user %}
 						<div>
 							<a class="text-center text-danger text-decoration-none" href="{{ path('app_logout') }}">
-								<h5 class="fs-3 pt-1">Déconnexion</h5>
+								<h5 class="fs-5 pt-1">Déconnexion</h5>
 							</a>
 						</div>
 					{% else %}
 						<div class="d-flex justify-content-between mx-5">
 							<li class="nav-item">
 								<a class="nav-link text-danger text-decoration-none" href="{{ path('app_login') }}">
-									<h5 class="fs-3">Connexion</h5>
+									<h5 class="fs-5">Connexion</h5>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a class=" nav-link text-danger text-decoration-none" href="{{ path('app_register') }}">
-									<h5 class="fs-3">Inscription</h5>
+									<h5 class="fs-5">Inscription</h5>
 								</a>
 							</li>
 						</div>
@@ -60,14 +60,14 @@
 				{% if is_granted('ROLE_USER') %}
 					<div class="nav-item text-center text-danger text-decoration-none">
 						<a class="text-center text-danger text-decoration-none" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
-							<h2 class='pt-1 fs-3'>Mon profil</h2>
+							<h2 class='pt-1 fs-5'>Mon profil</h2>
 						</a>
 					</div>
 
 					{% if is_granted('ROLE_ADMIN') %}
 						<div class="nav-item text-center text-danger text-decoration-none">
 							<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
-								<h2 class='pt-1 fs-3'>Rechercher sur YouTube</h2>
+								<h2 class='pt-1 fs-5'>Rechercher sur YouTube</h2>
 							</a>
 						</div>
 					{% endif %}
