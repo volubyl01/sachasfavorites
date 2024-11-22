@@ -63,7 +63,7 @@
 								<tr class="row">
 									<td class="col-12 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
 										<div class="rounded-circle overflow-hidden" style="width: 200px; height: 200px;">
-											<img class="img-fluid my-2" src="{{asset('uploads/image/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+											<img class="img-fluid my-2" src="{{ asset(pokemon.image)|imagine_filter('thumbnail') }}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 										</div>
 										<div class="my-2 h3 mx-auto text-primary">{{ pokemon.name }}</div>
 									</td>
