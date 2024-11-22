@@ -7,6 +7,7 @@ parameters:
     pokemon_image_directory : "%kernel.project_dir%/public/uploads/image"
     element_illustration_directory : "%kernel.project_dir%/public/uploads/image"
     app.youtube_api_key: 'YAIzaSyAjqHKgV53T_72xNBJiXt_c20eBl60JUyI'
+    upload_directory: '%kernel.project_dir%/public/uploads/Image/'
 services:
     # default configuration for services in *this* file
     _defaults:

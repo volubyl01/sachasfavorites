@@ -21,40 +21,25 @@ use Symfony\Component\Form\Form;
 #[Route('/monpokemon')]
 class PokemonController extends AbstractController
 {
-    private $entityManager;
-    private $pokemonRepository;
-    private $elementRepository;
-    private $teamRepository;
-    private $security;
-    private $httpClient;
-    private $imagineCacheManager;
+
+    private const MAX_TEAM_SIZE = 6;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        PokemonRepository $pokemonRepository,
-        ElementRepository $elementRepository,
-        TeamRepository $teamRepository,
-        Security $security,
-        HttpClientInterface $httpClient,
-        CacheManager $imagineCacheManager
-    ) {
-        $this->entityManager = $entityManager;
-        $this->pokemonRepository = $pokemonRepository;
-        $this->elementRepository = $elementRepository;
-        $this->teamRepository = $teamRepository;
-        $this->security = $security;
-        $this->httpClient = $httpClient;
-        $this->imagineCacheManager = $imagineCacheManager;
-    }
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PokemonRepository $pokemonRepository,
+        private readonly ElementRepository $elementRepository,
+        private readonly TeamRepository $teamRepository,
+        private readonly Security $security,
+        private readonly HttpClientInterface $httpClient,
+        private readonly CacheManager $imagineCacheManager
+    ) {}
 
-    // pour éviter l'erreur 404 et améliorer gestion des routes
-    #[Route('/', name: 'app_pokemon_redirect')]
-    public function redirectToIndex(): Response
+    #[Route('/favicon.ico', name: 'monpokemon_pokemon_favicon')]
+    public function favicon(): Response
     {
-        return $this->redirectToRoute('app_pokemon_index');
+        return $this->redirect('/favicon.ico', 301);
     }
-
-    #[Route('/pokemon', name: 'app_pokemon_index', methods: ['GET'])]
+    #[Route('/pokemon', name: 'monpokemon_pokemon_index', methods: ['GET'])]
     public function index(Request $request): Response
     {
         $form = $this->createForm(SearchingType::class, null, ['method' => 'GET']);
@@ -83,8 +68,7 @@ class PokemonController extends AbstractController
             'bodyClass' => 'liste-pokemons',
         ]);
     }
-
-    #[Route('/new', name: 'app_pokemon_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'monpokemon_pokemon_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $pokemon = new Pokemon();
@@ -97,7 +81,7 @@ class PokemonController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Le Pokémon a été créé avec succès.');
-            return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('monpokemon_pokemon_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('pokemon/new.html.twig', [
@@ -106,24 +90,52 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-
-
-
-
-    #[Route('/add-to-team/{id}', name: 'add_to_team', methods: ['POST'])]
+    #[Route('/add-to-team/{id}', name: 'monpokemon_pokemon_add_to_team', methods: ['POST'])]
     public function addToTeam(int $id): Response
     {
-        $team = $this->teamRepository->findOneBy(['dresseur' => $this->getUser()]);
-
-        if ($team && $team->getPokemons()->count() >= 6) {
-            $this->addFlash('error', 'Votre équipe est déjà complète (maximum 6 Pokémon)');
-            return $this->redirectToRoute('app_pokemon_index');
+        $user = $this->getUser();
+        if (!$user) {
+            throw new AccessDeniedException('Vous devez être connecté.');
         }
+
+        $pokemon = $this->pokemonRepository->find($id);
+        if (!$pokemon) {
+            try {
+                $response = $this->httpClient->request('GET', "https://pokeapi.co/api/v2/pokemon/{$id}");
+                $pokemonData = $response->toArray();
+
+                $pokemon = new Pokemon();
+                $pokemon->setName($pokemonData['name']);
+                $pokemon->setSprite($pokemonData['sprites']['front_default']);
+                $this->entityManager->persist($pokemon);
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'Erreur lors de la récupération du Pokémon.');
+                return $this->redirectToRoute('monpokemon_pokemon_index');
+            }
+        }
+
+        $team = $this->teamRepository->findOneBy(['dresseur' => $user]) ?? new Team();
+        if (!$team->getId()) {
+            $team->setDresseur($user);
+        }
+
+        if ($team->getPokemons()->count() >= self::MAX_TEAM_SIZE) {
+            $this->addFlash('error', 'Équipe complète (max 6 Pokémon)');
+            return $this->redirectToRoute('monpokemon_pokemon_index');
+        }
+
+        if (!$team->getPokemons()->contains($pokemon)) {
+            $team->addPokemon($pokemon);
+            $this->entityManager->persist($team);
+            $this->entityManager->flush();
+            $this->addFlash('success', $pokemon->getName() . ' ajouté à l\'équipe');
+        } else {
+            $this->addFlash('error', $pokemon->getName() . ' est déjà dans l\'équipe');
+        }
+
+        return $this->redirectToRoute('monpokemon_pokemon_index');
     }
-
-
-    #[Route('/{id}/edit', name: 'app_pokemon_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'monpokemon_pokemon_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Pokemon $pokemon): Response
     {
         $form = $this->createForm(PokemonType::class, $pokemon);
@@ -134,7 +146,7 @@ class PokemonController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash('success', 'Le Pokémon a été mis à jour avec succès.');
-            return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('monpokemon_pokemon_index', [], Response::HTTP_SEE_OTHER);
         }
 
         $element = $pokemon->getElement();
@@ -147,8 +159,7 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    #[Route('/{id}/delete', name: 'app_pokemon_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'monpokemon_pokemon_delete', methods: ['POST'])]
     public function delete(Request $request, Pokemon $pokemon): Response
     {
         if ($this->isCsrfTokenValid('delete' . $pokemon->getId(), $request->request->get('_token'))) {
@@ -157,9 +168,9 @@ class PokemonController extends AbstractController
             $this->addFlash('success', 'Le Pokémon a été supprimé avec succès.');
         }
 
-        return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('monpokemon_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+    #[Route('/{id}', name: 'monpokemon_pokemon_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Pokemon $pokemon): Response
     {
         $element = $pokemon->getElement();
@@ -172,33 +183,32 @@ class PokemonController extends AbstractController
     }
 
 
-
-
-
-
-
     private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void
     {
-
         $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
         if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
             throw new \InvalidArgumentException('Format d\'image non supporté');
         }
-        
-        $oldImage = $pokemon->getImage();
-        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/Image/';
 
+        $uploadDir = $this->getParameter('upload_directory');
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        $oldImage = $pokemon->getImage();
         if ($oldImage && file_exists($uploadDir . $oldImage)) {
             unlink($uploadDir . $oldImage);
             $this->imagineCacheManager->remove($oldImage);
         }
 
-        $imageName = uniqid() . '.' . $image->guessExtension();
-        $image->move($uploadDir, $imageName);
-        $pokemon->setImage($imageName);
-
-        // Génère les versions redimensionnées
-        $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
+        try {
+            $imageName = uniqid() . '.' . $image->guessExtension();
+            $image->move($uploadDir, $imageName);
+            $pokemon->setImage($imageName);
+            $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Erreur lors du téléchargement de l\'image');
+        }
     }
 
 

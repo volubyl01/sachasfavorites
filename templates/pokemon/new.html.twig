@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block body_class %}new-pokemon{% endblock %}
+{% block body_class %}new-pokemon
+{% endblock %}
 
 {% block title %}Nouveau Pokemon
 {% endblock %}
@@ -11,28 +12,28 @@
 		{# ligne 1 #}
 		<div class="mx-auto col-8 border border-danger px-5 py-5">
 
-		<h1 class="display-5 display-3 fw-bold text-center text-light">Add a Pokemon</h1>
+			<h1 class="display-5 display-3 fw-bold text-center text-light">Add a Pokemon</h1>
 			<div class="row">
 				<div class="col-lg-6 col-md-3 col-sm-3 justify-content-center pt-4 p-2  mx-auto">
 					<div class="fs-5 text-center justify-content-between">
 						{{ include('pokemon/_form.html.twig') }}
-					</div>	
-						<button class="btn btn-primary  btn-sm w-25">
-							<a class="text-light" href="{{ path('app_pokemon_index') }}">Retour à la liste
-							</a>
-						</button>
+					</div>
+					<button class="btn btn-primary  btn-sm w-25">
+						<a class="text-light" href="{{ path('monpokemon_pokemon_index') }}">Retour à la liste
+						</a>
+					</button>
 
 
-						<button class="btn btn-primary  btn-sm w-25">
-							<a class="text-light" href="{{path('app_pokemon_new')}}">Ajouter un Pokemon</a>
-						</button>
-					
+					<button class="btn btn-primary  btn-sm w-25">
+						<a class="text-light" href="{{path('monpokemon_pokemon_new')}}">Ajouter un Pokemon</a>
+					</button>
+
 
 				</div>
 
 
 			</div>
-		
-	</div>
+
+		</div>
 	</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block body_class %}liste-pokemons{% endblock %}
+{% block body_class %}liste-pokemons
+{% endblock %}
 
 {% block title %}Pokemon Favorites
 {% endblock %}
@@ -39,7 +40,7 @@
 							<button type="submit button" class="btn btn-outline-warning my-3 text-dark">Lancer la recherche</button>
 							{% if app.user %}
 								<button type="button" class="btn btn-outline-warning text-yellow">
-									<a class="nodecoration text-dark" href="{{ path('app_pokemon_new') }}">
+									<a class="nodecoration text-dark" href="{{ path('monpokemon_pokemon_new') }}">
 										Ajouter un personnage
 									</a>
 								</button>
@@ -94,13 +95,13 @@
 											{{ pokemon.description |u.truncate(110) }}
 											[...]
 											<p class="mt-3">
-												<a class="btn btn-success" href="{{ path('app_pokemon_show', {'id': pokemon.id}) }}">
+												<a class="btn btn-success" href="{{ path('monpokemon_pokemon_show', {'id': pokemon.id}) }}">
 													Voir la suite
 												</a>
 											</p>
 											{% if is_granted('ROLE_USER') %}
 												<div class='mt-3'>
-													<a class="btn btn-success btn-sm" href="{{ path('app_pokemon_edit', {'id': pokemon.id}) }}">
+													<a class="btn btn-success btn-sm" href="{{ path('monpokemon_pokemon_edit', {'id': pokemon.id}) }}">
 														Modifier
 													</a>
 												</div>
