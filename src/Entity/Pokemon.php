@@ -38,7 +38,7 @@ class Pokemon
     private ?int $apiId = null;
 
     #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'pokemons')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Team $team = null;
 
     public function getId(): ?int

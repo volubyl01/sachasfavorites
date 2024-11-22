@@ -2,10 +2,10 @@
 
 namespace App\Form;
 
-
+use App\Entity\Team;
 use App\Entity\Element;
 use App\Entity\Pokemon;
-use Symfony\Component\Form\FormBuilder;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,6 +18,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PokemonType extends AbstractType
 {
+    // injection de l'entitymanager dans le formulaire
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -39,13 +49,17 @@ class PokemonType extends AbstractType
             ->add('element', EntityType::class, [
                 'class' => Element::class,
                 'choice_label' => 'Specificite',
-              
-                
             ])
 
             // ->add('level', RangeType::class)
-            ->add('level', NumberType::class);
-           
+            ->add('level', NumberType::class)
+            ->add('team', EntityType::class, [
+                'class' => Team::class,
+                'choice_label' => 'name',
+                'placeholder' => 'Choisir une équipe',
+                'data' => $this->entityManager->getRepository(Team::class)->find(1), // Team avec id 1 par défaut
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
