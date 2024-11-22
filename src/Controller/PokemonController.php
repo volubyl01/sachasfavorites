@@ -34,11 +34,6 @@ class PokemonController extends AbstractController
         private readonly CacheManager $imagineCacheManager
     ) {}
 
-    #[Route('/favicon.ico', name: 'monpokemon_pokemon_favicon')]
-    public function favicon(): Response
-    {
-        return $this->redirect('/favicon.ico', 301);
-    }
     #[Route('/pokemon', name: 'monpokemon_pokemon_index', methods: ['GET'])]
     public function index(Request $request): Response
     {

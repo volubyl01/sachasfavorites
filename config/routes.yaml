@@ -3,14 +3,15 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    
+pokemon_index:
+  path: /pokemon
+  controller: App\Controller\PokemonController::index
 
 app_home:
     path: /
     controller: App\Controller\HomeController::index
 
-monpokemon_pokemon_index:
-    path: /pokemon
-    controller: App\Controller\PokemonController::index
 
 app_team_show:
     path: /team

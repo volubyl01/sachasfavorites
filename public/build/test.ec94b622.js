@@ -1,1 +1,0 @@
-(self.webpackChunk=self.webpackChunk||[]).push([[255],{4575:()=>{console.log("Hello from Webpack Encore!"),document.addEventListener("DOMContentLoaded",(function(){document.querySelector("#title").textContent="Les Pokemons dans le Monde"}))}},e=>{var n;n=4575,e(e.s=n)}]);
