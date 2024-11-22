@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<h1 class="text-center text-primary">Liste des teams</h1>
+	<h1 class="text-center text-primary">Constituez vos teams</h1>
 
 	{% for message in app.flashes('success') %}
 		<div class="alert alert-success">
@@ -12,8 +12,8 @@
 		</div>
 	{% endfor %}
 
-	<div class="container">
-		<div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+	<div class="container-fluid">
+		<div class="row row-cols-sm-1 row-cols-md-2 row-cols-lg-7 row-cols-xl-4 g-4">
 			{% for pokemon in pokemons %}
 				<div class="col">
 					<div class="card h-100">
