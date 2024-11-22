@@ -49,13 +49,13 @@ class PokemonController extends AbstractController
         $elements = $this->elementRepository->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $searchName = $form->get('name')->getData();
-            $searchSpecificite = $form->get('specificite')->getData();
+            $searchByName = $form->get('name')->getData();
+            $searchBySpecificite = $form->get('specificite')->getData();
 
-            if (!empty($searchName)) {
-                $pokemons = $this->pokemonRepository->searchByName($searchName);
-            } elseif (!empty($searchSpecificite)) {
-                $pokemons = $this->pokemonRepository->searchBySpecificite($searchSpecificite);
+            if (!empty($searchByName)) {
+                $pokemons = $this->pokemonRepository->searchByName($searchByName);
+            } elseif (!empty($searchBySpecificite)) {
+                $pokemons = $this->pokemonRepository->searchBySpecificite($searchBySpecificite);
             }
         }
 
