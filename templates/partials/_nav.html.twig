@@ -19,8 +19,6 @@
 							<h5 class="fs-5 text-danger">A propos</h5>
 						</a>
 					</li>
-				</div>
-				<div class="d-flex justify-content-between mx-5">
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('app_team_index') }}">
 							<h5 class="fs-5 text-danger">Les Teams</h5>
@@ -31,47 +29,43 @@
 							<h5 class="fs-5 text-danger">Les énergies</h5>
 						</a>
 					</li>
-				</div>
-
-				<div id="entreeSortie" class="d-flex justify-content-between mx-5">
-					{% if app.user %}
-						<div>
-							<a class="text-center text-danger text-decoration-none" href="{{ path('app_logout') }}">
-								<h5 class="fs-5 pt-1">Déconnexion</h5>
-							</a>
-						</div>
-					{% else %}
-						<div class="d-flex justify-content-between mx-5">
-							<li class="nav-item">
-								<a class="nav-link text-danger text-decoration-none" href="{{ path('app_login') }}">
-									<h5 class="fs-5">Connexion</h5>
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class=" nav-link text-danger text-decoration-none" href="{{ path('app_register') }}">
-									<h5 class="fs-5">Inscription</h5>
-								</a>
-							</li>
-						</div>
-					{% endif %}
-				</div>
-
-
-				{% if is_granted('ROLE_USER') %}
-					<div class="nav-item text-center text-danger text-decoration-none">
-						<a class="text-center text-danger text-decoration-none" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
-							<h2 class='pt-1 fs-5'>Mon profil</h2>
+				{% if app.user %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('app_logout') }}">
+							<h5 class="fs-5 text-danger">Déconnexion</h5>
 						</a>
-					</div>
+					</li>
+					{% else %}
 
-					{% if is_granted('ROLE_ADMIN') %}
-						<div class="nav-item text-center text-danger text-decoration-none">
-							<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
-								<h2 class='pt-1 fs-5'>Rechercher sur YouTube</h2>
+						<li class="nav-item">
+							<a class="nav-link text-danger" href="{{ path('app_login') }}">
+								<h5 class="fs-5">Connexion</h5>
 							</a>
-						</div>
+						</li>
+						<li class="nav-item">
+							<a class=" nav-link text-danger text-decoration-none" href="{{ path('app_register') }}">
+								<h5 class="fs-5">Inscription</h5>
+							</a>
+						</li>
 					{% endif %}
-				{% endif %}
+
+
+					{% if is_granted('ROLE_USER') %}
+						<li class="nav-item">
+							<a class="nav-link text-center text-danger text-decoration-none" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
+								<h2 class='fs-5'>Mon profil</h2>
+							</a>
+						</li>
+
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item">
+								<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
+									<h2 class='pt-1 fs-5'>Rechercher sur YouTube</h2>
+								</a>
+							</li>
+						{% endif %}
+					{% endif %}
+				</div>
 			</ul>
 		</div>
 	</div>
