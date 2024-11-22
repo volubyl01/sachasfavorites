@@ -104,19 +104,6 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'])]
-    public function show(Pokemon $pokemon): Response
-    {
-        $element = $pokemon->getElement();
-        $illustration = $element ? $element->getIllustration() : null;
-
-        return $this->render('pokemon/show.html.twig', [
-            'pokemon' => $pokemon,
-            'illustration' => $illustration,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_pokemon_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Pokemon $pokemon): Response
     {
@@ -141,19 +128,6 @@ class PokemonController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    #[Route('/{id}', name: 'app_pokemon_delete', methods: ['POST'])]
-    public function delete(Request $request, Pokemon $pokemon): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $pokemon->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($pokemon);
-            $this->entityManager->flush();
-            $this->addFlash('success', 'Le Pokémon a été supprimé avec succès.');
-        }
-
-        return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
-    }
-
     #[Route('/add-to-team/{id}', name: 'add_to_team', methods: ['POST'])]
     public function addToTeam(int $id): Response
     {
@@ -202,6 +176,34 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index');
     }
+    #[Route('/{id}/delete', name: 'app_pokemon_delete', methods: ['POST'])]
+    public function delete(Request $request, Pokemon $pokemon): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $pokemon->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($pokemon);
+            $this->entityManager->flush();
+            $this->addFlash('success', 'Le Pokémon a été supprimé avec succès.');
+        }
+
+        return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/{id}', name: 'app_pokemon_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function show(Pokemon $pokemon): Response
+    {
+        $element = $pokemon->getElement();
+        $illustration = $element ? $element->getIllustration() : null;
+
+        return $this->render('pokemon/show.html.twig', [
+            'pokemon' => $pokemon,
+            'illustration' => $illustration,
+        ]);
+    }
+
+    
+
+   
+
+   
 
     private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void 
     {
