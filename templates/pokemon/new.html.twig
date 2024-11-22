@@ -9,6 +9,8 @@
 	<div
 		class="text-primary container">
 		{# ligne 1 #}
+		<div class="mx-auto col-5 border border-danger px-5 py-5">
+
 		<h1 class="display-5 display-3 fw-bold text-center text-light">Add a Pokemon</h1>
 			<div class="row">
 				<div class="col-lg-6 col-md-3 col-sm-3 justify-content-center pt-4 p-2  mx-auto">
@@ -22,7 +24,7 @@
 
 
 						<button class="btn btn-primary  btn-sm w-25">
-							<a class="text-light" href="{{path('app_element_new')}}">Ajouter un Pokemon</a>
+							<a class="text-light" href="{{path('app_pokemon_new')}}">Ajouter un Pokemon</a>
 						</button>
 					
 
@@ -31,5 +33,6 @@
 
 			</div>
 		
+	</div>
 	</div>
 {% endblock %}

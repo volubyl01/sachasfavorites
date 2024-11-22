@@ -86,7 +86,7 @@ Encore
 	// on s'assure que webpack gère les images : 
 	.copyFiles({
 		from: './assets/images',
-		to: 'images/[path][name].[ext]'
+		to: 'images/[path][name].[hash:8].[ext]'
 	})
 
 module.exports = Encore.getWebpackConfig();

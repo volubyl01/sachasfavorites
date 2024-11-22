@@ -45,6 +45,7 @@ class PokemonType extends AbstractType
 
             // ->add('level', RangeType::class)
             ->add('level', NumberType::class);
+           
     }
 
     public function configureOptions(OptionsResolver $resolver): void
