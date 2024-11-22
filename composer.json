@@ -14,6 +14,7 @@
 		"friendsofsymfony/rest-bundle": "^3.7",
 		"google/apiclient": "^2.16",
 		"guzzlehttp/guzzle": "^7.8",
+		"liip/imagine-bundle": "^2.13",
 		"nelmio/cors-bundle": "^2.4",
 		"paragonie/sodium_compat": "^2.1",
 		"phpdocumentor/reflection-docblock": "^5.3",
@@ -100,7 +101,7 @@
 	},
 	"extra": {
 		"symfony": {
-			"allow-contrib": false,
+			"allow-contrib": true,
 			"require": "7.1.*"
 		},
 		"google/apiclient-services": [

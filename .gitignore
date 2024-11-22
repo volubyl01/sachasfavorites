@@ -33,3 +33,7 @@ npm-debug.log
 yarn-error.log
 
 
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###

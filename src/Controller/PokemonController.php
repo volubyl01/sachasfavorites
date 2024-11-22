@@ -19,6 +19,9 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\Form\Form;
+
 
 #[Route('/monpokemon')]
 class PokemonController extends AbstractController
@@ -28,6 +31,8 @@ class PokemonController extends AbstractController
     private $elementRepository;
     private $teamRepository;
     private $security;
+    private $httpClient;
+    private $imagineCacheManager;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -35,7 +40,8 @@ class PokemonController extends AbstractController
         ElementRepository $elementRepository,
         TeamRepository $teamRepository,
         Security $security,
-        HttpClientInterface $httpClient
+        HttpClientInterface $httpClient,
+        CacheManager $imagineCacheManager
     ) {
         $this->entityManager = $entityManager;
         $this->pokemonRepository = $pokemonRepository;
@@ -43,6 +49,7 @@ class PokemonController extends AbstractController
         $this->teamRepository = $teamRepository;
         $this->security = $security;
         $this->httpClient = $httpClient;
+        $this->imagineCacheManager = $imagineCacheManager;
     }
 
     #[Route('/pokemon', name: 'app_pokemon_index', methods: ['GET'])]
@@ -146,9 +153,6 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('app_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
-    private $httpClient;
-
- 
 
     #[Route('/add-to-team/{id}', name: 'add_to_team', methods: ['POST'])]
     public function addToTeam(int $id): Response
@@ -199,31 +203,34 @@ class PokemonController extends AbstractController
         return $this->redirectToRoute('app_pokemon_index');
     }
 
-    private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void
-{
-    $oldImage = $pokemon->getImage();
-    $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/Image/';
-    
-    if ($oldImage && file_exists($uploadDir . $oldImage)) {
-        unlink($uploadDir . $oldImage);
-    }
+    private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void 
+    {
+        $oldImage = $pokemon->getImage();
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/Image/';
+        
+        if ($oldImage && file_exists($uploadDir . $oldImage)) {
+            unlink($uploadDir . $oldImage);
+            $this->imagineCacheManager->remove($oldImage);
+        }
 
-    $imageName = uniqid() . '.' . $image->guessExtension();
-    $image->move($uploadDir, $imageName);
-    $pokemon->setImage($imageName);
-}
+        $imageName = uniqid() . '.' . $image->guessExtension();
+        $image->move($uploadDir, $imageName);
+        $pokemon->setImage($imageName);
 
-    private function handlePokemonForm(Pokemon $pokemon, $form): void
-{
-    $element = $form->get('element')->getData();
-    if ($element !== null) {
-        $pokemon->setElement($element);
+        // Génère les versions redimensionnées
+        $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
     }
-
-    $image = $form->get('image')->getData();
-    if ($image instanceof UploadedFile) {
-        $this->handleImageUpload($pokemon, $image);
-    }
-}
+        private function handlePokemonForm(Pokemon $pokemon, Form $form): void
+        {
+            $element = $form->get('element')->getData();
+            if ($element !== null) {
+                $pokemon->setElement($element);
+            }
+        
+            $image = $form->get('image')->getData();
+            if ($image instanceof UploadedFile) {
+                $this->handleImageUpload($pokemon, $image);
+            }
+        }
 
 }
