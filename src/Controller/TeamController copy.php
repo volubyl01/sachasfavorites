@@ -18,8 +18,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
+    private array $backgroundImages;
+
     public function __construct(private RequestStack $requestStack)
     {
+        $this->backgroundImages = [
+            'team' => 'AdobeStock_585885970.webp',
+            'show' => 'AdobeStock_585885970.webp',
+            'add' => 'AdobeStock_585885970.webp',
+            'index' => 'AdobeStock_585885970.webp',
+        ];
     }
 
     #[Route('/team', name: 'app_team_index')]
@@ -48,6 +56,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/index.html.twig', [
             'pokemons' => $pokemons,
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 
@@ -62,6 +71,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/show.html.twig', [
             'team' => $team,
+            'backgroundImage' => $this->backgroundImages['show']
         ]);
     }
 
@@ -99,6 +109,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/add.html.twig', [
             'form' => $form->createView(),
+            'backgroundImage' => $this->backgroundImages['add']
         ]);
     }
 

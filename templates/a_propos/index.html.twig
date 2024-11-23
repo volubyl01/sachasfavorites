@@ -1,19 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}A propos de ce site
+{% block title %}A propos
 {% endblock %}
-
-{% block body_class %}neutrals{% endblock %}
 
 
 {% block body %}
-
 	<div class="mx-auto col-5 border border-danger px-5 py-5">
 		<h1>Bonjour
 			{{ username_dresseur }}!
 		</h1>
 
-		Ce site est un projet Symfony, en tant que dresseur, il s'agit de :
+		<p>Ce site est un projet Symfony, en tant que dresseur, il s'agit de :</p>
 		<ul>
 			<li>Créer son Pokemon</li>
 			<li>Associer le Pokemon à son énergie

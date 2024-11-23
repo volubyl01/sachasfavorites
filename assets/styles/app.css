@@ -5,47 +5,24 @@
 	border-bottom: none !important;
 }
 
-body.liste-pokemons {
-	background-image: url("../images/pokemmo-pngrepo-com.webp");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
+body {
+    background-size: cover; /* Pour couvrir tout l'écran */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Ne pas répéter l'image */
 }
 
-body.new-pokemon {
+
+
+.new-pokemon {
 	background-image: url("../images/pokeball-pokemon-pngrepo-com.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
 }
 
-body.home {
-	background-image: url("../images/Background_pokemon_good.webp");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-}
-
-body.liste-energies {
-	background-image: url("../images/ciel_etoile.webp");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
-}
-
-body.new-element {
+.new-element {
 	background-image: url("../images/AdobeStock_585885970.webp");
 	background-repeat: no-repeat;
 	background-size: cover;
-}
-body.neutrals {
-	background-image: url("../images/vecteezy_abstract-white-line-background-wall-vector-illustration_7696710.webp");
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
-	background-attachment: fixed;
 }
 
 .bg-accueil {

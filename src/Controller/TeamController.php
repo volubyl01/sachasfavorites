@@ -18,6 +18,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TeamController extends AbstractController
 {
+
+    private $backgroundImages = [
+        'index' => 'ciel_etoile.webp',
+        'new' => 'AdobeStock_585885970.webp',
+        'edit' => 'AdobeStock_585885970.webp',
+        'show' => 'ciel_etoile.webp.jpg'
+    ];
+
+
+
+
     public function __construct(private RequestStack $requestStack)
     {
     }
@@ -48,6 +59,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/index.html.twig', [
             'pokemons' => $pokemons,
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 
@@ -62,6 +74,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/show.html.twig', [
             'team' => $team,
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 
@@ -99,6 +112,7 @@ class TeamController extends AbstractController
 
         return $this->render('team/add.html.twig', [
             'form' => $form->createView(),
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 

@@ -50,6 +50,13 @@ class ApiController extends AbstractController
     //     ]);
     // }
     // APi paginée
+
+    private $backgroundImages = [
+        'results' => 'pokemmo-pngrepo-com.webp',
+    ];
+
+
+
     #[Route('/results', name: 'app_api_results')]
     public function getResults(Request $request, HttpClientInterface $httpClient): Response
     {
@@ -88,7 +95,9 @@ class ApiController extends AbstractController
                 'totalPages' => $totalPages,
                 'previous' => $page > 1 ? $page - 1 : null,
                 'next' => $page < $totalPages ? $page + 1 : null,
+               
             ],
+            'backgroundImage' => $this->backgroundImages['results'] // Image pour la page d'index
         ]);
     }
 

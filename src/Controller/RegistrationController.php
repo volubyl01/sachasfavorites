@@ -15,6 +15,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
 {
+
+    private $backgroundImages = [
+'register' => '1329.jpg',    ];
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response
     {
@@ -41,6 +45,8 @@ class RegistrationController extends AbstractController
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form,
+            'backgroundImage' => $this->backgroundImages['register']
+
         ]);
     }
 }

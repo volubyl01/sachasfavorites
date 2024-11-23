@@ -22,6 +22,16 @@ use Symfony\Component\Form\Form;
 class PokemonController extends AbstractController
 {
 
+
+    private $backgroundImages = [
+        'index' => 'pokemmo-pngrepo-com.webp',
+        'new' => 'background_new.jpg',
+        'edit' => 'background_edit.jpg',
+        'show' => 'background_show.jpg'
+    ];
+
+
+
     private const MAX_TEAM_SIZE = 6;
 
     public function __construct(
@@ -61,6 +71,7 @@ class PokemonController extends AbstractController
             'pokemons' => $pokemons,
             'elements' => $elements,
             'bodyClass' => 'liste-pokemons',
+            'backgroundImage' => $this->backgroundImages['index'] // Image pour la page d'index
         ]);
     }
     #[Route('/new', name: 'monpokemon_pokemon_new', methods: ['GET', 'POST'])]

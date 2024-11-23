@@ -15,6 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/dresseur')]
 class DresseurController extends AbstractController
 {
+
+ 
+
+
+
     #[Route('/', name: 'app_dresseur_index', methods: ['GET'])]
     public function index(DresseurRepository $dresseurRepository): Response
     {

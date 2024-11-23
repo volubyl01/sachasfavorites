@@ -18,7 +18,9 @@ import $ from 'jquery';
  */
 import '@symfony/stimulus-bridge';
 // import './styles/app.css';
+import '../styles/app.css';
 
+import '../js/app'
 
 
 // import { createApp } from 'vue';

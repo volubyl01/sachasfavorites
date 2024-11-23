@@ -2,31 +2,40 @@ liip_imagine:
     driver: "gd"
     twig:
         mode: lazy
-    
+
     resolvers:
         default:
             web_path:
                 web_root: "%kernel.project_dir%/public"
                 cache_prefix: "media/cache"
-    
+
     loaders:
         default:
             filesystem:
                 data_root: "%kernel.project_dir%/public/uploads/Image"
-    
+
     cache: default
-    
+
     filter_sets:
         thumbnail:
             quality: 75
             filters:
                 thumbnail:
-                    size: [150, 150]
-                    mode: outbound
-        
+                    size: [200, 200]
+                    mode: inset
+
         medium:
             quality: 85
             filters:
                 thumbnail:
                     size: [300, 300]
                     mode: outbound
+
+        background_large:
+            quality: 75
+            filters:
+                resize:
+                    width: 1920
+                    height: 1080
+
+

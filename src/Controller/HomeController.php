@@ -10,6 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
+
+// on chisiit ses backgrounds par méthode
+private $backgroundImages = [
+    'index' => 'Background_pokemon_good.webp',
+];
+
     #[Route('/', name: 'app_home')]
     public function index(PokemonRepository $pokemonRepository, ElementRepository $elementRepository): Response
     {
@@ -19,8 +25,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'bodyClass' => 'home',
             'controller_name' => 'HomeController',
-            // 'pokemons' => $pokemons,
-            // 'illustration' => $elements,
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 }

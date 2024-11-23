@@ -1,40 +1,42 @@
 {% extends 'base.html.twig' %}
 
-{% block body_class %}neutrals{% endblock %}
-
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
-<form >
-<div class="mx-auto col-5 border border-danger px-5 py-5">
-    <h3 class=" mb-3 font-weight-normal text-center">Identifiez-vous</h3>
-    <label for="inputUsername">Username</label>
-    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+<body class="d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}" style="background-image: url('{{ asset('images/' ~ backgroundImage) }}');">
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
+	<form method="post">
+		{% if error %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endif %}
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
-    </div>
+		{% if app.user %}
+			<div class="mb-3">
+				You are logged in as
+				{{ app.user.userIdentifier }},
+				<a href="{{ path('app_logout') }}">Logout</a>
+			</div>
+		{% endif %}
+		<form>
+			<div class="mx-auto col-5 border border-danger px-5 py-5">
+				<h3 class=" mb-3 font-weight-normal text-center">Identifiez-vous</h3>
+				<label for="inputUsername">Dresseur</label>
+				<input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+				<label for="inputPassword">Password</label>
+				<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-    </div>
-    </form>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-{% endblock %}
+				<div class="checkbox mb-3">
+					<label>
+						<input type="checkbox" name="_remember_me">
+						Remember me
+					</label>
+				</div>
+
+				<button class="btn btn-lg btn-primary" type="submit">
+					Sign in
+				</button>
+			</div>
+		</form>
+</body>
+	{% endblock %}

@@ -8,8 +8,8 @@
 		<h1 class="display-5 text-center fw-bolder text-white">Les énergies</h1>
 	</div>
 
-	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		<div class="text-center">
+	{% if is_granted('ROLE_USER') %}
+		<div class="text-center text-white">
 			<p>Bienvenue,
 				{{ app.user.username }}!</p>
 			<button type="button" class="btn btn-outline-warning text-yellow ">
