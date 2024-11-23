@@ -8,14 +8,6 @@
 {% block stylesheets %}
 	{{ parent() }}
 	{{ encore_entry_link_tags('app') }}
-	<style>
-		body {
-			;
-			background-size: cover;
-			background-position: center;
-			background-attachment: fixed;
-		}
-	</style>
 {% endblock %}
 
 {% block body %}
@@ -48,8 +40,8 @@
 			</div>
 
 			{# Colonne droite #}
-			<div class="col-md-5 text-primary text-center my-3 mx-auto" >
-				<div class="text-center mb-5 background-image: url('{{ asset('uploads/Image/' ~ pokemon.element.illustration) }}')">
+			<div class="col-md-5 text-primary text-center my-3 mx-auto my-3 border rounded-4 mx-auto" style="background-image: url('{{ asset('uploads/Image/' ~ pokemon.element.illustration) }}')" >
+				<div class="text-center mb-5" >
 					<img src="{{ asset('uploads/Image/' ~ pokemon.image) }}" class="img-fluid" alt="">
 				</div>
 			</div>
