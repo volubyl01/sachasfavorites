@@ -14,7 +14,12 @@ framework:
 
     # Configurer l'Asset Mapper
     asset_mapper:
-        paths: ['assets/']
+        paths: 
+            - 'assets/'
+            - '%kernel.project_dir%/public/uploads'
+
+
+  
 
     # Activer ESI si nécessaire
     # esi: true

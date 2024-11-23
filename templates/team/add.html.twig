@@ -5,7 +5,9 @@
 {% block title %}Créer une Équipe{% endblock %}
 
 {% block body %}
+		<div class="text-white text-center col-sm-4 col-md-4 col-lg-4 bg-accueil  fw-bolder border-success border-4 border rounded-pill mx-auto p-3">
     <h1>Créer une Équipe</h1>
+    </div>
 
     {% for message in app.flashes('error') %}
         <div class="alert alert-danger">
@@ -18,9 +20,9 @@
             {{ message }}
         </div>
     {% endfor %}
-
+<div class="mx-auto col-5 border border-danger px-5 py-5">
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <button type="submit" class="btn btn-primary">Créer l'équipe</button>
     {{ form_end(form) }}
+    </div>
 {% endblock %}

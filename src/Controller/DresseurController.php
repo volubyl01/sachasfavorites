@@ -16,7 +16,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DresseurController extends AbstractController
 {
 
- 
+ // on chisiit ses backgrounds par méthode
+ private $backgroundImages = [
+    'index' => 'pokeball-pokemon-pngrepo-com.webp',
+    'new' => 'pokeball-pokemon-pngrepo-com.webp',
+    'edit' => 'pokeball-pokemon-pngrepo-com.webp',
+    'show' => 'pokeball-pokemon-pngrepo-com.webp',
+];
 
 
 
@@ -25,6 +31,7 @@ class DresseurController extends AbstractController
     {
         return $this->render('dresseur/index.html.twig', [
             'dresseurs' => $dresseurRepository->findAll(),
+            'backgroundImage' => $this->backgroundImages['index']
         ]);
     }
 
@@ -45,6 +52,7 @@ class DresseurController extends AbstractController
         return $this->render('dresseur/new.html.twig', [
             'dresseur' => $dresseur,
             'form' => $form,
+            'backgroundImage' => $this->backgroundImages['new']
         ]);
     }
 
@@ -54,6 +62,7 @@ class DresseurController extends AbstractController
         return $this->render('dresseur/show.html.twig', [
             'dresseur' => $dresseur,
             'teams' => $dresseur->getTeams(),
+            'backgroundImage' => $this->backgroundImages['show']
         ]);
     }
 
@@ -74,6 +83,7 @@ class DresseurController extends AbstractController
     return $this->render('dresseur/edit.html.twig', [
         'dresseur' => $dresseur,
         'form' => $form,
+        'backgroundImage' => $this->backgroundImages['edit']
     ]);
     }
 

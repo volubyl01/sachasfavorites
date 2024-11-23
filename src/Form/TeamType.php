@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 class TeamType extends AbstractType
 {
@@ -23,15 +25,23 @@ class TeamType extends AbstractType
         $builder
         
         ->add('name', TextType::class, [
+            'attr' => [
+                'placeholder' => 'Nommez votre équipe'
+            ],
             'required' => true,
         ])
-        ->add('pokemons', CollectionType::class, [
-            'entry_type' => TextType::class,
-            'allow_add' => true,
-            'allow_delete' => true,
+        // ->add('pokemons', CollectionType::class, [
+        //     'entry_type' => TextType::class,
+        //     'allow_add' => true,
+        //     'allow_delete' => true,
+        // ])
+        ->add('save', SubmitType::class, [
+            'label' => 'Créer l\'équipe',
+            'attr' => [
+                'class' => 'btn btn-primary'
+            ]
         ])
-
-        // ou Team Array
+     
 
     ;
 

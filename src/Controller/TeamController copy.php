@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Team;
@@ -15,6 +16,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
 
 class TeamController extends AbstractController
 {
@@ -114,49 +117,50 @@ class TeamController extends AbstractController
     }
 
     #[Route("/add-to-team/{id}", name: "add_to_team", methods: ["POST"])]
+    #[IsGranted('ROLE_USER')]
     public function addToTeam(int $id, Request $request, TeamService $teamService, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $sprite = $request->request->get('sprite');
-        
+
         $teamId = $session->get('team_id');
-        
+
         if (!$teamId) {
             $this->addFlash('error', 'Aucune équipe sélectionnée. Veuillez d\'abord créer une équipe.');
             return $this->redirectToRoute('app_team_add');
         }
-        
+
         $team = $entityManager->getRepository(Team::class)->find($teamId);
-        
+
         if (!$team) {
             $this->addFlash('error', 'Équipe non trouvée.');
             return $this->redirectToRoute('app_team_add');
         }
-        
+
         $url = "https://pokeapi.co/api/v2/pokemon/{$id}/";
         $pokemonDetails = $teamService->fetchPokemonDetails($url);
-        
+
         if (count($team->getPokemons()) >= 6) {
             $this->addFlash('error', 'L\'équipe est déjà complète (6 Pokémons maximum).');
-            return $this->redirectToRoute('app_pokemon');
+            return $this->redirectToRoute('monpokemon_pokemon_index');
         }
-        
+
         $pokemon = new Pokemon();
         $pokemon->setName($pokemonDetails['name']);
         $pokemon->setApiId($pokemonDetails['id']);
         $pokemon->setSprite($sprite);
         $pokemon->setDescription($pokemonDetails['description'] ?? '');
         $pokemon->setLevel($pokemonDetails['level'] ?? 1);
-        
+
         // Établir la relation bidirectionnelle
         $pokemon->setTeam($team);
         $team->addPokemon($pokemon);
-        
+
         $entityManager->persist($pokemon);
         $entityManager->persist($team);
         $entityManager->flush();
-        
+
         $this->addFlash('success', $pokemonDetails['name'] . ' a été ajouté à votre équipe !');
-        
-        return $this->redirectToRoute('app_pokemon');
+
+        return $this->redirectToRoute('monpokemon_pokemon_index');
     }
 }

@@ -27,7 +27,7 @@ class CartController extends AbstractController
 
  
 
-    #[Route('/pokemon/add', name: 'app_pokemon_add', methods: ['POST'])]
+    #[Route('/pokemon/add', name: 'monpokemon_pokemon_index_add', methods: ['POST'])]
     public function addToTeam(Request $request): Response
     {
         $pokemonId = $request->request->get('pokemon_id');

@@ -22,13 +22,19 @@
 							<h5 class="card-title">{{ pokemon.name|capitalize }}</h5>
 						</div>
 						<div class="card-body text-center">
-							<form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post" class="">
-								<input type="hidden" name="name" value="{{ pokemon.name }}">
-								<input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
-								<button type="submit" class="btn btn-primary mb-2 mx-auto">Ajouter ce Pokemon à l'équipe</button>
-							</form>
+							{% if app.user %}
+								<form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post" class="">
+									<input type="hidden" name="name" value="{{ pokemon.name }}">
+									<input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
+									<button type="submit" class="btn btn-primary mb-2 mx-auto">Ajouter ce Pokemon à l'équipe</button>
+								</form>
+								<a href="{{ path('app_team_add') }}" class="btn btn-outline-warning">Ajouter une équipe</a>
+							{% else %}
+								<p class="text-danger">Veuillez vous
+									<a href="{{ path('app_login') }}">connecter</a>
+									pour créer une équipe</p>
+							{% endif %}
 
-							<a href="{{ path('app_team_add') }}" class="btn btn-outline-warning">Ajouter une équipe</a>
 						</div>
 					</div>
 				</div>
