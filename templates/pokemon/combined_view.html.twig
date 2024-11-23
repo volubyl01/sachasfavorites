@@ -62,7 +62,7 @@
                 {% for pokemon in data.results %}
                     <div class="pokemon-card">
                         <img src="{{ pokemon.sprite }}" alt="{{ pokemon.name }}">
-                        <h3>{{ pokemon.name|capitalize }}</h3>
+                        <h3 class ="text-danger">{{ pokemon.name|capitalize }}</h3>
                         <form action="{{ path('add_to_team', {'id': pokemon.id}) }}" method="post">
                             <input type="hidden" name="name" value="{{ pokemon.name }}">
                             <input type="hidden" name="sprite" value="{{ pokemon.sprite }}">
