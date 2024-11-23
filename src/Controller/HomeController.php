@@ -13,7 +13,7 @@ class HomeController extends AbstractController
 
 // on chisiit ses backgrounds par méthode
 private $backgroundImages = [
-    'index' => 'Background_pokemon_good.webp',
+    'home' => 'Background_pokemon_good.webp',
 ];
 
     #[Route('/', name: 'app_home')]
@@ -25,7 +25,7 @@ private $backgroundImages = [
         return $this->render('home/index.html.twig', [
             'bodyClass' => 'home',
             'controller_name' => 'HomeController',
-            'backgroundImage' => $this->backgroundImages['index']
+            'backgroundImage' => $this->backgroundImages['home']
         ]);
     }
 }
