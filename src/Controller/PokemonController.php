@@ -25,9 +25,9 @@ class PokemonController extends AbstractController
 
     private $backgroundImages = [
         'index' => 'pokemmo-pngrepo-com.webp',
-        'new' => 'background_new.jpg',
-        'edit' => 'background_edit.jpg',
-        'show' => 'background_show.jpg'
+        'new' => 'pokemmo-pngrepo-com.webp',
+        'edit' => 'pokemmo-pngrepo-com.webp',
+        'show' => 'pokemmo-pngrepo-com.webp',
     ];
 
 
@@ -94,6 +94,7 @@ class PokemonController extends AbstractController
             'bodyClass' => 'new-pokemon',
             'pokemon' => $pokemon,
             'form' => $form->createView(),
+            'backgroundImage' => $this->backgroundImages['new'] // Image pour la page d'index
         ]);
     }
     #[Route('/add-to-team/{id}', name: 'monpokemon_pokemon_add_to_team', methods: ['POST'])]
@@ -163,6 +164,7 @@ class PokemonController extends AbstractController
             'illustration' => $illustration,
             'element' => $element,
             'form' => $form->createView(),
+            'backgroundImage' => $this->backgroundImages['edit'] // Image pour la page d'index
         ]);
     }
     #[Route('/{id}/delete', name: 'monpokemon_pokemon_delete', methods: ['POST'])]
@@ -185,13 +187,14 @@ class PokemonController extends AbstractController
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
             'illustration' => $illustration,
+            'backgroundImage' => $this->backgroundImages['show'] // Image pour la page d'index
         ]);
     }
 
 
     private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void
     {
-        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
         if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
             throw new \InvalidArgumentException('Format d\'image non supporté');
         }

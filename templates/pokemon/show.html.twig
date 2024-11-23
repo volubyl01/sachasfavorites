@@ -10,7 +10,7 @@
 	{{ encore_entry_link_tags('app') }}
 	<style>
 		body {
-			background-image: url('{{ asset('uploads/Image/' ~ illustration) }}');
+			;
 			background-size: cover;
 			background-position: center;
 			background-attachment: fixed;
@@ -26,10 +26,11 @@
 					{{ pokemon.name }}</h1>
 			</div>
 		</div>
+
 		<div
 			class="row justify-content-between">
 			{# colonne gauche #}
-			<div class="col-md-5 bg-light text-primary text-center my-3 border rounded-4">
+			<div class="col-md-5 bg-light text-primary text-center my-3 border rounded-4 mx-auto">
 				<h3>Son histoire</h3>
 				<h5>{{ pokemon.description }}</h5>
 				<div class="text-primary">
@@ -47,8 +48,8 @@
 			</div>
 
 			{# Colonne droite #}
-			<div class="col-md-5 text-primary text-center my-3">
-				<div class="text-center mb-5">
+			<div class="col-md-5 text-primary text-center my-3 mx-auto" >
+				<div class="text-center mb-5 background-image: url('{{ asset('uploads/Image/' ~ pokemon.element.illustration) }}')">
 					<img src="{{ asset('uploads/Image/' ~ pokemon.image) }}" class="img-fluid" alt="">
 				</div>
 			</div>

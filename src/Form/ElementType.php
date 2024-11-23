@@ -25,7 +25,7 @@ class ElementType extends AbstractType
                 'constraints'=> [
                     new File ([
                         'maxSize' => '6000k',
-                        'mimeTypes' => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'],
+                        'mimeTypes' => ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'],
                     ]),
                 ],
             ]) 

@@ -1,72 +1,68 @@
 <nav class="navbar navbar-expand-lg bg-body-transparent">
-	<div class="container-fluid justify-content-center justify-content-between">
-		<a class="navbar-brand" href="/">
-			<img src="{{asset('build/images/PW_logo.webp') }}" width="120" height="auto" class="d-inline-block align-top" alt="Brand">
-		</a>
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<div class="d-flex justify-content-between">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">
-							<h5 class="fs-5 text-danger">Home</h5>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_a_propos') }}">
-							<h5 class="fs-5 text-danger">A propos</h5>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_team_index') }}">
-							<h5 class="fs-5 text-danger">Les Teams</h5>
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_element_index') }}">
-							<h5 class="fs-5 text-danger">Les énergies</h5>
-						</a>
-					</li>
-				{% if app.user %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_logout') }}">
-							<h5 class="fs-5 text-danger">Déconnexion</h5>
-						</a>
-					</li>
-					{% else %}
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="{{asset('build/images/PW_logo.webp') }}" width="120" height="auto" class="d-inline-block align-top" alt="Brand">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto text-center">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">
+                        <h5 class="text-danger">Home</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_a_propos') }}">
+                        <h5 class="text-danger">A propos</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_team_index') }}">
+                        <h5 class="text-danger">Les Teams</h5>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_element_index') }}">
+                        <h5 class="text-danger">Les énergies</h5>
+                    </a>
+                </li>
 
-						<li class="nav-item">
-							<a class="nav-link text-danger" href="{{ path('app_login') }}">
-								<h5 class="fs-5">Connexion</h5>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class=" nav-link text-danger text-decoration-none" href="{{ path('app_register') }}">
-								<h5 class="fs-5">Inscription</h5>
-							</a>
-						</li>
-					{% endif %}
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">
+                            <h5 class="text-danger">Déconnexion</h5>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">
+                            <h5 class="text-danger">Connexion</h5>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">
+                            <h5 class="text-danger">Inscription</h5>
+                        </a>
+                    </li>
+                {% endif %}
 
-
-					{% if is_granted('ROLE_USER') %}
-						<li class="nav-item">
-							<a class="nav-link text-center text-danger text-decoration-none" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
-								<h2 class='fs-5'>Mon profil</h2>
-							</a>
-						</li>
-
-						{% if is_granted('ROLE_ADMIN') %}
-							<li class="nav-item">
-								<a class="text-center text-danger text-decoration-none" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
-									<h2 class='pt-1 fs-5'>Rechercher sur YouTube</h2>
-								</a>
-							</li>
-						{% endif %}
-					{% endif %}
-				</div>
-			</ul>
-		</div>
-	</div>
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_dresseur_show', {'id': app.user.id}) }}">
+                            <h5 class="text-danger">Mon profil</h5>
+                        </a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_youtube_search', {'query': 'terme de recherche'}) }}">
+                                <h5 class="text-danger">Rechercher sur YouTube</h5>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </nav>

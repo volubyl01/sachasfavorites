@@ -15,7 +15,7 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-5 justify-content-center mt-5">
-					<div class="d-flex w-75">
+					<div class="d-flex w-75 text-center">
 						{% if pokemon.image %}
 							<img src="{{ asset(pokemon.image)|imagine_filter('thumbnail') }}" alt="{{ pokemon.name }}" style='width:18rem'>
 						{% else %}
@@ -23,9 +23,9 @@
 						{% endif %}
 					</div>
 
-					<div class="">
+					<div class="text-center">
 						<button>
-							<a class="btn  text-yellow nodecoration bg-buttonM" href="{{ path('monpokemon_pokemon_index') }}">Retour à la liste</a>
+							<a class="text-yellow nodecoration" href="{{ path('monpokemon_pokemon_index') }}">Retour à la liste</a>
 						</button>
 						<button>
 							{{ include('pokemon/_delete_form.html.twig') }}
