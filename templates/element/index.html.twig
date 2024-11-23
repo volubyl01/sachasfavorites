@@ -21,25 +21,15 @@
 	{% endif %}
 
 	<div class="container-fluid">
-		<div class="cols-12">
-			<table class="table table-responsive table-hover opacity-3 border-start border-end  border-5 border-radius border-success my-5">
-				<thead>
-					<tr>
-
-						{# <th>Specificite</th>
-																									<th>Illustration</th>
-																									<th>actions</th> #}
-					</tr>
-				</thead>
+		<div class="table-responsive row">
+			<table class=" mx-auto col-5 table-hover opacity-3 border-start border-end  border-5 border-radius border-success my-5">
 				<tbody>
 					{% for element in elements %}
-						<tr>
-
-							<td>{{ element.specificite }}</td>
+						<tr class="">
+							<td class="text-center">{{ element.specificite }}</td>
 							<td class="img-fluid">
 								<img src="{{asset('uploads/image/') ~ element.illustration}}" alt="" style='width:100px;height:100px'>
 							</td>
-							
 							<td>
 								<a href="{{ path('app_element_show', {'id': element.id}) }}">show</a>
 								<a href="{{ path('app_element_edit', {'id': element.id}) }}">edit</a>
@@ -52,6 +42,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			</div>
 		</div>
 	</div>
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}

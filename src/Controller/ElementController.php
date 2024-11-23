@@ -23,7 +23,7 @@ class ElementController extends AbstractController
         'index' => 'ciel_etoile.webp',
         'new' => 'AdobeStock_585885970.webp',
         'edit' => 'AdobeStock_585885970.webp',
-        'show' => 'ciel_etoile.webp.jpg'
+        'show' => 'ciel_etoile.webp'
     ];
 
 
