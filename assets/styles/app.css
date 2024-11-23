@@ -4,25 +4,7 @@
 .navbar {
 	border-bottom: none !important;
 }
-/* paramétrages pour laisser le footer en bas de page */
-/* html, body {
-    height: 100%;
-}
 
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-main {
-    flex: 1 0 auto;
-}
-
-footer {
-    flex-shrink: 0;
-} */
-/* ----------------------------------------- */
 body.liste-pokemons {
 	background-image: url("../images/pokemmo-pngrepo-com.webp");
 	background-repeat: no-repeat;

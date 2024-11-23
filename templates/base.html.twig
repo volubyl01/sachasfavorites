@@ -22,7 +22,7 @@
 		{% endblock %}
 	</head>
 	<body
-		class="d-flex flex-column min-vh-100 {% block body_class %}{% endblock %}">
+		class="d-flex flex-column min-vh-100 {% block body_class %}{{ bodyClass|default('') }}{% endblock %}">
 
 
 		{# class="{{ bodyClass|default('') }}"> #}
@@ -38,7 +38,7 @@
 		{% endfor %}
 		<!-- Ajout d'un conteneur flex ici -->
 		<main
-			class="flex-grow-1">
+			>
 			<!-- Conteneur pour le contenu principal -->
 			{% block body %}{% endblock %}
 		</main>
