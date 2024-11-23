@@ -26,7 +26,7 @@
 				<tbody>
 					{% for element in elements %}
 						<tr class="">
-							<td class="text-center">{{ element.specificite }}</td>
+							<td class="text-center text-danger">{{ element.specificite }}</td>
 							<td class="img-fluid">
 								<img src="{{asset('uploads/image/') ~ element.illustration}}" alt="" style='width:100px;height:100px'>
 							</td>
