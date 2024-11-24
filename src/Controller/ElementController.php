@@ -122,20 +122,39 @@ class ElementController extends AbstractController
 
 private function handleElementForm(Element $element, FormInterface $form): void
 {
-
-
     $illustrationFile = $form->get('illustration')->getData();
 
     if ($illustrationFile) {
-        // Vérification des formats acceptés
-        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
-        if (!in_array($illustrationFile->getMimeType(), $allowedMimeTypes)) {
+        // Vérification des formats acceptés avec plus de variations possibles
+        $allowedMimeTypes = [
+            'image/jpeg', 
+            'image/png', 
+            'image/gif', 
+            'image/webp',
+            'image/jpg',
+            'application/octet-stream' // Parfois le WebP est détecté comme ceci
+        ];
+
+        $mimeType = $illustrationFile->getMimeType();
+        $extension = strtolower($illustrationFile->getClientOriginalExtension());
+
+        // Log pour déboguer en production
+        error_log("Mime Type: " . $mimeType);
+        error_log("Extension: " . $extension);
+
+        // Vérification plus souple incluant l'extension
+        if (!in_array($mimeType, $allowedMimeTypes) && !in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
             throw new \InvalidArgumentException(
-                'Format d\'image non supporté. Formats acceptés : JPEG, PNG, GIF, WEBP'
+                'Format d\'image non supporté. Formats acceptés : JPG, JPEG, PNG, GIF, WEBP. ' .
+                'Type détecté : ' . $mimeType . ', Extension : ' . $extension
             );
         }
 
 
+
+
+
+        // Supppression de l'ancienne illustration
         if ($element->getIllustration()) {
             $oldIllustrationPath = $this->getParameter('upload_directory') . '/' . $element->getIllustration();
             if (file_exists($oldIllustrationPath)) {
