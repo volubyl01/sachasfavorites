@@ -122,10 +122,20 @@ class ElementController extends AbstractController
 
 private function handleElementForm(Element $element, FormInterface $form): void
 {
+
+
     $illustrationFile = $form->get('illustration')->getData();
 
     if ($illustrationFile) {
-        // Suppression de l'ancienne image si elle existe
+        // Vérification des formats acceptés
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
+        if (!in_array($illustrationFile->getMimeType(), $allowedMimeTypes)) {
+            throw new \InvalidArgumentException(
+                'Format d\'image non supporté. Formats acceptés : JPEG, PNG, GIF, WEBP'
+            );
+        }
+
+
         if ($element->getIllustration()) {
             $oldIllustrationPath = $this->getParameter('upload_directory') . '/' . $element->getIllustration();
             if (file_exists($oldIllustrationPath)) {
