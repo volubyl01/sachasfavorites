@@ -7,7 +7,7 @@ parameters:
     pokemon_image_directory : "%kernel.project_dir%/public/uploads/image"
     element_illustration_directory : "%kernel.project_dir%/public/uploads/image"
     app.youtube_api_key: 'YAIzaSyAjqHKgV53T_72xNBJiXt_c20eBl60JUyI'
-    upload_directory: '%kernel.project_dir%/public/uploads/Image/'
+    upload_directory: '%kernel.project_dir%/public/uploads/'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -58,4 +58,10 @@ services:
         arguments:
             $httpClient: '@http_client'
             $apiKey: '%env(YOUTUBE_API_KEY)%'
-            
+
+    App\Controller\ElementController:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $elementRepository: '@App\Repository\ElementRepository'
+            $imagineCacheManager: '@liip_imagine.cache.manager'
+        

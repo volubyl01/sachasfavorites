@@ -31,6 +31,7 @@ class ElementController extends AbstractController
 
     public function __construct(
         private EntityManagerInterface $entityManager,
+        private readonly ElementRepository $elementRepository,
         private CacheManager $imagineCacheManager
     ) {
     }
