@@ -92,7 +92,7 @@ class Element
 
     public function getIllustration(): ?string
     {
-        return $this->illustration;
+        return $this->illustration ? '/uploads/Image/' . $this->illustration : null;
     }
 
     public function setIllustration(?string $illustration): static

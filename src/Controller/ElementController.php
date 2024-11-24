@@ -8,11 +8,13 @@ use App\Form\SearchingType;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -27,13 +29,12 @@ class ElementController extends AbstractController
     ];
 
 
-    private $imagineCacheManager;
-
-    public function __construct(CacheManager $imagineCacheManager)
-    {
-        $this->imagineCacheManager = $imagineCacheManager;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private CacheManager $imagineCacheManager
+    ) {
     }
-
+    
     #[Route('/', name: 'app_element_index', methods: ['GET'])]
     public function index(ElementRepository $elementRepository): Response
     { 
@@ -45,23 +46,57 @@ class ElementController extends AbstractController
         ]);
     }
 
-    #[Route('new', name: 'app_element_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $element = new Element();
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    public function form(
+        Request $request,
+        SluggerInterface $slugger,
+        ?Element $element = null
+    ): Response {
+        $element = $element ?? new Element();
         $form = $this->createForm(ElementType::class, $element);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleElementForm($element, $form, $entityManager);
-            return $this->redirectToRoute('app_element_index', [], Response::HTTP_SEE_OTHER);
+            $illustrationFile = $form->get('illustration')->getData();
+
+            if ($illustrationFile) {
+                $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
+
+                try {
+                    $illustrationFile->move(
+                        $this->getParameter('elements_directory'),
+                        $newFilename
+                    );
+                    
+                    // Supprime l'ancienne image si elle existe
+                    if ($element->getIllustration()) {
+                        $oldFile = $this->getParameter('elements_directory') . '/' . $element->getIllustration();
+                        if (file_exists($oldFile)) {
+                            unlink($oldFile);
+                        }
+                    }
+                    
+                    $element->setIllustration($newFilename);
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Une erreur est survenue lors de l\'upload du fichier');
+                    return $this->redirectToRoute('element_index');
+                }
+            }
+
+            $this->entityManager->persist($element);
+            $this->entityManager->flush();
+
+            $this->addFlash('success', 'Élément ' . ($element->getId() ? 'modifié' : 'créé') . ' avec succès!');
+            return $this->redirectToRoute('element_index');
         }
 
-        return $this->render('element/new.html.twig', [
-            'element' => $element,
+        return $this->render('element/form.html.twig', [
             'form' => $form,
-            'bodyClass'=> 'new-element',
-            'backgroundImage' => $this->backgroundImages['new']
+            'element' => $element,
+            'edit' => $element->getId() !== null,
         ]);
     }
 
@@ -74,23 +109,7 @@ class ElementController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_element_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Element $element, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(ElementType::class, $element);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleElementForm($element, $form, $entityManager);
-            return $this->redirectToRoute('app_element_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('element/edit.html.twig', [
-            'element' => $element,
-            'form' => $form,
-            'backgroundImage' => $this->backgroundImages['edit']
-        ]);
-    }
+   
 
     #[Route('/{id}', name: 'app_element_delete', methods: ['POST'])]
     public function delete(Request $request, Element $element, EntityManagerInterface $entityManager): Response
