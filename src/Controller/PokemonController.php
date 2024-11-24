@@ -164,7 +164,7 @@ class PokemonController extends AbstractController
             'illustration' => $illustration,
             'element' => $element,
             'form' => $form->createView(),
-            'backgroundImage' => $this->backgroundImages['edit'] // Image pour la page d'index
+            'backgroundImage' => $this->backgroundImages['edit'] 
         ]);
     }
     #[Route('/{id}/delete', name: 'monpokemon_pokemon_delete', methods: ['POST'])]
@@ -178,6 +178,7 @@ class PokemonController extends AbstractController
 
         return $this->redirectToRoute('monpokemon_pokemon_index', [], Response::HTTP_SEE_OTHER);
     }
+
     #[Route('/{id}', name: 'monpokemon_pokemon_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Pokemon $pokemon): Response
     {
@@ -187,7 +188,7 @@ class PokemonController extends AbstractController
         return $this->render('pokemon/show.html.twig', [
             'pokemon' => $pokemon,
             'illustration' => $illustration,
-            'backgroundImage' => $this->backgroundImages['show'] // Image pour la page d'index
+            'backgroundImage' => $this->backgroundImages['show'] 
         ]);
     }
 
@@ -220,19 +221,51 @@ class PokemonController extends AbstractController
         }
     }
 
-
-
-
-    private function handlePokemonForm(Pokemon $pokemon, Form $form): void
-    {
-        $element = $form->get('element')->getData();
-        if ($element !== null) {
-            $pokemon->setElement($element);
-        }
-
-        $image = $form->get('image')->getData();
-        if ($image instanceof UploadedFile) {
-            $this->handleImageUpload($pokemon, $image);
-        }
+    private function handleElementImageUpload(Element $element, UploadedFile $illustration): void
+{
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
+    if (!in_array($illustration->getMimeType(), $allowedMimeTypes)) {
+        throw new \InvalidArgumentException('Format d\'image non supporté');
     }
+
+    $uploadDir = $this->getParameter('upload_directory');
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+
+    $oldIllustration = $element->getIllustration();
+    if ($oldIllustration && file_exists($uploadDir . $oldIllustration)) {
+        unlink($uploadDir . $oldIllustration);
+        $this->imagineCacheManager->remove($oldIllustration);
+    }
+
+    try {
+        $imageName = uniqid() . '.' . $illustration->guessExtension();
+        $illustration->move($uploadDir, $imageName);
+        $element->setIllustration($imageName);
+        $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
+    } catch (\Exception $e) {
+        throw new \RuntimeException('Erreur lors du téléchargement de l\'illustration');
+    }
+}
+
+private function handlePokemonForm(Pokemon $pokemon, Form $form): void
+{
+    $element = $form->get('element')->getData();
+    if ($element !== null) {
+        if ($form->has('illustration')) {
+            $illustration = $form->get('illustration')->getData();
+            if ($illustration instanceof UploadedFile) {
+                $this->handleElementImageUpload($element, $illustration);
+                $this->entityManager->persist($element);
+            }
+        }
+        $pokemon->setElement($element);
+    }
+
+    $image = $form->get('image')->getData();
+    if ($image instanceof UploadedFile) {
+        $this->handleImageUpload($pokemon, $image);
+    }
+}
 }
