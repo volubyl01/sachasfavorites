@@ -17,7 +17,8 @@ class RegistrationController extends AbstractController
 {
 
     private $backgroundImages = [
-'register' => '1329.jpg',    ];
+        'register' => 'images/backgrounds/1329.jpg',
+    ];
 
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, Security $security, EntityManagerInterface $entityManager): Response

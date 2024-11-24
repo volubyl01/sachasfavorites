@@ -28,7 +28,7 @@
 						<tr class="">
 							<td class="text-center text-danger">{{ element.specificite }}</td>
 							<td class="img-fluid">
-								<img src="{{asset('uploads/image/') ~ element.illustration}}" alt="" style='width:100px;height:100px'>
+								<img src="{{element.illustration}}" alt="" style='width:100px;height:100px'>
 							</td>
 							<td>
 								<a href="{{ path('app_element_show', {'id': element.id}) }}">show</a>

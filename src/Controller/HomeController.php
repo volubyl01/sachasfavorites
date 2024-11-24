@@ -13,7 +13,7 @@ class HomeController extends AbstractController
 
 // on chisiit ses backgrounds par méthode
 private $backgroundImages = [
-    'home' => 'Background_pokemon_good.webp',
+    'home' => 'images/backgrounds/Background_pokemon_good.webp',
 ];
 
     #[Route('/', name: 'app_home')]

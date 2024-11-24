@@ -10,7 +10,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class SecurityController extends AbstractController
 {
     private $backgroundImages = [
-        'login' => '1329.jpg',
+        'login' => 'images/backgrounds/1329.jpg',
     ];
 
     #[Route(path: '/login', name: 'app_login')]

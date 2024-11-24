@@ -24,10 +24,10 @@ class PokemonController extends AbstractController
 
 
     private $backgroundImages = [
-        'index' => 'pokemmo-pngrepo-com.webp',
-        'new' => 'pokemmo-pngrepo-com.webp',
-        'edit' => 'pokemmo-pngrepo-com.webp',
-        'show' => 'pokemmo-pngrepo-com.webp',
+        'index' => 'images/backgrounds/pokemmo-pngrepo-com.webp',
+        'new' => 'images/backgrounds/pokemmo-pngrepo-com.webp',
+        'edit' => 'images/backgrounds/pokemmo-pngrepo-com.webp',
+        'show' => 'images/backgrounds/pokemmo-pngrepo-com.webp',
     ];
 
 
@@ -195,31 +195,55 @@ class PokemonController extends AbstractController
 
     private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void
     {
+        // 1. Validation du type MIME
         $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
         if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
-            throw new \InvalidArgumentException('Format d\'image non supporté');
+            throw new \InvalidArgumentException(
+                'Format d\'image non supporté. Formats acceptés : JPEG, PNG, GIF, WEBP'
+            );
         }
-
-        $uploadDir = $this->getParameter('upload_directory');
+    
+        // 2. Vérification et création du répertoire
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/images/pokemon/';
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+            if (!mkdir($uploadDir, 0755, true)) {
+                throw new \RuntimeException('Impossible de créer le répertoire d\'upload');
+            }
         }
-
+    
+        // 3. Suppression de l'ancienne image
         $oldImage = $pokemon->getImage();
-        if ($oldImage && file_exists($uploadDir . $oldImage)) {
-            unlink($uploadDir . $oldImage);
-            $this->imagineCacheManager->remove($oldImage);
+        if ($oldImage) {
+            $oldImagePath = $uploadDir . $oldImage;
+            if (file_exists($oldImagePath)) {
+                try {
+                    unlink($oldImagePath);
+                    $this->imagineCacheManager->remove($oldImage);
+                } catch (\Exception $e) {
+                    throw new \RuntimeException('Erreur lors de la suppression de l\'ancienne image : ' . $e->getMessage());
+                }
+            }
         }
-
+    
+        // 4. Upload de la nouvelle image
         try {
-            $imageName = uniqid() . '.' . $image->guessExtension();
+            $imageName = uniqid() . '_' . time() . '.' . $image->guessExtension();
             $image->move($uploadDir, $imageName);
             $pokemon->setImage($imageName);
-            $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
+            
+            // 5. Génération du thumbnail
+            try {
+                $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
+            } catch (\Exception $e) {
+                throw new \RuntimeException('Erreur lors de la génération du thumbnail : ' . $e->getMessage());
+            }
         } catch (\Exception $e) {
-            throw new \RuntimeException('Erreur lors du téléchargement de l\'image');
+            throw new \RuntimeException(
+                'Erreur lors du téléchargement de l\'image : ' . $e->getMessage()
+            );
         }
     }
+    
 
     private function handleElementImageUpload(Element $element, UploadedFile $illustration): void
 {
@@ -268,4 +292,20 @@ private function handlePokemonForm(Pokemon $pokemon, Form $form): void
         $this->handleImageUpload($pokemon, $image);
     }
 }
+
+public function upload(Request $request, Pokemon $pokemon): Response
+{
+    try {
+        $image = $request->files->get('image');
+        if ($image) {
+            $this->handleImageUpload($pokemon, $image);
+            $this->addFlash('success', 'Image uploadée avec succès');
+        }
+        return $this->redirectToRoute('pokemon_show', ['id' => $pokemon->getId()]);
+    } catch (\Exception $e) {
+        $this->addFlash('error', $e->getMessage());
+        return $this->redirectToRoute('pokemon_edit', ['id' => $pokemon->getId()]);
+    }
+}
+
 }

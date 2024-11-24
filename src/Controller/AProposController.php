@@ -11,7 +11,7 @@ class AProposController extends AbstractController
 {
 
     private $backgroundImages = [
-        'apropos' => '1329.jpg',
+        'apropos' => 'images/backgrounds/1329.jpg',
     ];
 
     #[Route('/apropos', name: 'app_a_propos')]

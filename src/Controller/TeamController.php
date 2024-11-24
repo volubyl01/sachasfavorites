@@ -21,10 +21,10 @@ class TeamController extends AbstractController
 {
 
     private $backgroundImages = [
-        'index' => 'ciel_etoile.webp',
-        'new' => 'AdobeStock_585885970.webp',
-        'edit' => 'AdobeStock_585885970.webp',
-        'show' => 'ciel_etoile.webp.jpg'
+        'team' => 'images/backgrounds/pokeball-pokemon-pngrepo-com.webp',
+        'show' => 'images/backgrounds/pokeball-pokemon-pngrepo-com.webp',
+        'add' => 'images/backgrounds/pokeball-pokemon-pngrepo-com.webp',
+        'index' => 'images/backgrounds/pokeball-pokemon-pngrepo-com.webp'
     ];
 
     public function __construct(private RequestStack $requestStack) {}
@@ -114,10 +114,10 @@ class TeamController extends AbstractController
 
     #[Route("/team/add-to-team/{id}", name: "add_to_team", methods: ["POST"])]
     public function addToTeam(
-        int $id, 
-        Request $request, 
-        TeamService $teamService, 
-        EntityManagerInterface $entityManager, 
+        int $id,
+        Request $request,
+        TeamService $teamService,
+        EntityManagerInterface $entityManager,
         SessionInterface $session
     ): Response {
         try {
@@ -126,59 +126,57 @@ class TeamController extends AbstractController
             if (!$teamId) {
                 throw new \Exception('Aucune équipe sélectionnée. Veuillez d\'abord créer une équipe.');
             }
-    
+
             $team = $entityManager->getRepository(Team::class)->find($teamId);
             if (!$team) {
                 throw new \Exception('Équipe non trouvée.');
             }
-    
+
             if (count($team->getPokemons()) >= 6) {
                 throw new \Exception('L\'équipe est déjà complète (6 Pokémons maximum).');
             }
-    
+
             // Récupération des données Pokémon
             $sprite = $request->request->get('sprite');
             $url = "https://pokeapi.co/api/v2/pokemon/{$id}/";
             $pokemonDetails = $teamService->fetchPokemonDetails($url);
-    
+
             // Gestion de l'image
             $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/pokemon/';
             if (!is_dir($uploadDir)) {
                 mkdir($uploadDir, 0777, true);
             }
-    
+
             $fileName = uniqid() . '.png';
             $imageContent = file_get_contents($sprite);
             if ($imageContent === false) {
                 throw new \Exception('Impossible de télécharger l\'image.');
             }
-    
+
             file_put_contents($uploadDir . $fileName, $imageContent);
-    
+
             // Création du Pokémon
             $pokemon = new Pokemon();
             $pokemon->setName($pokemonDetails['name'])
-                   ->setApiId($pokemonDetails['id'])
-                   ->setSprite($sprite)  
-                   ->setImage('uploads/pokemon/' . $fileName)
-                   ->setDescription($pokemonDetails['description'] ?? '')
-                   ->setLevel($pokemonDetails['level'] ?? 1)
-                   ->setTeam($team);
-    
+                ->setApiId($pokemonDetails['id'])
+                ->setSprite($sprite)
+                ->setImage('uploads/pokemon/' . $fileName)
+                ->setDescription($pokemonDetails['description'] ?? '')
+                ->setLevel($pokemonDetails['level'] ?? 1)
+                ->setTeam($team);
+
             $team->addPokemon($pokemon);
-    
+
             // Persistance des données
             $entityManager->persist($pokemon);
             $entityManager->flush();
-    
+
             $this->addFlash('success', $pokemonDetails['name'] . ' a été ajouté à votre équipe !');
-            
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
             return $this->redirectToRoute('app_team_add');
         }
-    
+
         return $this->redirectToRoute('app_team_index');
     }
-    
 }
