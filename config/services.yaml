@@ -4,7 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    pokemon_image_directory: '%kernel.project_dir%/public/uploads/pokemon'
+    pokemon_directory: '%kernel.project_dir%/public/uploads/pokemon'
     elements_directory: '%kernel.project_dir%/public/uploads/elements'
     upload_directory: '%kernel.project_dir%/public/uploads/images'
     app.youtube_api_key: '%env(YOUTUBE_API_KEY)%'
@@ -66,3 +66,6 @@ services:
             $elementRepository: '@App\Repository\ElementRepository'
             $imagineCacheManager: '@liip_imagine.cache.manager'
         
+
+    
+

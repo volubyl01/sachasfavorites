@@ -192,86 +192,39 @@ class PokemonController extends AbstractController
         ]);
     }
 
-
-    private function handleImageUpload(Pokemon $pokemon, UploadedFile $image): void
-    {
-        // 1. Validation du type MIME
-        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
-        if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
-            throw new \InvalidArgumentException(
-                'Format d\'image non supporté. Formats acceptés : JPEG, PNG, GIF, WEBP'
-            );
-        }
-    
-        // 2. Vérification et création du répertoire
-        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/images/pokemon/';
-        if (!is_dir($uploadDir)) {
-            if (!mkdir($uploadDir, 0755, true)) {
-                throw new \RuntimeException('Impossible de créer le répertoire d\'upload');
-            }
-        }
-    
-        // 3. Suppression de l'ancienne image
-        $oldImage = $pokemon->getImage();
-        if ($oldImage) {
-            $oldImagePath = $uploadDir . $oldImage;
-            if (file_exists($oldImagePath)) {
-                try {
-                    unlink($oldImagePath);
-                    $this->imagineCacheManager->remove($oldImage);
-                } catch (\Exception $e) {
-                    throw new \RuntimeException('Erreur lors de la suppression de l\'ancienne image : ' . $e->getMessage());
-                }
-            }
-        }
-    
-        // 4. Upload de la nouvelle image
-        try {
-            $imageName = uniqid() . '_' . time() . '.' . $image->guessExtension();
-            $image->move($uploadDir, $imageName);
-            $pokemon->setImage($imageName);
-            
-            // 5. Génération du thumbnail
-            try {
-                $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
-            } catch (\Exception $e) {
-                throw new \RuntimeException('Erreur lors de la génération du thumbnail : ' . $e->getMessage());
-            }
-        } catch (\Exception $e) {
-            throw new \RuntimeException(
-                'Erreur lors du téléchargement de l\'image : ' . $e->getMessage()
-            );
-        }
-    }
-    
-
-    private function handleElementImageUpload(Element $element, UploadedFile $illustration): void
+// Gestion des uploads la logique se fait dans handlepokemonimageupload
+    private function handlePokemonImageUpload(Pokemon $pokemon, UploadedFile $image): void
 {
     $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/jpg'];
-    if (!in_array($illustration->getMimeType(), $allowedMimeTypes)) {
-        throw new \InvalidArgumentException('Format d\'image non supporté');
+    if (!in_array($image->getMimeType(), $allowedMimeTypes)) {
+        throw new \InvalidArgumentException(
+            'Format d\'image non supporté. Formats acceptés : JPEG, PNG, GIF, WEBP'
+        );
     }
 
-    $uploadDir = $this->getParameter('upload_directory');
+    $uploadDir = $this->getParameter('pokemon_directory');
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        if (!mkdir($uploadDir, 0755, true)) {
+            throw new \RuntimeException('Impossible de créer le répertoire d\'upload');
+        }
     }
 
-    $oldIllustration = $element->getIllustration();
-    if ($oldIllustration && file_exists($uploadDir . $oldIllustration)) {
-        unlink($uploadDir . $oldIllustration);
-        $this->imagineCacheManager->remove($oldIllustration);
+    $oldImage = $pokemon->getImage();
+    if ($oldImage) {
+        $oldImagePath = $uploadDir . '/' . $oldImage;
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath);
+            $this->imagineCacheManager->remove($oldImage);
+        }
     }
 
-    try {
-        $imageName = uniqid() . '.' . $illustration->guessExtension();
-        $illustration->move($uploadDir, $imageName);
-        $element->setIllustration($imageName);
-        $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
-    } catch (\Exception $e) {
-        throw new \RuntimeException('Erreur lors du téléchargement de l\'illustration');
-    }
+    $imageName = uniqid() . '_' . time() . '.' . $image->guessExtension();
+    $image->move($uploadDir, $imageName);
+    $pokemon->setImage($imageName);
+    
+    $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
 }
+
 
 private function handlePokemonForm(Pokemon $pokemon, Form $form): void
 {
@@ -289,23 +242,10 @@ private function handlePokemonForm(Pokemon $pokemon, Form $form): void
 
     $image = $form->get('image')->getData();
     if ($image instanceof UploadedFile) {
-        $this->handleImageUpload($pokemon, $image);
+        $this->handlePokemonImageUpload($pokemon, $image);
     }
 }
 
-public function upload(Request $request, Pokemon $pokemon): Response
-{
-    try {
-        $image = $request->files->get('image');
-        if ($image) {
-            $this->handleImageUpload($pokemon, $image);
-            $this->addFlash('success', 'Image uploadée avec succès');
-        }
-        return $this->redirectToRoute('pokemon_show', ['id' => $pokemon->getId()]);
-    } catch (\Exception $e) {
-        $this->addFlash('error', $e->getMessage());
-        return $this->redirectToRoute('pokemon_edit', ['id' => $pokemon->getId()]);
-    }
-}
+
 
 }

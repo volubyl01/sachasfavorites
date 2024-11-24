@@ -8,6 +8,7 @@ use App\Form\SearchingType;
 use App\Repository\ElementRepository;
 use App\Repository\PokemonRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -48,14 +49,14 @@ class ElementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_element_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, SluggerInterface $slugger): Response
+    public function new(Request $request): Response
     {
         $element = new Element();
         $form = $this->createForm(ElementType::class, $element);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleIllustrationUpload($form, $element, $slugger);
+            $this->handleElementForm($element, $form);
             
             $this->entityManager->persist($element);
             $this->entityManager->flush();
@@ -73,14 +74,14 @@ class ElementController extends AbstractController
     }
     
     #[Route('/{id}/edit', name: 'app_element_edit', methods: ['GET', 'POST'])]
-    public function edit(Element $element, Request $request, SluggerInterface $slugger): Response
+    public function edit(Element $element, Request $request): Response
     {
         $form = $this->createForm(ElementType::class, $element);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->handleIllustrationUpload($form, $element, $slugger);
-            
+            $this->handleElementForm($element, $form);
+           
             $this->entityManager->flush();
     
             $this->addFlash('success', 'Élément modifié avec succès!');
@@ -93,36 +94,6 @@ class ElementController extends AbstractController
             'edit' => true,
             'backgroundImage' => $this->backgroundImages['edit']
         ]);
-    }
-    
-    private function handleIllustrationUpload($form, Element $element, SluggerInterface $slugger): void
-    {
-        $illustrationFile = $form->get('illustration')->getData();
-    
-        if ($illustrationFile) {
-            $originalFilename = pathinfo($illustrationFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = $slugger->slug($originalFilename);
-            $newFilename = $safeFilename . '-' . uniqid() . '.' . $illustrationFile->guessExtension();
-    
-            try {
-                $illustrationFile->move(
-                    $this->getParameter('upload_directory'),
-                    $newFilename
-                );
-                
-                if ($element->getIllustration()) {
-                    $oldFile = $this->getParameter('upload_directory') . '/' . $element->getIllustration();
-                    if (file_exists($oldFile)) {
-                        unlink($oldFile);
-                    }
-                }
-                
-                $element->setIllustration($newFilename);
-            } catch (FileException $e) {
-                $this->addFlash('error', 'Une erreur est survenue lors de l\'upload du fichier');
-                throw $e;
-            }
-        }
     }
     
 
@@ -138,8 +109,6 @@ class ElementController extends AbstractController
         ]);
     }
 
-   
-
     #[Route('/{id}', name: 'app_element_delete', methods: ['POST'])]
     public function delete(Request $request, Element $element, EntityManagerInterface $entityManager): Response
     {
@@ -152,27 +121,38 @@ class ElementController extends AbstractController
     }
 // intégration de liipimagebundle
 
-    private function handleElementForm(Element $element, $form, EntityManagerInterface $entityManager): void
-    {
-        $illustration = $form->get('illustration')->getData();
-        if ($illustration !== null) {
-            if ($element->getIllustration() !== null) {
-                $oldIllustrationPath = $this->getParameter('elements_directory') . '/' . $element->getIllustration();
-                if (file_exists($oldIllustrationPath)) {
-                    unlink($oldIllustrationPath);
-                    $this->imagineCacheManager->remove($element->getIllustration());
-                }
+private function handleElementForm(Element $element, FormInterface $form): void
+{
+    $illustrationFile = $form->get('illustration')->getData();
+
+    if ($illustrationFile) {
+        // Suppression de l'ancienne image si elle existe
+        if ($element->getIllustration()) {
+            $oldIllustrationPath = $this->getParameter('upload_directory') . '/' . $element->getIllustration();
+            if (file_exists($oldIllustrationPath)) {
+                unlink($oldIllustrationPath);
+                $this->imagineCacheManager->remove($element->getIllustration());
             }
-
-            $illustrationName = uniqid() . '.' . $illustration->guessExtension();
-            $element->setIllustration($illustrationName);
-            $illustration->move($this->getParameter('elements_directory'), $illustrationName);
-
-            // Générer les versions redimensionnées de l'image
-            $this->imagineCacheManager->getBrowserPath($illustrationName, 'thumbnail');
         }
 
-        $entityManager->persist($element);
-        $entityManager->flush();
+        // Création du nouveau nom de fichier
+        $newFilename = uniqid() . '.' . $illustrationFile->guessExtension();
+        
+        try {
+            // Déplacement du fichier
+            $illustrationFile->move(
+                $this->getParameter('upload_directory'),
+                $newFilename
+            );
+            
+            $element->setIllustration($newFilename);
+
+            // Générer les versions redimensionnées de l'image
+            $this->imagineCacheManager->getBrowserPath($newFilename, 'thumbnail');
+        } catch (FileException $e) {
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'upload du fichier');
+            throw $e;
+        }
     }
+}
 }

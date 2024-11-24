@@ -64,7 +64,7 @@
 								<tr class="row">
 									<td class="col-12 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
 										<div class="rounded-circle overflow-hidden">
-											<img class="img-fluid my-2" src="{{ asset('uploads/images/' ~ pokemon.image) }}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+											<img src="{{ pokemon.image is not null ? asset('uploads/pokemon/' ~ pokemon.image) : asset('uploads/images/665b5f2ccd0a3.jpg') }}" alt="{{ pokemon.name }}" class="img-fluid my-2" style="width: 13rem; height: 13rem;">
 											<img class="img-fluid my-2" src="{{ pokemon.sprite}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 
 										</div>

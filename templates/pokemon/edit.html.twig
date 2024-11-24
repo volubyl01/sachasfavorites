@@ -17,7 +17,7 @@
 				<div class="col-lg-5 justify-content-center mt-5">
 					<div class="d-flex w-75 text-center">
 						{% if pokemon.image %}
-							<img src="{{ asset(pokemon.image)|imagine_filter('thumbnail') }}" alt="{{ pokemon.name }}" style='width:18rem'>
+							<img src="{{asset('uploads/pokemon/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style='width:18rem'>
 						{% else %}
 							<div style='width:18rem; height:18rem; background-color: #ccc;'>Pas d'image</div>
 						{% endif %}
