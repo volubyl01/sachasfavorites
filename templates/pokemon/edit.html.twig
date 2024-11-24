@@ -18,6 +18,7 @@
 					<div class="d-flex w-75 text-center">
 						{% if pokemon.image %}
 							<img src="{{asset('uploads/pokemon/' ~ pokemon.image)}}" alt="{{ pokemon.name }}" style='width:18rem'>
+							<img class="img-fluid my-2" src="{{ pokemon.sprite}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 						{% else %}
 							<div style='width:18rem; height:18rem; background-color: #ccc;'>Pas d'image</div>
 						{% endif %}
