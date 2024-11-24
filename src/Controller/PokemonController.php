@@ -91,7 +91,7 @@ class PokemonController extends AbstractController
         }
 
         return $this->render('pokemon/new.html.twig', [
-            'bodyClass' => 'new-pokemon',
+            'edit' => false,
             'pokemon' => $pokemon,
             'form' => $form->createView(),
             'backgroundImage' => $this->backgroundImages['new'] // Image pour la page d'index
@@ -225,7 +225,6 @@ class PokemonController extends AbstractController
     $this->imagineCacheManager->getBrowserPath($imageName, 'thumbnail');
 }
 
-
 private function handlePokemonForm(Pokemon $pokemon, Form $form): void
 {
     $element = $form->get('element')->getData();
@@ -233,7 +232,7 @@ private function handlePokemonForm(Pokemon $pokemon, Form $form): void
         if ($form->has('illustration')) {
             $illustration = $form->get('illustration')->getData();
             if ($illustration instanceof UploadedFile) {
-                $this->handleElementImageUpload($element, $illustration);
+                $this->handlePokemonImageUpload($element, $illustration);
                 $this->entityManager->persist($element);
             }
         }

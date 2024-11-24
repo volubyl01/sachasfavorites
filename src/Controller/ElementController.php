@@ -57,7 +57,6 @@ class ElementController extends AbstractController
     
         if ($form->isSubmitted() && $form->isValid()) {
             $this->handleElementForm($element, $form);
-            
             $this->entityManager->persist($element);
             $this->entityManager->flush();
     
@@ -66,9 +65,9 @@ class ElementController extends AbstractController
         }
     
         return $this->render('element/new.html.twig', [
-            'form' => $form->createView(),
             'element' => $element,
             'edit' => false,
+            'form' => $form->createView(),
             'backgroundImage' => $this->backgroundImages['new']
         ]);
     }

@@ -23,13 +23,13 @@
 			class="row justify-content-between">
 			{# colonne gauche #}
 			<div class="col-md-5 bg-light text-primary text-center my-3 border rounded-4 mx-auto">
-				<h3>Son histoire</h3>
+				<h5>Son histoire</h5>
 				<h5>{{ pokemon.description }}</h5>
 				<div class="text-primary">
-					<h3>Son élément</h3>
-					<h2>{{ pokemon.element.specificite ?? 'Non spécifié' }}</h2>
+					<h5>Son élément</h5>
+					<h5>{{ pokemon.element.specificite ?? 'Non spécifié' }}</h5>
 					<h3>Sa force</h3>
-					<h2>{{ pokemon.level }}</h2>
+					<h5>{{ pokemon.level }}</h5>
 				</div>
 				{# bouton vers page Team #}
 				<a href="{{ path('monpokemon_pokemon_index') }}" class="btn btn-warning btn-sm">Retour à la liste</a>
