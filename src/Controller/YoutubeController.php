@@ -11,6 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class YoutubeController extends AbstractController
 {
+
+    private $backgroundImages = [
+        'search' => 'images/backgrounds/AdobeStock_585885970.webp',
+    ];
+
     #[Route('/youtube-search', name: 'app_youtube_search')]
     public function search(YoutubeService $youtubeService, Request $request, $query = null): Response
     {
@@ -33,11 +38,15 @@ class YoutubeController extends AbstractController
                 'videos' => $videos,
                 'query' => $query,
                 'form' => $form->createView(),
+                'backgroundImage' => $this->backgroundImages['search']
             ]);
         }
 
         return $this->render('youtube/search.html.twig', [
             'form' => $form->createView(),
+            'backgroundImage' => $this->backgroundImages['search']
         ]);
+
+
     }
 }

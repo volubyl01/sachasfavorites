@@ -44,7 +44,7 @@
 	</style>
 {% endblock %}
 {% block body %}
-<div class="container mx-auto">
+<div class="mx-auto col-8 border border-danger px-5 py-5 text-center bg-warning">
 	<h1>Recherche sur YouTube</h1>
 
 	{{ form_start(form) }}
@@ -54,6 +54,7 @@
 	{{ form_end(form) }}
 </div>
 	{% if videos is defined and videos|length > 0 %}
+	<div class="mx-auto col-8 border border-danger px-5 py-5">
 		<h2>Résultats de la recherche pour "{{ form.query.vars.value }}"</h2>
 
 		<ul>
