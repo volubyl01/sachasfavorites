@@ -81,8 +81,6 @@
 											</div>
 											<div class="img-fluid">
 												{% if pokemon.element and pokemon.element.illustration %}
-													{# Ajoutez temporairement ce debug #}
-													{{ dump(asset(pokemon.element.illustration)) }}
 
 													<img class="rounded-circle img-fluid" src="{{ asset(pokemon.element.illustration) | imagine_filter('thumbnail')}}" alt="{{ pokemon.element.specificite }}" style="width: 13rem; height: 13rem;">
 

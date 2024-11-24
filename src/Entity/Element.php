@@ -95,7 +95,7 @@ class Element
         return $this->illustration ? '/uploads/Image/' . $this->illustration : null;
     }
 
-    public function setIllustration(?string $illustration): static
+    public function setIllustration(?string $illustration): self
     {
         $this->illustration = $illustration;
 
