@@ -41,7 +41,7 @@
 
 			{# Colonne droite #}
 			{% if pokemon is not null and pokemon.element is not null %}
-			<div class="col-md-3 text-primary text-center my-3 mx-auto my-3 border rounded-4 mx-auto" style="background-image: url('{{ asset('uploads/Image/' ~ pokemon.element.illustration) }}')">
+			<div class="col-md-3 text-primary text-center my-3 mx-auto my-3 border rounded-4 mx-auto background-element" style="background-image: url('{{ asset('uploads/Image/' ~ pokemon.element.illustration) }}')">
 				{% endif %}
 				<div class="text-center mb-5">
 					<img src="{{ asset('uploads/Image/' ~ pokemon.image) }}" class="img-fluid" alt="">
