@@ -87,8 +87,8 @@ class ElementController extends AbstractController
             return $this->redirectToRoute('app_element_index');
         }
     
-        return $this->render('element/form.html.twig', [
-            'form' => $form,
+        return $this->render('element/edit.html.twig', [
+            'form' => $form->createView(),
             'element' => $element,
             'edit' => true,
             'backgroundImage' => $this->backgroundImages['edit']
@@ -106,12 +106,12 @@ class ElementController extends AbstractController
     
             try {
                 $illustrationFile->move(
-                    $this->getParameter('elements_directory'),
+                    $this->getParameter('upload_directory'),
                     $newFilename
                 );
                 
                 if ($element->getIllustration()) {
-                    $oldFile = $this->getParameter('elements_directory') . '/' . $element->getIllustration();
+                    $oldFile = $this->getParameter('upload_directory') . '/' . $element->getIllustration();
                     if (file_exists($oldFile)) {
                         unlink($oldFile);
                     }
@@ -129,6 +129,9 @@ class ElementController extends AbstractController
     #[Route('/{id}', name: 'app_element_show', methods: ['GET'])]
     public function show(Element $element): Response
     {
+        if (!$element) {
+            throw $this->createNotFoundException('Element non trouvé');
+        }
         return $this->render('element/show.html.twig', [
             'element' => $element,
             'backgroundImage' => $this->backgroundImages['show']
@@ -154,7 +157,7 @@ class ElementController extends AbstractController
         $illustration = $form->get('illustration')->getData();
         if ($illustration !== null) {
             if ($element->getIllustration() !== null) {
-                $oldIllustrationPath = $this->getParameter('element_illustration_directory') . '/' . $element->getIllustration();
+                $oldIllustrationPath = $this->getParameter('elements_directory') . '/' . $element->getIllustration();
                 if (file_exists($oldIllustrationPath)) {
                     unlink($oldIllustrationPath);
                     $this->imagineCacheManager->remove($element->getIllustration());
@@ -163,7 +166,7 @@ class ElementController extends AbstractController
 
             $illustrationName = uniqid() . '.' . $illustration->guessExtension();
             $element->setIllustration($illustrationName);
-            $illustration->move($this->getParameter('element_illustration_directory'), $illustrationName);
+            $illustration->move($this->getParameter('elements_directory'), $illustrationName);
 
             // Générer les versions redimensionnées de l'image
             $this->imagineCacheManager->getBrowserPath($illustrationName, 'thumbnail');

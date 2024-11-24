@@ -83,14 +83,3 @@ body.new-element {
 .ajouter {
 	background-image: var(--bs-gradient);
 }
-.charactersElectric {
-    background-image:url("../uploads/Image/electricity.jpg") ;
-	background-repeat: no-repeat;
-	opacity:1.5;
-}
-.charactersFire {
-    background-image:url("../uploads/Image/feu.webp");
-	background-size: cover ;
-	background-repeat: no-repeat;
-	opacity:1.5;
-}

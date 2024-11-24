@@ -64,7 +64,7 @@
 								<tr class="row">
 									<td class="col-12 col-md-4 w-lg-25 w-md-25 text-center d-flex flex-column justify-content-center align-items-center">
 										<div class="rounded-circle overflow-hidden">
-											<img class="img-fluid my-2" src="{{ asset('uploads/Image/' ~ pokemon.image) }}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
+											<img class="img-fluid my-2" src="{{ asset('uploads/images/' ~ pokemon.image) }}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 											<img class="img-fluid my-2" src="{{ pokemon.sprite}}" alt="{{ pokemon.name }}" style="width: 13rem; height: 13rem;">
 
 										</div>
@@ -81,12 +81,6 @@
 											</div>
 											<div class="img-fluid">
 												{% if pokemon.element and pokemon.element.illustration %}
-													<div>Chemin de l'image :
-														{{ pokemon.element.illustration }}</div>
-													<div>Chemin complet :
-														{{ asset('uploads/image/' ~ pokemon.element.illustration) | imagine_filter('thumbnail') }}</div>
-
-
 													<img class="rounded-circle img-fluid" src="{{ asset(pokemon.element.illustration) | imagine_filter('thumbnail')}}" alt="{{ pokemon.element.specificite }}" style="width: 13rem; height: 13rem;">
 
 												{% else %}
