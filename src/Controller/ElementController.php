@@ -64,8 +64,8 @@ class ElementController extends AbstractController
             return $this->redirectToRoute('app_element_index');
         }
     
-        return $this->render('element/form.html.twig', [
-            'form' => $form,
+        return $this->render('element/new.html.twig', [
+            'form' => $form->createView(),
             'element' => $element,
             'edit' => false,
             'backgroundImage' => $this->backgroundImages['new']
