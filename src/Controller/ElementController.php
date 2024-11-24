@@ -47,7 +47,7 @@ class ElementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_element_new', methods: ['GET', 'POST'])]
-    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_element_edit', methods: ['GET', 'POST'])]
     public function form(
         Request $request,
         SluggerInterface $slugger,
