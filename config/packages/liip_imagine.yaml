@@ -1,4 +1,6 @@
 liip_imagine:
+    twig:
+        mode: lazy  # Ajouter cette ligne pour résoudre la dépréciation
     driver: "gd"
     resolvers:
         default:

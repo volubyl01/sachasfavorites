@@ -1,28 +1,5 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Rediriger HTTP vers HTTPS
-    RewriteCond %{HTTPS} off
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-    # Supprimer www (optionnel, décommentez si nécessaire)
-    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-    # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
-
-    # Rediriger les slashes de fin
-    # RewriteCond %{REQUEST_FILENAME} !-d
-    # RewriteRule ^(.*)/$ /$1 [L,R=301]
-
-    # Gérer le contrôleur frontal
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [L]
+    RewriteRule ^(.*)$ index.php [QSA,L]
 </IfModule>
-
-# Forcer HTTPS pour tous les cookies (recommandé pour la sécurité)
-<IfModule mod_headers.c>
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-</IfModule>
-
-
-
