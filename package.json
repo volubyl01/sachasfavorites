@@ -26,7 +26,7 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "@babel/runtime": "^7.26.0",
+    "@babel/runtime": "^7.26.7",
     "jquery": "^3.7.1"
   }
 }
